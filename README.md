@@ -1,56 +1,94 @@
-# Lunatar-Unofficial para Foundry VTT
+# 🎲 Lunatar RPG — Foundry VTT
 
-**Versão 0.2.10** · Implementação independente em português para o playtest de Lunatar RPG, publicado pela New Order Editora. A interface tem arte vetorial original inspirada nas fichas das páginas 77 e 78 do playtest.
+Leve suas aventuras de **Lunatar RPG** ao Foundry VTT com uma ficha temática, criação de personagens por etapas, compêndios organizados e ferramentas para testes, combate e Formulações mágicas.
 
-## Instalação manual no Foundry V13 ou V14
+Esta é uma **implementação independente e não oficial**, baseada no playtest de Lunatar RPG. **Os direitos de Lunatar e da obra original pertencem a Colucci e à New Order Editora.**
 
-1. Na tela inicial do Foundry, abra **Configuração** e copie o **Caminho dos dados do usuário**. No Windows, o padrão é `%LOCALAPPDATA%\FoundryVTT`, mas a configuração do aplicativo prevalece.
-2. Feche o Foundry por completo. Extraia o ZIP em uma pasta temporária e copie a pasta interna **lunatar-unofficial** para **Data/systems** dentro do caminho anotado. Ao atualizar uma versão anterior, substitua os arquivos na pasta `lunatar-unofficial` existente.
-3. Confira que o caminho termina em `Data/systems/lunatar-unofficial/system.json`. Se o extrator criou uma pasta extra com o nome do ZIP, mova a pasta `lunatar-unofficial` para o lugar indicado.
-4. Abra o Foundry e verifique **Sistemas de Jogo → Lunatar RPG**, versão **0.2.10**. Em **Mundos de Jogo**, selecione o sistema ao criar um mundo.
+## ✨ Por que usar?
 
+Crie personagens com orientação em cada etapa, organize armas e armaduras por espaço de equipamento e acompanhe Saúde, Magia, Ações e Dados Lunares na ficha. Ajuste Trunfos e Fardos com botões interativos, componha Formulações com prévia de custos e consulte Classes, Proezas e Traços sem sair do Foundry.
 
-Se a entrada ainda estiver ausente, confira as linhas referentes a `lunatar-unofficial` ou `system.json` em `Logs/error.log` no caminho de dados anotado. Elas ajudam a distinguir um erro de leitura do manifesto de uma pasta que o Foundry não encontrou.
+## 🎯 Principais recursos
 
-Para instalar em um servidor hospedado, envie a pasta `lunatar-unofficial` pela área de arquivos do host ou use o procedimento de instalação manual do provedor.
+- 🎨 **Fichas temáticas** — Interface em português com estética de pergaminho, retrato ampliado, abas com ícones e fichas para personagens e ameaças.
+- 🧭 **Gerador de personagens** — Criação de nível 1 em seis etapas: Identidade, Origem, Classe, Características, Aptidões e Revisão. Permite revisar escolhas, ajustar distribuições e sortear o Signo Lunar.
+- 🎲 **Testes interativos** — Botões de dados, busca de Aptidões, filtros e controles de Trunfos e Fardos com atualização do dado efetivo e do modificador.
+- ❤️ **Recursos e defesas** — Controle de Saúde, Magia e Ações, descanso e ajustes manuais de Defesa, Defesa Mágica, Proteção e valores máximos de Saúde e Magia.
+- ⚔️ **Inventário organizado** — Busca, filtro de itens equipados e espaços de Mão Esquerda, Mão Direita e Corpo. Armas de Uma Mão, Duas Mãos e versáteis têm tratamento próprio.
+- ✨ **Compositor de Formulações** — Combine Forma e Palavra, escolha Ampliações e acompanhe a prévia de PM, Reflexo, ações, alcance e dano. Formulações salvas possuem botões para conjurar e editar.
+- 📈 **Classes e progressão** — Escolha da Classe Básica, apresentação de seus caminhos e seleção da Classe Superior a partir do nível 5.
+- 📚 **Compêndios organizados** — Equipamentos, Classes, Proezas, Traços e Macros com pastas coloridas para facilitar a consulta.
+- 🌙 **Ciclo lunar** — Signo Lunar, Dados Lunares, sorteio das Luas do céu e opção de rejogada lunar após o resultado do teste.
+- 💬 **Chat personalizado** — Cards de rolagem com sucesso ou falha, Impulso e Recuo, além da apresentação de itens, Proezas e Traços.
+- 🖼️ **Ícones SVG** — Identificação visual de equipamentos, Aptidões, Classes, Proezas e Traços.
+- 🛠️ **Macros de mesa** — Atalhos para rolagens, uso de itens, recursos, descanso, reposição de Proezas e início do ciclo lunar.
 
-O identificador do sistema mudou de `lunatar` para `lunatar-unofficial`. Mundos existentes continuam associados ao identificador anterior. Mantenha uma cópia do sistema anterior para abrir esses mundos. Faça um backup do mundo antes de qualquer migração.
+## ⚙️ Compatibilidade
 
-## Primeira sessão
+| Requisito | Versão |
+| --- | --- |
+| Foundry VTT | 13 e 14 |
+| Lunatar para Foundry | 0.2.10 |
+| Idioma da interface | Português brasileiro |
+| Material de referência | Playtest de Lunatar RPG |
 
-Clique no retrato à esquerda para abrir a imagem. Quem pode editar a ficha também pode usar **Trocar imagem**.
+O pacote funciona como **sistema de jogo próprio** do Foundry e não exige outro sistema instalado. A versão passou por testes isolados de regressão e do gerador; esses testes não substituem a validação completa em uma mesa nas duas versões do Foundry.
 
-Em **Ficha → Editar valores**, você pode fixar Defesa, Defesa Mágica, Proteção, Saúde máxima e Magia máxima. Deixe o campo em branco para usar o cálculo automático. Saúde e Magia atuais continuam editáveis nos respectivos cartões.
+## 📦 Instalação
 
-- **Criação.** Abra **Atores → Gerador de Personagem** e passe pelas seis etapas de nível 1: Identidade, Origem, Classe, Características, Aptidões e Revisão. Use **Voltar** para corrigir uma escolha. Nas distribuições, você pode ajustar a sugestão, restaurá-la ou sortear outra válida. A última tela resume a ficha e permite sortear o Signo Lunar com 1d12 ao criar o personagem.
-- **Progressão.** Em **Classe, Proezas e Traços**, escolha a Classe Básica e consulte seus três caminhos. Ao atingir o nível 5, selecione a Classe Superior diretamente na ficha. Os registros do compêndio anexados ficam em uma seção separada.
-- **Rolagens.** Em **Ficha → Aptidões**, clique no botão do dado para abrir a rolagem. A busca aceita nome, Característica ou Maestria, e pode ser combinada com os filtros de Característica e de Aptidões treinadas. Informe o Número-Alvo e ajuste Trunfos e Fardos pelos botões **−/+**. O dado efetivo e o modificador são atualizados na hora, com os ajustes automáticos discriminados. Para um Teste Oposto, role a oposição primeiro e use o total como NA no segundo teste. O card mostra sucesso ou falha, Impulso e Recuo. Use o botão de ajustes no card para ajustar a graduação ou a Maestria.
-- **Equipamento e ataques.** Em **Equipamentos**, use **Catálogo** para adicionar armas, armaduras e escudos do playtest. A busca por nome ou propriedade e o filtro **Só equipados** ajudam a localizar itens. Use **Equipar** para marcar Mão Esquerda, Mão Direita ou Corpo conforme o item. Armas de Duas Mãos ocupam as duas mãos. Armas versáteis podem usar uma ou duas. Se o espaço estiver ocupado, o item anterior volta ao inventário. Use **Mover ou guardar** para liberar o espaço. Armaduras e escudos equipados somam seus efeitos conforme a ficha. Armas, armaduras, equipamentos, Aptidões, Classes, Proezas e Traços do catálogo têm ícones em SVG. O ícone pode ser trocado na ficha de um item editável. Com um token marcado como alvo, um ataque de arma recebe sua Defesa como NA. Use **Ajustar Saúde** na ficha do alvo para aplicar dano com Proteção, dano direto ou cura.
-- **Combate.** Role Iniciativa pelo rastreador nativo. Ao avançar o turno, o cliente que o avançou repõe as ações do ator quando tem permissão. Na janela de teste, o gasto de ações pode ser ligado ou desligado. Com ele ligado, repetições da mesma Aptidão acumulam Fardos. **Repor** permite ajustar o controle à mesa.
-- **Magia.** Abra **Formulações → Compor Forma + Palavra**, ou crie um registro personalizado. A lista reúne cartões com botões para conjurar e editar. O editor manual tem botões −/+, alternadores de tipo e resumo dos custos. O compositor mostra uma prévia de custo, Reflexo, ações, alcance e dano à medida que você faz as escolhas. Conjurar usa a Aptidão da classe ou Ataque Mágico e desconta PM. Reflexo causa 1d4 de dano direto por ponto. Para automatizar dano no chat, use uma fórmula como `1d8 + @formulacao`. O NA pode ser preenchido pela Defesa Mágica de um único token marcado como alvo.
-- **Luas.** O mestre usa **Novo ciclo** na ficha de um personagem para sortear as Luas do céu e repor os Dados Lunares dos personagens pertencentes a jogadores. Na janela de teste, marque a opção lunar para decidir se quer rerrolar depois de ver o primeiro resultado. Bênçãos e outros usos podem ser anotados na ficha e lançados manualmente.
-- **Ameaças.** Preencha Defesa, Defesa Mágica, Proteção, Movimento, Saúde e Ações diretamente. Use os modificadores Concreto e Abstrato do bloco da ameaça. Os mesmos registros de itens servem para ataques e Proezas.
+### Instalação manual
 
-## Critérios desta versão
+1. Baixe o ZIP do sistema e feche o Foundry.
+2. Extraia os arquivos e coloque a pasta `lunatar-unofficial` dentro de `Data/systems`, no diretório de dados do Foundry.
+3. Confira se o manifesto está em `Data/systems/lunatar-unofficial/system.json`, sem uma pasta extra entre eles.
+4. Abra o Foundry, crie um mundo e selecione **Lunatar RPG** como sistema de jogo.
+5. Inicie o mundo para acessar as fichas, os compêndios e o gerador.
 
-- Empate no Teste Oposto favorece a oposição por padrão, conforme a subseção específica da p. 7. O mestre pode mudar para **Favorece a ação** nas configurações do sistema. Um empate contra NA fixo ou Defesa dá sucesso.
-- O teto da Escala segue o nível. Trunfos que ultrapassam o teto são tratados como +2 por passo excedente, e Fardos abaixo do d4 como −2 por passo. Os Fardos e Trunfos da mesma jogada se compensam.
-- Para **Saber**, a ficha usa Inteligência, conforme a descrição da p. 12. Para a Formulação de Naturalista, usa Natureza com Instinto, conforme a referência ao teste de Natureza na p. 71.
-- A Saúde usa os valores da tabela da p. 16. A progressão registra o nível 5 como o primeiro da classe superior. Ações, PM e Reflexo são acompanhados na ficha. Efeitos específicos de Proezas, invocações, áreas, testes secundários, magias de Controle simultâneas, Impasses, duração de condições e dano no alvo são resolvidos pela mesa. Empates de Iniciativa após graduação e Agilidade usam a ordem do Foundry até o mestre decidir a rerrolagem.
-- O gerador registra as opções de Religião, Técnica de Combate e Trilha da Natureza como Traços. As opções narrativas e os efeitos específicos de religião e técnica são resolvidos pela mesa. O equipamento inicial pode ser escolhido no compêndio e arrastado para a ficha. O catálogo contém nomes e parâmetros mecânicos para compor Formulações. Confira os efeitos e exceções no playtest.
-- O pacote é voltado à instalação manual. O `system.json` já está na pasta do sistema. A instalação por URL requer hospedar o manifesto e o ZIP.
+Se baixar o código pelo GitHub, renomeie a pasta extraída para `lunatar-unofficial`. O nome do repositório é **Lunatar-Unofficial**, mas a pasta instalada deve usar o identificador em letras minúsculas.
 
-## Compêndios e macros
+### Instalação por manifesto
 
-Abra **Compêndios → Lunatar RPG**. As pastas Arsenal, Técnicas e Proezas, Traços e Origens, Linhagens e Classes e Ferramentas e Macros usam cores diferentes. As subpastas dentro dos compêndios também têm cores por categoria.
+A instalação por URL depende da publicação do manifesto e do ZIP para download. Nesta versão, utilize o procedimento manual acima.
 
-- **Equipamentos** reúne armas corpo a corpo e à distância por categoria, armaduras, escudos e equipamento inicial.
-- **Proezas** separa Origens e Classes. As Proezas de classe estão organizadas por nível, e os Instintos Selvagens e as Engenhocas têm pastas próprias.
-- **Traços** separa Origens, Classes Básicas e Classes Superiores. **Classes** reúne as cinco classes básicas e as quinze superiores.
-- **Macros de Lunatar** reúne rolagens, uso de itens, ajustes de recursos, descanso, reposição de Proezas por cena e início do ciclo lunar.
+## 🎮 Primeiros passos
 
-Abra qualquer entrada de item para ler sua descrição. Arraste a entrada para a ficha de um ator que você controla para criar uma cópia anexada. Uma classe anexada fica em **Classe, Proezas e Traços**. Use **Aplicar** para alterar a classe usada pelos cálculos da ficha. Classes superiores exigem a classe básica correspondente e nível 5 ou maior.
+- Em **Atores → Gerador de Personagem**, siga as seis etapas e confira o resumo antes de criar a ficha.
+- Explore **Compêndios → Lunatar RPG**. Abra os registros para consultar as descrições ou arraste-os para uma ficha que você controla.
+- Na aba **Ficha**, clique em uma Aptidão para rolar. Informe o Número-Alvo e ajuste Trunfos e Fardos pelos botões **−/+**.
+- Use **Editar valores** para definir manualmente defesas e recursos máximos. Deixe um campo em branco para retomar seu cálculo automático.
+- Em **Equipamentos**, adicione itens pelo **Catálogo** e use **Equipar** para escolher o espaço ocupado. Armas de Duas Mãos ocupam as duas mãos.
+- Em **Formulações → Compor Forma + Palavra**, monte a magia, confira seus custos e salve-a para usar pela ficha.
+- Em **Classe, Proezas e Traços**, acompanhe sua Classe Básica e os caminhos disponíveis para a Classe Superior.
+- Clique no retrato para visualizar a imagem. Usuários com permissão de edição também podem usar **Trocar imagem**.
+- Arraste um item já anexado à ficha para a barra de macros para criar um atalho de uso.
 
-Para criar uma macro de item, arraste o item **já anexado** da ficha para um espaço livre da barra de macros. O atalho aponta para aquele item da ficha, inclusive para tokens não vinculados. Para as macros gerais, importe a entrada do compêndio e arraste a macro para a barra. Elas usam o token selecionado ou o personagem associado ao seu usuário. A criação e a execução de macros de script seguem as permissões do Foundry.
+## 📖 Automação e regras de mesa
 
-Os atalhos chamam as mesmas ações da ficha. Armas abrem o teste de ataque, armaduras e escudos alternam o estado de equipamento, e Proezas descontam as ações em combate e os usos cadastrados. **Repor Proezas por cena** renova as entradas marcadas para essa recarga. A descrição da Proeza ou do Traço é publicada no chat para resolver as condições, os alvos, os custos específicos da classe e outros efeitos de mesa.
+O sistema acompanha rolagens, custos e recursos, mas efeitos específicos de Proezas, invocações, áreas, condições e outras decisões narrativas continuam sendo resolvidos pela mesa. Consulte o playtest para os efeitos e as exceções das regras.
+
+Por padrão, empates em Testes Opostos favorecem a oposição; o mestre pode alterar essa opção nas configurações. Empates contra Número-Alvo fixo ou Defesa contam como sucesso. Para um Teste Oposto, role a oposição primeiro e utilize seu total como Número-Alvo do segundo teste.
+
+O equipamento inicial deve ser escolhido no compêndio e adicionado à ficha. Para aplicar dano ou cura, use **Ajustar Saúde** na ficha do alvo.
+
+## 🔄 Atualizações
+
+Antes de atualizar o sistema ou migrar a versão do Foundry, faça uma cópia de segurança dos mundos. Com o Foundry fechado, substitua os arquivos da pasta `lunatar-unofficial` e consulte as notas da versão, quando disponíveis.
+
+**Mundos de versões antigas:** o identificador mudou de `lunatar` para `lunatar-unofficial`. Mundos criados com o identificador anterior continuam associados a ele. Preserve uma cópia do sistema anterior para abri-los e faça backup antes de qualquer migração.
+
+## 🐛 Problemas e sugestões
+
+Encontrou um erro ou tem uma ideia de melhoria? Abra uma **Issue** no repositório, incluindo, quando possível:
+
+- Uma captura de tela ou mensagem do console.
+- As versões do Foundry e do sistema Lunatar utilizadas.
+- Os passos para reproduzir o problema.
+- Os módulos ativos no mundo.
+
+## 👤 Créditos e direitos
+
+**Implementação não oficial para Foundry VTT desenvolvida por DM Arkhron.**
+
+**Lunatar RPG e sua obra original pertencem a Colucci e à New Order Editora.** Todos os direitos sobre a obra original, seus textos, regras, ilustrações e materiais relacionados permanecem com seus respectivos titulares.
+
+Este projeto é uma adaptação independente para uso no Foundry VTT e não é uma publicação oficial de Colucci ou da New Order Editora. Materiais de terceiros conservam seus próprios direitos. O projeto não substitui o material original de Lunatar RPG.
