@@ -5,7 +5,6 @@ on:
     branches: [main]
     paths:
       - system.json
-      - .github/workflows/release.yml
 permissions:
   contents: write
 concurrency:
@@ -16,6 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compilar e testar bestiário
+        run: |
+          npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5
+          node scripts/build-bestiary.mjs
       - name: Validar e empacotar
         run: |
           python3 - <<'PY'
