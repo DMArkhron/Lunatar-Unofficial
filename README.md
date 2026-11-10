@@ -28,7 +28,7 @@ Crie personagens com orientação em cada etapa, organize armas e armaduras por 
 | Requisito | Versão |
 | --- | --- |
 | Foundry VTT | 13 e 14 |
-| Lunatar para Foundry | 0.2.10 |
+| Lunatar para Foundry | 0.2.11 |
 | Idioma da interface | Português brasileiro |
 | Material de referência | Playtest de Lunatar RPG |
 
@@ -98,3 +98,13 @@ Encontrou um erro ou tem uma ideia de melhoria? Abra uma **Issue** no repositór
 **Lunatar RPG e sua obra original pertencem a Colucci, Smzinho e à New Order Editora.** Todos os direitos sobre a obra original, seus textos, regras, ilustrações e materiais relacionados permanecem com seus respectivos titulares.
 
 Este projeto é uma adaptação independente para uso no Foundry VTT e não é uma publicação oficial de Colucci ou da New Order Editora. Materiais de terceiros conservam seus próprios direitos. O projeto não substitui o material original de Lunatar RPG.
+
+## 🐉 Bestiário do playtest
+
+Em **Compêndios → Lunatar RPG → Bestiário → Bestiário de Lunatar**, encontre as seis ameaças das páginas 73–75: **Aranha Gigante, Alpa Combatente, Conjurador, Devorado, Guardião da Culpa e Mercenário**. As fichas estão organizadas em Monstro, Profanado, Humanoide e Morto-vivo, com recursos, Aptidões, ataques e habilidades incorporados. Importe a criatura para Atores e arraste-a para a cena; os tokens são desvinculados para manter Saúde e recursos individuais.
+
+O Conjurador possui suas Formas e Palavras registradas como Traço, para montar Formulações pelo compositor. Proezas condicionais, ações extras, condições e a ocupação de dois hexágonos da Aranha são resolvidas pelo mestre. As armas com Perfurante 1 oferecem a opção de dano perfurante na rolagem.
+
+**Nota da fonte:** o Guardião da Culpa lista Resistência d16 e d10 no mesmo bloco. A ficha utiliza d16 e registra a divergência nas Anotações para revisão pelo mestre.
+
+Para gerar o compêndio a partir do código-fonte, instale `@foundryvtt/foundryvtt-cli@3.0.5` e execute `node scripts/build-bestiary.mjs`. As Releases já incluem o compêndio compilado.
