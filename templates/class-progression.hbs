@@ -1,0 +1,51 @@
+<section class="ln-class-progression ln-feature-classe" aria-label="Progressão de classe">
+  <div class="ln-class-stage ln-class-base">
+    <header>
+      <span class="ln-class-number">1</span>
+      <div><h3>Classe Básica</h3><small>Disponível desde o nível 1</small></div>
+    </header>
+    {{#if editable}}
+    <label>Classe atual
+      <select name="system.classe">
+        <option value="">Escolha a classe</option>
+        {{#each classes}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+      </select>
+    </label>
+    <p class="ln-class-hint">Trocar a Classe Básica limpa a escolha de Classe Superior.</p>
+    {{else}}
+    <p class="ln-class-current">{{#if progression.base}}{{progression.base}}{{else}}Sem classe escolhida{{/if}}</p>
+    {{/if}}
+  </div>
+  <div class="ln-class-stage ln-class-superior">
+    <header>
+      <span class="ln-class-number">2</span>
+      <div><h3>Classe Superior</h3><small>Disponível a partir do nível 5</small></div>
+      {{#if progression.unlocked}}{{#if progression.superior}}<span class="ln-path-status">Ativa · {{progression.superior}}</span>{{/if}}
+      {{else}}<span class="ln-path-status ln-path-locked"><i class="fa-solid fa-lock" aria-hidden="true"></i> Nível 5</span>{{/if}}
+    </header>
+    {{#if progression.paths}}
+    <div class="ln-path-grid">
+      {{#each progression.paths}}
+      <article class="ln-path-card {{#if active}}ln-path-active{{/if}}">
+        <div class="ln-path-name"><img src="{{img}}" alt=""><strong>{{label}}</strong></div>
+        <p class="ln-class-hint">{{description}}</p>
+        <div class="ln-path-actions">
+          {{#if active}}<span class="ln-path-status"><i class="fa-solid fa-check" aria-hidden="true"></i> Selecionada</span>
+          {{else}}{{#if ../progression.unlocked}}
+            {{#if ../editable}}<button type="button" data-action="choosePath" data-path="{{id}}" data-classe="{{../progression.baseId}}">Escolher</button>{{/if}}
+          {{else}}<span class="ln-path-status ln-path-locked">{{#if current}}Escolha salva · nível 5{{else}}Bloqueada{{/if}}</span>{{/if}}{{/if}}
+          {{#if attached}}<button type="button" data-action="edit" data-id="{{attached}}" aria-label="Abrir registro de {{label}}" title="Abrir registro"><i class="fa-solid fa-book-open" aria-hidden="true"></i></button>{{/if}}
+        </div>
+      </article>
+      {{/each}}
+    </div>
+    {{#if editable}}{{#if progression.superior}}
+    <button type="button" class="ln-clear-path" data-action="clearPath" data-classe="{{progression.baseId}}"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Limpar escolha</button>
+    {{/if}}{{/if}}
+    {{else}}<p class="ln-feature-empty">Escolha uma Classe Básica para ver seus caminhos.</p>{{/if}}
+  </div>
+  <details class="ln-class-records">
+    <summary>Registros do compêndio anexados <span>{{groups.classe.items.length}}</span></summary>
+    {{> lunatarGroup groups.classe editable=editable}}
+  </details>
+</section>

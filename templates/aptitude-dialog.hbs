@@ -1,0 +1,21 @@
+<div class="ln-dialog ln-aptitude-editor">
+  <div class="ln-aptitude-summary">
+    <span>Característica <strong>{{attribute}}</strong></span>
+    <span class="ln-aptitude-cap">Limite <strong>d{{cap}}</strong></span>
+  </div>
+  {{#if overCap}}<p class="ln-aptitude-editor-note">A graduação registrada usa d{{recordedDie}}. Escolha um dado disponível para substituí-la.</p>{{/if}}
+  <fieldset class="ln-aptitude-ranks">
+    <legend>Graduação</legend>
+    <div>
+      {{#each ranks}}
+      <label class="{{#if locked}}ln-aptitude-rank-locked{{/if}}">
+        <input type="radio" name="rank" value="{{rank}}" {{#if selected}}checked{{/if}} {{#if locked}}disabled{{/if}}>
+        <img src="systems/lunatar-unofficial/assets/d{{die}}.svg" alt="">
+        <strong>d{{die}}</strong>
+        <small>{{#if locked}}Bloqueado{{else}}Grau {{rank}}{{/if}}</small>
+      </label>
+      {{/each}}
+    </div>
+  </fieldset>
+  {{#if pc}}<label>Maestria <input type="text" name="mastery" value="{{mastery}}" placeholder="Maestria associada a esta Aptidão"></label>{{/if}}
+</div>

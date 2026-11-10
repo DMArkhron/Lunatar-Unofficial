@@ -1,0 +1,207 @@
+<div class="ln-scroll">
+  <div class="ln-paper">
+    <header class="ln-hero">
+      <button type="button" class="ln-portrait" data-action="portrait" title="Abrir retrato" aria-label="Abrir retrato de {{actor.name}}">
+        <img src="{{actor.img}}" alt="">
+        <span><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Retrato</span>
+      </button>
+      <div class="ln-hero-main">
+        <div class="ln-brand">
+          <img src="systems/lunatar-unofficial/assets/moon.svg" alt="">
+          <div><span class="ln-kicker">{{#if pc}}Ficha de personagem{{else}}Registro de ameaça{{/if}}</span><strong>Lunatar</strong></div>
+        </div>
+        <div class="ln-identity">
+          <label class="ln-name">Nome <input name="name" value="{{actor.name}}" required></label>
+          {{#if pc}}
+          <label>Origem <select name="system.origem"><option value="">Escolha a origem</option>{{#each origins}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+          <div class="ln-class-summary"><span>Classe</span>
+            <strong>{{#if progression.base}}{{progression.base}}{{else}}Sem classe{{/if}}{{#if progression.unlocked}}{{#if progression.superior}} <i class="fa-solid fa-angle-right" aria-hidden="true"></i> {{progression.superior}}{{/if}}{{/if}}</strong>
+          </div>
+          {{else}}
+          <label>Categoria <input name="system.categoria" value="{{system.categoria}}" placeholder="Humanoide, monstro…"></label>
+          {{/if}}
+          <label>Nível <input type="number" name="system.nivel" min="1" max="12" value="{{system.nivel}}"></label>
+        </div>
+      </div>
+    </header>
+
+    <nav class="ln-tabs" aria-label="Seções da ficha">
+      {{#each tabs}}<button type="button" class="{{cssClass}}" data-action="selectTab" data-group="sheet" data-tab="{{id}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}"><i class="fa-solid {{icon}}" aria-hidden="true"></i><span>{{label}}</span></button>{{/each}}
+    </nav>
+
+    <section class="tab {{tabs.base.cssClass}}" data-group="sheet" data-tab="base">
+      <div class="ln-vitals">
+        <header class="ln-vitals-header">
+          <h2><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Estado do {{#if pc}}personagem{{else}}ator{{/if}}</h2>
+          {{#if pc}}{{#if editable}}<button type="button" data-action="editStats"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Editar valores</button>{{/if}}{{/if}}
+        </header>
+        <div class="ln-resources">
+          <div class="ln-resource {{#if halfActive}}ln-alert{{/if}}">
+            <span><i class="fa-solid fa-heart" aria-hidden="true"></i> Saúde</span>
+            <div><input type="number" name="system.saude.value" value="{{system.saude.value}}" min="0" max="{{system.saude.max}}" aria-label="Saúde atual"><b>/</b>
+              {{#if pc}}<strong>{{system.saude.max}}</strong>{{else}}<input type="number" name="system.saude.max" min="1" value="{{system.saude.max}}" aria-label="Saúde máxima">{{/if}}
+            </div>
+            <meter min="0" max="{{system.saude.max}}" value="{{system.saude.value}}" aria-label="Proporção de Saúde"></meter>
+            <small>{{#if collapsed}}Colapso{{else}}{{#if pc}}Meia Vida {{half}}{{/if}}{{/if}}{{#if system.manual.saude includeZero=true}} · Máximo manual{{/if}}</small>
+          </div>
+          <div class="ln-resource ln-resource-magic"><span><i class="fa-solid fa-droplet" aria-hidden="true"></i> Magia</span>
+            <div><input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais"><b>/</b>
+              {{#if pc}}<strong>{{system.magia.max}}</strong>{{else}}<input type="number" name="system.magia.max" min="0" value="{{system.magia.max}}" aria-label="PM máximos">{{/if}}
+            </div>
+            {{#if system.magia.max}}<meter min="0" max="{{system.magia.max}}" value="{{system.magia.value}}" aria-label="Proporção de Magia"></meter>{{/if}}
+            <small>Pontos de Magia{{#if system.manual.magia includeZero=true}} · Máximo manual{{/if}}</small>
+          </div>
+          <div class="ln-resource"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Ações</span>
+            <div><input type="number" name="system.acoes.value" value="{{system.acoes.value}}" min="0" max="{{system.acoes.max}}" aria-label="Ações disponíveis"><b>/</b><input type="number" name="system.acoes.max" value="{{system.acoes.max}}" min="0" aria-label="Máximo de ações"></div>
+            <button type="button" data-action="reset" {{#unless editable}}disabled{{/unless}}>Repor</button>
+          </div>
+          <div class="ln-resource"><span><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> Movimento</span>
+            <div>{{#if pc}}<strong>{{system.movimento}}</strong>{{else}}<input type="number" name="system.movimento" min="0" value="{{system.movimento}}" aria-label="Movimento">{{/if}}<b>m</b></div>
+            <small>Por ação</small>
+          </div>
+        </div>
+
+        <div class="ln-defenses">
+          <label><i class="fa-solid fa-shield" aria-hidden="true"></i> Defesa {{#if pc}}<strong>{{system.defesa}}</strong>{{#if system.manual.defesa includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesa" value="{{system.defesa}}" min="0">{{/if}}</label>
+          <label><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Defesa Mágica {{#if pc}}<strong>{{system.defesaMagica}}</strong>{{#if system.manual.defesaMagica includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesaMagica" value="{{system.defesaMagica}}" min="0">{{/if}}</label>
+          <label><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Proteção {{#if pc}}<strong>{{system.protecao}}</strong>{{#if system.manual.protecao includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.protecao" value="{{system.protecao}}" min="0">{{/if}}</label>
+        </div>
+      </div>
+
+      {{#if pc}}
+      <div class="ln-lunar">
+        <img src="systems/lunatar-unofficial/assets/phases.svg" alt="">
+        <label>Signo Lunar <select name="system.lua"><option value="0">Sem signo</option>{{#each moons}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+        <label>Dados Lunares <input type="number" name="system.dadoLunar" min="0" value="{{system.dadoLunar}}"></label>
+        <div class="ln-buttons">
+          <button type="button" data-action="sign" {{#unless editable}}disabled{{/unless}}>Rolar signo</button>
+          {{#if isGM}}<button type="button" data-action="cycle">Novo ciclo</button>{{/if}}
+        </div>
+        {{#if sky}}<small>No céu: {{sky}}{{#if moonActive}} · Seu signo está ativo{{/if}}</small>{{/if}}
+      </div>
+      {{/if}}
+
+      {{#if status}}<div class="ln-status">{{#each status}}<span>{{this}}</span>{{/each}}</div>{{/if}}
+      {{#if editable}}
+      <section class="ln-quick-actions" aria-label="Ações da ficha">
+        <div class="ln-quick-group">
+          <h3>Recuperação</h3>
+          <div class="ln-quick-buttons">
+            <button type="button" data-action="health"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i><span><strong>Ajustar Saúde</strong><small>Dano e cura</small></span></button>
+            {{#if pc}}
+            <button type="button" data-action="rest" data-kind="quick"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i><span><strong>Descanso rápido</strong><small>Recuperar PS e PM</small></span></button>
+            <button type="button" data-action="rest" data-kind="complete"><i class="fa-solid fa-bed" aria-hidden="true"></i><span><strong>Descanso completo</strong><small>Recuperação com bônus de nível</small></span></button>
+            {{/if}}
+          </div>
+        </div>
+      </section>
+      {{/if}}
+
+      <h2 class="ln-heading">Características</h2>
+      <div class="ln-attributes">
+        {{#if pc}}
+          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
+          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
+        {{else}}
+          <label>Concretas <input type="number" name="system.concreto" value="{{system.concreto}}"></label>
+          <label>Abstratas <input type="number" name="system.abstrato" value="{{system.abstrato}}"></label>
+        {{/if}}
+      </div>
+
+      <div class="ln-aptitudes" data-lunatar-aptitudes>
+        <h2 class="ln-heading">Aptidões</h2>
+        <div class="ln-aptitude-tools" data-aptitude-filters>
+          <label>Buscar aptidão
+            <input type="search" placeholder="Nome, característica ou maestria" data-aptitude-query autocomplete="off">
+          </label>
+          <label>Característica
+            <select data-aptitude-attribute>
+              <option value="">Todas</option>
+              {{#each attributeFilters}}<option value="{{id}}">{{label}}</option>{{/each}}
+            </select>
+          </label>
+          <div class="ln-aptitude-tools-actions">
+            <label><input type="checkbox" data-aptitude-trained> Só treinadas</label>
+            <button type="button" data-aptitude-clear>Limpar</button>
+          </div>
+        </div>
+        <div class="ln-aptitude-summary">
+          <span data-aptitude-count aria-live="polite"></span>
+          <span class="ln-aptitude-cap">Limite <strong>d{{cap}}</strong></span>
+        </div>
+        <p class="ln-aptitude-empty" data-aptitude-empty hidden>Nenhuma Aptidão corresponde aos filtros.</p>
+        <div class="ln-aptitude-grid">
+          {{#each abilities}}
+          <article class="ln-aptitude {{#if concrete}}ln-aptitude-concrete{{else}}ln-aptitude-abstract{{/if}}"
+            data-aptitude-card data-attribute="{{attribute}}" data-trained="{{#if trained}}true{{else}}false{{/if}}"
+            data-search="{{label}} {{attr}} {{mastery}}">
+            <div class="ln-aptitude-main">
+              <button type="button" class="ln-aptitude-roll" data-action="test" data-skill="{{key}}"
+                title="Rolar {{label}}" aria-label="Rolar {{label}}, dado base d{{die}}" {{#unless ../editable}}disabled{{/unless}}>
+                <img src="systems/lunatar-unofficial/assets/d{{die}}.svg" alt="">
+                <strong>d{{die}}</strong>
+                {{#if ../editable}}<small>Rolar</small>{{/if}}
+              </button>
+              <div class="ln-aptitude-identity">
+                <strong><img class="ln-aptitude-symbol" src="{{img}}" alt=""> {{label}}</strong>
+                <span>{{attr}} · {{#if trained}}Graduação {{rank}}{{else}}Sem graduação{{/if}}</span>
+                {{#if mastery}}<span class="ln-aptitude-mastery" title="{{mastery}}">{{mastery}}</span>{{/if}}
+                {{#if overCap}}<span>Registrado d{{recordedDie}} · limitado a d{{die}}</span>{{/if}}
+              </div>
+              {{#if ../editable}}<button type="button" class="ln-aptitude-edit" data-action="editAptitude" data-skill="{{key}}"
+                title="Editar {{label}}" aria-label="Editar {{label}}"><i class="fa-solid fa-sliders" aria-hidden="true"></i></button>{{/if}}
+            </div>
+            <div class="ln-aptitude-track" aria-hidden="true">
+              {{#each steps}}<span class="{{#if filled}}filled{{/if}} {{#if locked}}locked{{/if}}" title="d{{die}}"></span>{{/each}}
+            </div>
+          </article>
+          {{/each}}
+        </div>
+      </div>
+    </section>
+
+    <section class="tab {{tabs.inventory.cssClass}}" data-group="sheet" data-tab="inventory">
+      {{> lunatarInventory}}
+    </section>
+
+    <section class="tab {{tabs.magic.cssClass}}" data-group="sheet" data-tab="magic">
+      {{> lunatarSpells}}
+    </section>
+
+    <section class="tab {{tabs.features.cssClass}}" data-group="sheet" data-tab="features">
+      <div class="ln-feature-book">
+        <header class="ln-section-banner">
+          <div><span class="ln-kicker">Identidade e habilidades</span><h2>Classes, Proezas e Traços</h2></div>
+          <img src="icons/svg/book.svg" alt="">
+        </header>
+        {{#if pc}}{{> lunatarClassProgression}}{{/if}}
+        {{> lunatarGroup groups.proeza editable=editable}}
+        {{> lunatarGroup groups.traco editable=editable}}
+      </div>
+    </section>
+
+    <section class="tab {{tabs.notes.cssClass}}" data-group="sheet" data-tab="notes">
+      <h2 class="ln-heading">História e anotações</h2>
+      <label class="ln-block">Anotações <textarea name="system.notas" rows="6">{{system.notas}}</textarea></label>
+      <label class="ln-block">Marcas, efeitos e condições <textarea name="system.marcas" rows="3">{{system.marcas}}</textarea></label>
+      {{#if pc}}
+      <h2 class="ln-heading">Progressão e ajustes</h2>
+      <div class="ln-fields cols-3">
+        {{#if nature}}<label>Traço do Naturalista <select name="system.trilhaNatureza"><option value="">Nenhum</option>{{#each nature}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{/if}}
+        <label>Desafios superados <input type="number" min="0" name="system.desafios" value="{{system.desafios}}"></label>
+        {{#if def}}<label>Base de Defesa <select name="system.defAtributo">{{#each def}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{/if}}
+        {{#if ward}}<label>Base de Defesa Mágica <select name="system.wardAtributo">{{#each ward}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{/if}}
+        <label>Ajuste de Saúde máxima <input type="number" name="system.ajuste.saude" value="{{system.ajuste.saude}}"></label>
+        <label>Ajuste de PM máximos <input type="number" name="system.ajuste.magia" value="{{system.ajuste.magia}}"></label>
+        <label>Ajuste de Movimento <input type="number" name="system.ajuste.movimento" value="{{system.ajuste.movimento}}"></label>
+        <label>Ajuste de Defesa <input type="number" name="system.ajuste.defesa" value="{{system.ajuste.defesa}}"></label>
+        <label>Ajuste de Defesa Mágica <input type="number" name="system.ajuste.defesaMagica" value="{{system.ajuste.defesaMagica}}"></label>
+        <label>Ajuste de Proteção <input type="number" name="system.ajuste.protecao" value="{{system.ajuste.protecao}}"></label>
+      </div>
+      {{/if}}
+      <label class="ln-block">Característica de formulação sem classe
+        <select name="system.formulacaoAtributo">{{#each attributeOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+      </label>
+    </section>
+  </div>
+</div>

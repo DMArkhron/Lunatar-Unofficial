@@ -1,0 +1,76 @@
+<div class="ln-scroll"><div class="ln-paper">
+  {{#if flags.formulacao}}
+  {{> lunatarSpellEditor}}
+  {{else}}
+  <h2 class="ln-heading">{{#if editable}}<button type="button" class="ln-icon-picker" data-action="itemIcon" aria-label="Trocar ícone"><img class="ln-item-heading-icon" src="{{img}}" alt=""></button>{{else}}<img class="ln-item-heading-icon" src="{{img}}" alt="">{{/if}} {{label}}</h2>
+  {{#if s.referencia}}<p class="ln-reference-source">{{s.referencia}}</p>{{/if}}
+  {{#if canUse}}<div class="ln-toolbar"><button type="button" class="ln-primary" data-action="use">{{#if flags.classe}}Aplicar classe{{else}}{{#if flags.armadura}}Equipar ou guardar{{else}}Usar item{{/if}}{{/if}}</button></div>{{/if}}
+  {{#if flags.classe}}
+  <dl class="ln-reference-stats">
+    <div><dt>Classificação</dt><dd>{{#if s.trilha}}Classe superior · {{classLabel}}{{else}}Classe básica{{/if}}</dd></div>
+    <div><dt>Nível mínimo</dt><dd>{{s.nivel}}</dd></div>
+    <div><dt>Saúde</dt><dd>{{s.saude}}</dd></div>
+    <div><dt>Defesa</dt><dd>{{s.defesa}}</dd></div>
+    <div><dt>Defesa Mágica</dt><dd>{{s.defesaMagica}}</dd></div>
+    {{#if s.conjuracao}}<div><dt>Conjuração</dt><dd>{{s.conjuracao}}</dd></div>{{/if}}
+    {{#if s.equipamento}}<div><dt>Equipamento inicial</dt><dd>{{s.equipamento}}</dd></div>{{/if}}
+  </dl>
+  {{/if}}
+  {{#if canUse}}{{#unless flags.armadura}}{{#if flags.arma}}<button type="button" data-action="equip">Equipar arma</button>{{/if}}{{#if flags.equipamento}}<button type="button" data-action="equip">Equipar item</button>{{/if}}{{/unless}}{{/if}}
+  <label class="ln-block">Nome <input name="name" required value="{{item.name}}"></label>
+  {{#if flags.arma}}
+  <div class="ln-fields cols-2">
+    <label>Aptidão <select name="system.aptidao">{{#each skillOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label>Fórmula de dano <input name="system.dano" value="{{s.dano}}" placeholder="1d8"></label>
+    <label>Atributo de dano <select name="system.atributoDano">{{#each attributeOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label>Bônus de dano ou valor Perfurante <input type="number" name="system.bonus" value="{{s.bonus}}"></label>
+    <label>Alcance em metros <input type="number" min="0" name="system.alcance" value="{{s.alcance}}"></label>
+    <label>Ações <input type="number" min="0" name="system.custoAcao" value="{{s.custoAcao}}"></label>
+    <label>Bruta <input type="number" min="0" name="system.bruta" value="{{s.bruta}}"></label>
+    <label>Propriedades <input name="system.propriedades" value="{{s.propriedades}}"></label>
+  </div>
+  <div class="ln-checks">
+    <label><input type="checkbox" name="system.adicionarAtributo" {{#if s.adicionarAtributo}}checked{{/if}}> Somar atributo</label>
+    <label><input type="checkbox" name="system.perfurante" {{#if s.perfurante}}checked{{/if}}> Perfurante</label>
+    <label><input type="checkbox" name="system.mortifera" {{#if s.mortifera}}checked{{/if}}> Mortífera</label>
+    <label><input type="checkbox" name="system.versatil" {{#if s.versatil}}checked{{/if}}> Versátil</label>
+    <label><input type="checkbox" name="system.duasMaos" {{#if s.duasMaos}}checked{{/if}}> Duas mãos</label>
+  </div>
+  {{/if}}
+  {{#if flags.armadura}}
+  <div class="ln-checks">
+    <label><input type="checkbox" name="system.escudo" {{#if s.escudo}}checked{{/if}}> É um escudo</label>
+  </div>
+  <div class="ln-fields cols-3">
+    <label>Defesa <input type="number" min="0" name="system.defesa" value="{{s.defesa}}"></label>
+    <label>Proteção <input type="number" min="0" name="system.protecao" value="{{s.protecao}}"></label>
+    <label>Fardos <input type="number" min="0" name="system.fardos" value="{{s.fardos}}"></label>
+  </div>
+  {{/if}}
+  {{#if flags.equipamento}}<label class="ln-block">Quantidade <input type="number" min="0" name="system.quantidade" value="{{s.quantidade}}"></label>{{/if}}
+  {{#if flags.traco}}
+    <div class="ln-fields cols-2">
+      <label>Origem ou fonte <input name="system.origem" value="{{s.origem}}"></label>
+      <label>Custo fixo em ações <input type="number" min="0" name="system.custoAcao" value="{{s.custoAcao}}"></label>
+    </div>
+  {{/if}}
+  {{#if flags.proeza}}
+  <div class="ln-fields cols-2">
+    <label>Fonte <input name="system.fonte" value="{{s.fonte}}"></label>
+    <label>Tipo de ação <select name="system.tipoAcao">{{#each actionTypes}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label>Custo em ações <input type="number" min="0" name="system.custoAcao" value="{{s.custoAcao}}"></label>
+    <label>Usos atuais <input type="number" min="0" name="system.usos" value="{{s.usos}}"></label>
+    <label>Usos máximos (0 = sem contador) <input type="number" min="0" name="system.maxUsos" value="{{s.maxUsos}}"></label>
+  </div>
+  <label class="ln-block">Recarga por cena
+    <select name="system.recarga"><option value="">Manual</option><option value="cena" {{#if sceneRecharge}}selected{{/if}}>Macro de nova cena</option></select>
+  </label>
+  <label class="ln-checks"><input type="checkbox" name="system.recuperar" {{#if s.recuperar}}checked{{/if}}> Recuperar usos no descanso completo</label>
+  {{/if}}
+  {{#if s.descricao}}<div class="ln-reference"><h3>Descrição e efeitos</h3><p>{{s.descricao}}</p></div>{{/if}}
+  {{#if editable}}<details class="ln-block" {{#unless s.descricao}}open{{/unless}}>
+    <summary>Editar descrição</summary>
+    <textarea name="system.descricao" rows="5" aria-label="Descrição e efeitos">{{s.descricao}}</textarea>
+  </details>{{/if}}
+  {{/if}}
+</div></div>

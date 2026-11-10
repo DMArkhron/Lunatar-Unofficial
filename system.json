@@ -1,0 +1,168 @@
+{
+  "id": "lunatar-unofficial",
+  "type": "system",
+  "title": "Lunatar RPG",
+  "description": "Sistema não oficial para o playtest de Lunatar RPG.",
+  "version": "0.2.10",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "media": [],
+  "esmodules": [
+    "src/main.mjs"
+  ],
+  "styles": [
+    "styles/lunatar.css"
+  ],
+  "languages": [
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    },
+    {
+      "lang": "en",
+      "name": "Português (padrão do sistema)",
+      "path": "lang/pt-BR.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "personagem": {
+        "htmlFields": []
+      },
+      "ameaca": {
+        "htmlFields": []
+      }
+    },
+    "Item": {
+      "arma": {},
+      "armadura": {},
+      "equipamento": {},
+      "proeza": {},
+      "traco": {},
+      "formulacao": {},
+      "classe": {}
+    }
+  },
+  "primaryTokenAttribute": "saude",
+  "secondaryTokenAttribute": "magia",
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+  "packs": [
+    {
+      "name": "equipamentos",
+      "label": "Equipamentos",
+      "path": "packs/equipamentos",
+      "type": "Item",
+      "system": "lunatar-unofficial",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "proezas",
+      "label": "Proezas",
+      "path": "packs/proezas",
+      "type": "Item",
+      "system": "lunatar-unofficial",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "tracos",
+      "label": "Traços",
+      "path": "packs/tracos",
+      "type": "Item",
+      "system": "lunatar-unofficial",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "classes",
+      "label": "Classes",
+      "path": "packs/classes",
+      "type": "Item",
+      "system": "lunatar-unofficial",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "macros",
+      "label": "Macros de Lunatar",
+      "path": "packs/macros",
+      "type": "Macro",
+      "system": "lunatar-unofficial",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Lunatar RPG",
+      "sorting": "m",
+      "color": "#705832",
+      "packs": [],
+      "folders": [
+        {
+          "name": "Arsenal",
+          "sorting": "m",
+          "color": "#956126",
+          "packs": [
+            "equipamentos"
+          ],
+          "folders": []
+        },
+        {
+          "name": "Técnicas e Proezas",
+          "sorting": "m",
+          "color": "#983d48",
+          "packs": [
+            "proezas"
+          ],
+          "folders": []
+        },
+        {
+          "name": "Traços e Origens",
+          "sorting": "m",
+          "color": "#277354",
+          "packs": [
+            "tracos"
+          ],
+          "folders": []
+        },
+        {
+          "name": "Linhagens e Classes",
+          "sorting": "m",
+          "color": "#6350a1",
+          "packs": [
+            "classes"
+          ],
+          "folders": []
+        },
+        {
+          "name": "Ferramentas e Macros",
+          "sorting": "m",
+          "color": "#286c98",
+          "packs": [
+            "macros"
+          ],
+          "folders": []
+        }
+      ]
+    }
+  ]
+}

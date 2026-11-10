@@ -1,0 +1,54 @@
+<div class="ln-dialog ln-composer">
+  <header class="ln-compose-heading">
+    <img src="icons/svg/book.svg" alt="">
+    <div><span class="ln-roll-kicker">{{spellClass}} · Oficina de magia</span><h2 data-spell-preview="name">Forma + Palavra</h2></div>
+    <span class="ln-pm-available">{{available}} PM disponíveis</span>
+  </header>
+  <div class="ln-composer-columns">
+    <div class="ln-composer-inputs">
+      <section class="ln-roll-panel">
+        <h3>1. Forma e Palavra</h3>
+        <label>Nome da formulação <input name="name" placeholder="Automático pela combinação"></label>
+        <div class="ln-fields cols-2">
+          <label>Forma <select name="form">{{#each forms}}<option value="{{id}}">{{label}} · {{cost}} PM</option>{{/each}}</select></label>
+          <label>Palavra <select name="word">{{#each words}}<option value="{{id}}">{{label}} · {{cost}} PM</option>{{/each}}</select></label>
+        </div>
+        {{#if superior}}<label hidden>Segunda Palavra <select name="extra" disabled><option value="">Escolha outra Palavra</option>{{#each words}}<option value="{{id}}">{{label}} · {{cost}} PM</option>{{/each}}</select></label>{{/if}}
+      </section>
+      <section class="ln-roll-panel">
+        <div class="ln-composer-section-title"><h3>2. Ampliações</h3><small data-spell-preview="count"></small></div>
+        <div class="ln-amplifications">{{#each amps}}
+          <label title="{{detail}}"><input name="amp-{{id}}" type="checkbox" data-amplification="{{label}}" aria-label="{{label}}. {{cost}} pontos de Reflexo. {{detail}}">
+            <span>{{label}}</span><small>+{{cost}}</small>
+          </label>
+        {{/each}}</div>
+      </section>
+      <section class="ln-roll-panel">
+        <h3>3. Detalhes</h3>
+        <div class="ln-fields cols-2">
+          <label>PM extras <input type="number" name="pm" value="0" min="0" step="1"></label>
+          <label>Duração <input name="duration" placeholder="Instantânea, 2 rodadas…"></label>
+        </div>
+        <div class="ln-checks">
+          <label><input name="attack" type="checkbox"> Forçar Ataque Mágico</label>
+          <label><input name="control" type="checkbox"> Magia de Controle</label>
+        </div>
+        <label>Efeito e condições <textarea name="notes" rows="2" placeholder="Registre condições ou efeitos adicionais"></textarea></label>
+      </section>
+    </div>
+    <section class="ln-roll-panel ln-composer-preview" aria-label="Prévia da formulação">
+      <h3>Prévia</h3>
+      <dl>
+        <div><dt>Custo</dt><dd data-spell-preview="pm">—</dd></div>
+        <div><dt>Dano de Reflexo</dt><dd data-spell-preview="reflex">—</dd></div>
+        <div><dt>Ações</dt><dd data-spell-preview="actions">—</dd></div>
+        <div><dt>Alcance</dt><dd data-spell-preview="range">—</dd></div>
+        <div><dt>Alvos</dt><dd data-spell-preview="targets">—</dd></div>
+        <div><dt>Teste</dt><dd data-spell-preview="test">—</dd></div>
+        <div><dt>Dano</dt><dd data-spell-preview="damage">—</dd></div>
+      </dl>
+      <p data-spell-preview="effect" hidden></p>
+      <p class="ln-composer-error" data-spell-preview="error" aria-live="polite" hidden></p>
+    </section>
+  </div>
+</div>

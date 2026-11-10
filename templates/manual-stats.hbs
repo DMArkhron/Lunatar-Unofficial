@@ -1,0 +1,11 @@
+<div class="ln-dialog ln-roll">
+  <p>Preencha um valor para fixar o total. Deixe em branco para voltar ao cálculo automático, incluindo os ajustes e equipamentos aplicáveis.</p>
+  <div class="ln-fields cols-2">
+    {{#each fields}}
+    <label>{{label}}
+      <input type="number" name="{{key}}" min="{{min}}" step="1" value="{{value}}" placeholder="{{automatic}}">
+      <small>Automático · {{automatic}}</small>
+    </label>
+    {{/each}}
+  </div>
+</div>

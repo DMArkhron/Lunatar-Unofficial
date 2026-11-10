@@ -1,0 +1,34 @@
+<section class="ln-feature-group ln-feature-{{type}}">
+  <header class="ln-feature-header">
+    <div><h3>{{label}}</h3><span class="ln-feature-count">{{items.length}}</span></div>
+    {{#if editable}}{{#if canCreate}}
+    <button type="button" data-action="add" data-kind="{{type}}"><i class="fa-solid fa-plus" aria-hidden="true"></i> Adicionar</button>
+    {{/if}}{{/if}}
+  </header>
+  {{#if items}}
+  <div class="ln-feature-grid">
+    {{#each items}}
+    <article class="ln-feature-card" data-item-id="{{id}}" data-document-class="Item">
+      <div class="ln-feature-name">
+        <img src="{{img}}" alt="" draggable="false">
+        <div><h4>{{name}}</h4>
+          {{#if classRecord}}<small>Nível {{system.nivel}} · {{#if system.trilha}}Classe superior{{else}}Classe básica{{/if}}</small>{{/if}}
+          {{#if feat}}<small>{{system.tipoAcao}}{{#if system.fonte}} · {{system.fonte}}{{/if}}{{#if system.maxUsos}} · {{system.usos}}/{{system.maxUsos}} usos{{/if}}</small>{{/if}}
+          {{#if system.origem}}<small>{{system.origem}}</small>{{/if}}
+        </div>
+      </div>
+      {{#if system.descricao}}<details class="ln-spell-effect"><summary>Ver detalhes</summary><p>{{system.descricao}}</p></details>{{/if}}
+      <div class="ln-feature-controls">
+        {{#if classActive}}<span class="ln-path-status">Ativa</span>
+        {{else}}{{#if classUnavailable}}<span class="ln-path-status ln-path-locked" title="Exige a Classe Básica correspondente e nível 5">Indisponível</span>
+        {{else}}{{#if ../editable}}<button type="button" class="ln-feature-use" data-action="use" data-id="{{id}}">{{#if classRecord}}Escolher classe{{else}}{{action}}{{/if}}</button>{{/if}}{{/if}}{{/if}}
+        <button type="button" data-action="edit" data-id="{{id}}" aria-label="Abrir {{name}}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> {{#if ../editable}}Editar{{else}}Abrir{{/if}}</button>
+        {{#if ../editable}}<button type="button" class="ln-feature-remove" data-action="remove" data-id="{{id}}" aria-label="Remover {{name}}" title="Remover {{name}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}
+      </div>
+    </article>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="ln-feature-empty">{{#if canCreate}}Nenhum registro nesta categoria.{{else}}{{#if editable}}Arraste uma classe do compêndio para anexá-la à ficha.{{else}}Nenhuma classe anexada.{{/if}}{{/if}}</p>
+  {{/if}}
+</section>

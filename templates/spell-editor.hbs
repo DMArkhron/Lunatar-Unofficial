@@ -1,0 +1,72 @@
+<div class="ln-spell-editor" data-spell-editor>
+  <header class="ln-spellbook-header">
+    <div class="ln-spellbook-title">
+      {{#if editable}}<button type="button" class="ln-icon-picker" data-action="itemIcon" aria-label="Trocar ícone"><img src="{{img}}" alt=""></button>{{else}}<img src="{{img}}" alt="">{{/if}}
+      <div><small>Formulação</small><h2>{{item.name}}</h2></div>
+    </div>
+    {{#if canUse}}<button type="button" class="ln-primary" data-action="use"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Conjurar</button>{{/if}}
+  </header>
+  <dl class="ln-spell-metrics" aria-live="polite">
+    <div><dt>Custo total</dt><dd><span data-spell-pm>{{cost}}</span> PM</dd></div>
+    <div><dt>Dano de Reflexo</dt><dd><span data-spell-reflex>{{#if s.reflexo}}{{s.reflexo}}d4{{else}}0{{/if}}</span> PS</dd></div>
+    <div><dt>Ações</dt><dd data-spell-actions>{{s.custoAcao}}</dd></div>
+  </dl>
+  {{#if s.referencia}}<p class="ln-reference-source">{{s.referencia}}</p>{{/if}}
+  {{#if editable}}
+  <section class="ln-spell-panel">
+    <h3><i class="fa-solid fa-feather" aria-hidden="true"></i> Composição</h3>
+    <label>Nome <input name="name" required value="{{item.name}}"></label>
+    <div class="ln-fields cols-2">
+      <label>Forma <input name="system.forma" value="{{s.forma}}"></label>
+      <label>Palavra <input name="system.palavra" value="{{s.palavra}}"></label>
+      <label>Palavra adicional <input name="system.palavraExtra" value="{{s.palavraExtra}}"></label>
+      <label>Ampliações <input name="system.ampliacao" value="{{s.ampliacao}}"></label>
+    </div>
+  </section>
+  <section class="ln-spell-panel">
+    <h3><i class="fa-solid fa-sliders" aria-hidden="true"></i> Custos e ajustes</h3>
+    <div class="ln-spell-numbers">
+      {{#each spellNumbers}}
+      <div>
+        <label for="spell-{{../item.id}}-{{key}}">{{name}}</label>
+        <div class="ln-stepper ln-spell-step">
+          <button type="button" data-action="spellStep" data-step="-1" aria-label="Diminuir {{name}}"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <input id="spell-{{../item.id}}-{{key}}" name="system.{{key}}" type="number" min="0" step="1" {{#if max}}max="{{max}}"{{/if}} value="{{value}}" {{#if pm}}data-pm-part{{/if}}>
+          <button type="button" data-action="spellStep" data-step="1" aria-label="Aumentar {{name}}"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </section>
+  <section class="ln-spell-panel">
+    <h3><i class="fa-solid fa-burst" aria-hidden="true"></i> Aplicação e efeitos</h3>
+    <div class="ln-fields cols-2">
+      <label>Alcance <input name="system.alcance" value="{{s.alcance}}"></label>
+      <label>Alvos <input name="system.alvos" value="{{s.alvos}}"></label>
+      <label>Duração <input name="system.duracao" value="{{s.duracao}}"></label>
+      <label>Fórmula de dano <input name="system.dano" value="{{s.dano}}" placeholder="1d6 + @formulacao"></label>
+    </div>
+    <div class="ln-spell-toggles">
+      <label><input type="checkbox" name="system.ataqueMagico" {{#if s.ataqueMagico}}checked{{/if}}><i class="fa-solid fa-crosshairs" aria-hidden="true"></i> Ataque Mágico</label>
+      <label><input type="checkbox" name="system.controle" {{#if s.controle}}checked{{/if}}><i class="fa-solid fa-link" aria-hidden="true"></i> Magia de Controle</label>
+    </div>
+    <label>Descrição e efeitos <textarea name="system.descricao" rows="4">{{s.descricao}}</textarea></label>
+  </section>
+  {{else}}
+  <section class="ln-spell-panel">
+    <h3>Detalhes</h3>
+    <dl class="ln-reference-stats">
+      <div><dt>Composição</dt><dd>{{s.forma}}{{#if s.palavra}} · {{s.palavra}}{{/if}}{{#if s.palavraExtra}} · {{s.palavraExtra}}{{/if}}</dd></div>
+      {{#if s.ampliacao}}<div><dt>Ampliações</dt><dd>{{s.ampliacao}}</dd></div>{{/if}}
+      {{#if s.alcance}}<div><dt>Alcance</dt><dd>{{s.alcance}}</dd></div>{{/if}}
+      {{#if s.alvos}}<div><dt>Alvos</dt><dd>{{s.alvos}}</dd></div>{{/if}}
+      {{#if s.duracao}}<div><dt>Duração</dt><dd>{{s.duracao}}</dd></div>{{/if}}
+      {{#if s.dano}}<div><dt>Dano</dt><dd>{{s.dano}}</dd></div>{{/if}}
+      {{#if s.trunfos}}<div><dt>Trunfos</dt><dd>{{s.trunfos}}</dd></div>{{/if}}
+      {{#if s.ataqueMagico}}<div><dt>Teste</dt><dd>Ataque Mágico</dd></div>{{/if}}
+      {{#if s.controle}}<div><dt>Tipo</dt><dd>Magia de Controle</dd></div>{{/if}}
+    </dl>
+    {{#if s.descricao}}<p class="ln-spell-description">{{s.descricao}}</p>{{/if}}
+  </section>
+  {{/if}}
+</div>

@@ -1,0 +1,14 @@
+{
+  "TYPES": {
+    "Actor": { "personagem": "Personagem", "ameaca": "Ameaça" },
+    "Item": {
+      "arma": "Arma",
+      "armadura": "Armadura ou escudo",
+      "equipamento": "Equipamento",
+      "proeza": "Proeza",
+      "traco": "Traço",
+      "classe": "Classe",
+      "formulacao": "Formulação"
+    }
+  }
+}

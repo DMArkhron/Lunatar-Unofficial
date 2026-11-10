@@ -1,0 +1,106 @@
+<div class="ln-dialog ln-wizard">
+  <ol class="ln-wizard-progress" aria-label="Etapas da criação">
+    {{#each progress}}
+    <li class="{{#if current}}current{{/if}} {{#if done}}done{{/if}}" {{#if current}}aria-current="step"{{/if}}>
+      <i class="fa-solid {{#if done}}fa-check{{else}}{{icon}}{{/if}}" aria-hidden="true"></i><span>{{name}}</span>
+    </li>
+    {{/each}}
+  </ol>
+  <div class="ln-wizard-body">
+    <h2>{{label}}</h2>
+    {{#unless identity}}<p class="ln-wizard-byline">{{originLabel}} · {{classLabel}} · Nível 1</p>{{/unless}}
+
+    {{#if identity}}
+    <p>Dê um nome ao personagem e escolha de onde ele vem e qual papel terá no grupo.</p>
+    <label class="ln-block">Nome <input name="name" value="{{name}}" maxlength="100" placeholder="Nome do personagem"></label>
+    <div class="ln-fields cols-2">
+      <label>Origem <select name="origin"><option value="">Escolha a origem</option>{{#each origins}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label>Classe Básica <select name="classe"><option value="">Escolha a classe</option>{{#each classes}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    </div>
+    {{/if}}
+
+    {{#if origin}}
+    <div class="ln-wizard-callout"><strong>{{traitName}}</strong><p>{{traitDescription}}</p><small>Movimento base da Origem · {{movement}} m</small></div>
+    <p>A Origem concede +1 em duas Características diferentes. Escolha também a Proeza que o personagem recebe.</p>
+    <div class="ln-fields cols-2">
+      <label>Primeiro bônus de +1 <select name="first">{{#each first}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <label>Segundo bônus de +1 <select name="second">{{#each second}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    </div>
+    <label class="ln-block">Proeza de Origem <select name="feature">{{#each features}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <p class="ln-wizard-detail" data-choice-detail="feature"></p>
+    {{/if}}
+
+    {{#if class}}
+    <p>Escolha a Proeza inicial da Classe Básica. A Classe Superior pode ser escolhida na ficha a partir do nível 5.</p>
+    <label class="ln-block">Proeza de Classe <select name="classFeature">{{#each features}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <p class="ln-wizard-detail" data-choice-detail="classFeature"></p>
+    {{#if extra}}
+    <label class="ln-block">{{extraLabel}} <select name="extra">{{#each extra}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <p class="ln-wizard-detail" data-choice-detail="extra"></p>
+    {{/if}}
+    {{/if}}
+
+    {{#if attributes}}
+    <p>Distribua <strong>4, 3, 2, 2, 1, 1, 1 e 1</strong>. A sugestão para {{classLabel}} prioriza {{priorities}}. O valor final já inclui o bônus de Origem.</p>
+    {{/if}}
+    {{#if skills}}
+    <p>Distribua <strong>2d12, 3d10, 4d8 e 5d6</strong>. As demais Aptidões ficam em d4. A sugestão para {{classLabel}} prioriza {{priorities}}.</p>
+    {{/if}}
+    {{#if attributes}}
+    <div class="ln-wizard-distribution">
+      <p data-budget class="ln-budget" aria-live="polite"></p>
+      <button type="button" data-distribution="suggested">Usar sugestão</button>
+      <button type="button" data-distribution="shuffle"><i class="fa-solid fa-dice" aria-hidden="true"></i> Sortear distribuição</button>
+    </div>
+    <div class="ln-wizard-grid">{{#each stats}}
+      <label class="ln-wizard-field">{{label}}
+        <select name="{{id}}">{{#each values}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+        <small>{{#if bonus}}+1 de Origem · {{/if}}Final <strong data-final-attribute="{{id}}"></strong></small>
+      </label>
+    {{/each}}</div>
+    {{/if}}
+    {{#if skills}}
+    <div class="ln-wizard-distribution">
+      <p data-budget class="ln-budget" aria-live="polite"></p>
+      <button type="button" data-distribution="suggested">Usar sugestão</button>
+      <button type="button" data-distribution="shuffle"><i class="fa-solid fa-dice" aria-hidden="true"></i> Sortear distribuição</button>
+    </div>
+    <div class="ln-wizard-grid">{{#each skills}}
+      <label class="ln-wizard-field">{{label}}
+        <select name="{{id}}">{{#each values}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+      </label>
+    {{/each}}</div>
+    {{#if human}}
+    <div class="ln-wizard-callout">
+      <strong>Traço Humano</strong>
+      <p>Versátil transforma uma Aptidão em d4 em d8 depois da distribuição inicial. Propósito é a opção de Azular.</p>
+      <div class="ln-fields cols-2">
+        <label>Traço <select name="humanTrait">{{#each humanTraits}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+        <label>Aptidão de Versátil <select name="versatil">{{#each versatile}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      </div>
+    </div>
+    {{/if}}
+    {{/if}}
+
+    {{#if review}}
+    <div class="ln-wizard-callout">
+      <strong>{{name}}</strong>
+      <p>{{hp}} PS · {{mp}} PM · Defesa base {{defense}} · Defesa Mágica base {{magicDefense}}</p>
+      {{#if moon}}<p>Signo Lunar · {{moon}}</p>{{else}}
+      <label class="ln-checks"><input type="checkbox" name="lua" {{#if rollMoon}}checked{{/if}}> Sortear o Signo Lunar com 1d12 ao concluir</label>
+      {{/if}}
+    </div>
+    <h3>Características finais</h3>
+    <div class="ln-wizard-grid">{{#each stats}}<div class="ln-wizard-field">{{label}} <strong>{{value}}</strong></div>{{/each}}</div>
+    <h3>Aptidões treinadas</h3>
+    {{#each training}}<p><strong>{{die}}</strong> {{skills}}</p>{{/each}}
+    <h3>Proezas e Traços iniciais</h3>
+    <ul>{{#each items}}<li>{{name}}</li>{{/each}}</ul>
+    <p>O equipamento pode ser adicionado pelo catálogo depois de abrir a ficha.</p>
+    {{#if existing}}<p>Ao aplicar, a ficha volta ao nível 1 e recebe os valores desta criação.</p>{{/if}}
+    {{/if}}
+    <p class="ln-wizard-warning" data-step-message aria-live="polite" hidden>
+      {{#if identity}}Preencha o nome e escolha a Origem e a Classe Básica.{{else}}Complete as escolhas e confira os limites desta etapa.{{/if}}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="ln-dialog ln-roll">
+  <div class="ln-roll-heading">
+    <div class="ln-roll-die">
+      <img data-roll-icon src="systems/lunatar-unofficial/assets/d{{baseDie}}.svg" alt="">
+      <b data-roll-die>d{{baseDie}}</b><small>Dado efetivo</small>
+    </div>
+    <div>
+      <span class="ln-roll-kicker">Teste de Aptidão</span>
+      <h2>{{label}}</h2>
+      <p>{{actor}}{{#if skill}} · {{skill}}{{/if}}</p>
+      <div class="ln-roll-tags">
+        <span data-roll-formula aria-live="polite"></span><span>Base d{{baseDie}}</span>
+        <span>{{attribute}} <b>{{characteristic}}</b></span>
+        {{#if level}}<span>Nível <b>{{level}}</b></span>{{/if}}
+        {{#if magic}}<span><b>{{pm}}</b> PM</span>{{#if reflex}}<span><b>{{reflex}}</b> Reflexo</span>{{/if}}{{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="ln-roll-panel">
+    <h3>Comparação</h3>
+    <div class="ln-fields cols-2">
+      <label>Tipo de teste
+        <select name="tipo"><option value="simples">Simples ou Defesa</option><option value="oposto">Oposto</option></select>
+      </label>
+      <label>Número-Alvo ou Oposição
+        <input type="number" name="na" value="{{target}}" placeholder="Opcional">
+      </label>
+    </div>
+  </div>
+
+  <div class="ln-roll-panel">
+    <h3>Ajustes da rolagem</h3>
+    <div class="ln-fields cols-2">
+      <div class="ln-roll-trump">
+        <label for="ln-roll-trumps">Trunfos</label>
+        <div class="ln-stepper">
+          <button type="button" data-roll-field="trunfo" data-roll-step="-1" aria-label="Remover um Trunfo"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <input id="ln-roll-trumps" type="number" name="trunfo" min="0" max="2" value="{{trumps}}" readonly>
+          <button type="button" data-roll-field="trunfo" data-roll-step="1" aria-label="Adicionar um Trunfo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="ln-roll-burden">
+        <label for="ln-roll-burdens">Fardos adicionais</label>
+        <div class="ln-stepper">
+          <button type="button" data-roll-field="fardo" data-roll-step="-1" aria-label="Remover um Fardo"><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <input id="ln-roll-burdens" type="number" name="fardo" min="0" value="0" readonly>
+          <button type="button" data-roll-field="fardo" data-roll-step="1" aria-label="Adicionar um Fardo"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <label>Modificador adicional <input type="number" name="bonus" value="0"></label>
+      <label>Visibilidade
+        <select name="modo">{{#each modes}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>
+      </label>
+    </div>
+    <p class="ln-roll-sources" data-roll-sources aria-live="polite"></p>
+  </div>
+
+  <div class="ln-roll-options">
+    <label><input type="checkbox" name="gastar" {{#if spend}}checked{{/if}}> Gastar {{cost}} ação(ões) e contar repetição</label>
+    {{#if lunar}}<label><input type="checkbox" name="lunar"> Oferecer rejogada lunar após ver o resultado</label>{{/if}}
+    {{#if damage}}<label><input type="checkbox" name="dano" checked> Rolar dano ao acertar ou sem Número-Alvo</label>{{/if}}
+    {{#if piercing}}<label><input type="checkbox" name="perfurante"> Usar Perfurante</label>{{/if}}
+    {{#if versatile}}<label><input type="checkbox" name="duas"> Empunhar com duas mãos</label>{{/if}}
+  </div>
+</div>
