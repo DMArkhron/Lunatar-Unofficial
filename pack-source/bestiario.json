@@ -1,0 +1,886 @@
+{
+  "actors": [
+    {
+      "_id": "3c67a838f6069a89",
+      "name": "Aranha Gigante",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/aptidao-natureza.svg",
+      "folder": "cbd9be5565749fce",
+      "sort": 100000,
+      "system": {
+        "nivel": 1,
+        "categoria": "Monstro",
+        "concreto": 1,
+        "abstrato": 0,
+        "defesa": 5,
+        "defesaMagica": 4,
+        "movimento": 9,
+        "acoes": {
+          "value": 2,
+          "max": 2
+        },
+        "saude": {
+          "value": 10,
+          "max": 10
+        },
+        "magia": {
+          "value": 0,
+          "max": 0
+        },
+        "protecao": 1,
+        "aptidoes": {
+          "astucia": 0,
+          "atletismo": 2,
+          "ataque": 4,
+          "ataqueMagico": 0,
+          "conducao": 0,
+          "esquiva": 0,
+          "expressao": 0,
+          "furtividade": 3,
+          "iniciativa": 3,
+          "intuicao": 0,
+          "ladroagem": 0,
+          "manipulacao": 0,
+          "misticismo": 0,
+          "natureza": 0,
+          "ocultismo": 0,
+          "pontaria": 0,
+          "resistencia": 2,
+          "razao": 0,
+          "saber": 0,
+          "sobrevivencia": 0,
+          "teurgia": 0
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 73. Direitos: Colucci e New Order Editora.\nGigante: ocupa dois hexágonos; ajuste o token conforme o grid. Pontaria não está listada: usa d4, como as demais Aptidões não especificadas.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "948a7158495e02e0",
+          "name": "Mordida",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Ataque conforme o bloco da criatura.",
+            "referencia": "Playtest de Lunatar, p. 73",
+            "aptidao": "ataque",
+            "dano": "1d6+1",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 0,
+            "bruta": 0,
+            "alcance": 0,
+            "propriedades": "",
+            "custoAcao": 1,
+            "perfurante": false,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "e1bad075568c740f",
+          "name": "Disparar teia",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "Uma vez por rodada, escolha um alvo a até 10 m. Ele testa Esquiva contra a Pontaria da aranha. Em caso de falha, fica Restrito até conseguir se libertar. Resolva o teste oposto e a condição pela mesa.",
+            "referencia": "Playtest de Lunatar, p. 73",
+            "custoAcao": 2,
+            "tipoAcao": "Ação",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        },
+        {
+          "_id": "409358504c8dd9da",
+          "name": "Envenenar",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "Quando a Mordida acerta, o alvo testa Resistência contra o dano. Se falhar, sofre Dano Contínuo por 1d4 rodadas. Aplique a condição e acompanhe a duração pela mesa.",
+            "referencia": "Playtest de Lunatar, p. 73",
+            "custoAcao": 0,
+            "tipoAcao": "Passiva",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        },
+        {
+          "_id": "9bff625a34b76a80",
+          "name": "Gigante",
+          "type": "traco",
+          "img": "systems/lunatar-unofficial/assets/icons/traco.svg",
+          "system": {
+            "descricao": "Ocupa dois hexágonos. Ajuste a ocupação do token ao grid da cena.",
+            "referencia": "Playtest de Lunatar, p. 73",
+            "custoAcao": 0
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Aranha Gigante",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/aptidao-natureza.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    },
+    {
+      "_id": "89f830584ba112c0",
+      "name": "Alpa Combatente",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/aptidao-ataque.svg",
+      "folder": "11d5854cb58a44d6",
+      "sort": 400000,
+      "system": {
+        "nivel": 4,
+        "categoria": "Profanado",
+        "concreto": 4,
+        "abstrato": 4,
+        "defesa": 10,
+        "defesaMagica": 9,
+        "movimento": 7,
+        "acoes": {
+          "value": 3,
+          "max": 3
+        },
+        "saude": {
+          "value": 50,
+          "max": 50
+        },
+        "magia": {
+          "value": 0,
+          "max": 0
+        },
+        "protecao": 3,
+        "aptidoes": {
+          "astucia": 1,
+          "atletismo": 4,
+          "ataque": 5,
+          "ataqueMagico": 2,
+          "conducao": 1,
+          "esquiva": 4,
+          "expressao": 1,
+          "furtividade": 1,
+          "iniciativa": 4,
+          "intuicao": 1,
+          "ladroagem": 1,
+          "manipulacao": 1,
+          "misticismo": 1,
+          "natureza": 1,
+          "ocultismo": 1,
+          "pontaria": 4,
+          "resistencia": 5,
+          "razao": 1,
+          "saber": 1,
+          "sobrevivencia": 1,
+          "teurgia": 1
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nMovimento: voo, 7 m.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "43210651f354c429",
+          "name": "Lâmina",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Ataque conforme o bloco da criatura.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "aptidao": "ataque",
+            "dano": "1d12+4",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 0,
+            "bruta": 0,
+            "alcance": 0,
+            "propriedades": "",
+            "custoAcao": 1,
+            "perfurante": false,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "b7794b6dd808925a",
+          "name": "Balestra",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Ataque conforme o bloco da criatura.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "aptidao": "pontaria",
+            "dano": "1d8+4",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 0,
+            "bruta": 0,
+            "alcance": 9,
+            "propriedades": "",
+            "custoAcao": 1,
+            "perfurante": false,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "23e96e71f8c5f475",
+          "name": "Golpe Perigoso",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "Uma vez por rodada, o Alpa permite que o ataque do alvo o atinja e pode reagir com um ataque de Lâmina. Após publicar a proeza, use o botão Atacar da Lâmina.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "custoAcao": 0,
+            "tipoAcao": "Reação",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        },
+        {
+          "_id": "625548046a703d62",
+          "name": "Voo",
+          "type": "traco",
+          "img": "systems/lunatar-unofficial/assets/icons/traco.svg",
+          "system": {
+            "descricao": "Movimento de voo: 7 m.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "custoAcao": 0
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Alpa Combatente",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/aptidao-ataque.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    },
+    {
+      "_id": "d2a3f277ee6b4ce8",
+      "name": "Conjurador",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/aptidao-misticismo.svg",
+      "folder": "a6624f76c694c554",
+      "sort": 300000,
+      "system": {
+        "nivel": 3,
+        "categoria": "Humanoide",
+        "concreto": 1,
+        "abstrato": 4,
+        "defesa": 8,
+        "defesaMagica": 11,
+        "movimento": 9,
+        "acoes": {
+          "value": 3,
+          "max": 3
+        },
+        "saude": {
+          "value": 30,
+          "max": 30
+        },
+        "magia": {
+          "value": 19,
+          "max": 19
+        },
+        "protecao": 1,
+        "aptidoes": {
+          "astucia": 0,
+          "atletismo": 0,
+          "ataque": 1,
+          "ataqueMagico": 4,
+          "conducao": 0,
+          "esquiva": 2,
+          "expressao": 0,
+          "furtividade": 0,
+          "iniciativa": 3,
+          "intuicao": 2,
+          "ladroagem": 0,
+          "manipulacao": 0,
+          "misticismo": 4,
+          "natureza": 0,
+          "ocultismo": 0,
+          "pontaria": 3,
+          "resistencia": 0,
+          "razao": 0,
+          "saber": 0,
+          "sobrevivencia": 0,
+          "teurgia": 0
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nEstudioso da magia que prefere combater à distância e planejar suas ações.\nFormas: Cone, Disparo, Toque. Palavras: Implosão, Elemento, Energia. A Rajada Mística causa apenas 1d6, sem somar o modificador abstrato.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "69cf464f29e26f07",
+          "name": "Rajada Mística",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Ataque conforme o bloco da criatura.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "aptidao": "ataqueMagico",
+            "dano": "1d6",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 0,
+            "bruta": 0,
+            "alcance": 0,
+            "propriedades": "",
+            "custoAcao": 1,
+            "perfurante": false,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "b84b407bf640ecc1",
+          "name": "Formas e Palavras conhecidas",
+          "type": "traco",
+          "img": "systems/lunatar-unofficial/assets/icons/traco.svg",
+          "system": {
+            "descricao": "Formas: Cone, Disparo e Toque. Palavras: Implosão, Elemento e Energia. Use o compositor de Formulações para montar as combinações; o bloco não determina Formulações prontas.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "custoAcao": 0
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Conjurador",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/aptidao-misticismo.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    },
+    {
+      "_id": "97fb1f6074b0ed55",
+      "name": "Devorado",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/aptidao-ocultismo.svg",
+      "folder": "11d5854cb58a44d6",
+      "sort": 100000,
+      "system": {
+        "nivel": 1,
+        "categoria": "Profanado",
+        "concreto": 1,
+        "abstrato": 0,
+        "defesa": 5,
+        "defesaMagica": 6,
+        "movimento": 4,
+        "acoes": {
+          "value": 2,
+          "max": 2
+        },
+        "saude": {
+          "value": 10,
+          "max": 10
+        },
+        "magia": {
+          "value": 0,
+          "max": 0
+        },
+        "protecao": 1,
+        "aptidoes": {
+          "astucia": 0,
+          "atletismo": 0,
+          "ataque": 3,
+          "ataqueMagico": 0,
+          "conducao": 0,
+          "esquiva": 2,
+          "expressao": 0,
+          "furtividade": 0,
+          "iniciativa": 2,
+          "intuicao": 0,
+          "ladroagem": 0,
+          "manipulacao": 0,
+          "misticismo": 0,
+          "natureza": 0,
+          "ocultismo": 0,
+          "pontaria": 2,
+          "resistencia": 4,
+          "razao": 0,
+          "saber": 0,
+          "sobrevivencia": 0,
+          "teurgia": 0
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nPerfurante 1: opção disponível na janela de ataque; causa os dados de dano +1 e ignora a Proteção.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "d9d453d690cfff3c",
+          "name": "Garras Sombrias",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Perfurante 1: ao escolher o dano perfurante na janela de ataque, ignore a Proteção e cause os dados de dano +1 (playtest, p. 57). Aplique esse dano como dano direto na ficha do alvo.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "aptidao": "ataque",
+            "dano": "1d6",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 1,
+            "bruta": 0,
+            "alcance": 0,
+            "propriedades": "Perfurante 1",
+            "custoAcao": 1,
+            "perfurante": true,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Devorado",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/aptidao-ocultismo.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    },
+    {
+      "_id": "fcde39efca905d6e",
+      "name": "Guardião da Culpa",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/armadura.svg",
+      "folder": "e8efc3e97d9137be",
+      "sort": 600000,
+      "system": {
+        "nivel": 6,
+        "categoria": "Morto-vivo, Chefão",
+        "concreto": 7,
+        "abstrato": 5,
+        "defesa": 10,
+        "defesaMagica": 10,
+        "movimento": 7,
+        "acoes": {
+          "value": 3,
+          "max": 3
+        },
+        "saude": {
+          "value": 110,
+          "max": 110
+        },
+        "magia": {
+          "value": 0,
+          "max": 0
+        },
+        "protecao": 5,
+        "aptidoes": {
+          "astucia": 1,
+          "atletismo": 2,
+          "ataque": 5,
+          "ataqueMagico": 1,
+          "conducao": 1,
+          "esquiva": 4,
+          "expressao": 1,
+          "furtividade": 1,
+          "iniciativa": 4,
+          "intuicao": 1,
+          "ladroagem": 1,
+          "manipulacao": 1,
+          "misticismo": 1,
+          "natureza": 1,
+          "ocultismo": 1,
+          "pontaria": 1,
+          "resistencia": 5,
+          "razao": 1,
+          "saber": 1,
+          "sobrevivencia": 1,
+          "teurgia": 1
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nDivergência da fonte: Resistência aparece como d16 e d10 no mesmo bloco. Esta ficha usa d16 (primeira ocorrência). O mestre pode alterar para d10 se preferir. O PDF não identifica outra Aptidão para substituir a entrada duplicada.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "92fe9ee122303dd4",
+          "name": "Espada do pesar",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Ataque conforme o bloco da criatura.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "aptidao": "ataque",
+            "dano": "2d10+7",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 0,
+            "bruta": 0,
+            "alcance": 0,
+            "propriedades": "",
+            "custoAcao": 1,
+            "perfurante": false,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "f6c3bbf2897c44f5",
+          "name": "Poder de chefão",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "Ao término do turno de cada personagem, o Guardião pode realizar uma ação. Controle essas ações extras pela mesa.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "custoAcao": 0,
+            "tipoAcao": "Passiva",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        },
+        {
+          "_id": "65f0258f74e7b9e6",
+          "name": "Culpa Corrosiva",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "No primeiro turno do Guardião, uma aura alcança todos os alvos em um raio de 6 m. Cada alvo testa Resistência contra NA 12. Quem falhar fica Atordoado até o início do próximo turno do Guardião. Aplique as condições pela mesa.",
+            "referencia": "Playtest de Lunatar, p. 74",
+            "custoAcao": 0,
+            "tipoAcao": "Passiva",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Guardião da Culpa",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/armadura.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    },
+    {
+      "_id": "3f0231ac8b3b3a1f",
+      "name": "Mercenário",
+      "type": "ameaca",
+      "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+      "folder": "a6624f76c694c554",
+      "sort": 300000,
+      "system": {
+        "nivel": 3,
+        "categoria": "Humanoide",
+        "concreto": 3,
+        "abstrato": 1,
+        "defesa": 9,
+        "defesaMagica": 8,
+        "movimento": 9,
+        "acoes": {
+          "value": 3,
+          "max": 3
+        },
+        "saude": {
+          "value": 25,
+          "max": 25
+        },
+        "magia": {
+          "value": 0,
+          "max": 0
+        },
+        "protecao": 3,
+        "aptidoes": {
+          "astucia": 1,
+          "atletismo": 2,
+          "ataque": 4,
+          "ataqueMagico": 1,
+          "conducao": 1,
+          "esquiva": 1,
+          "expressao": 1,
+          "furtividade": 1,
+          "iniciativa": 4,
+          "intuicao": 2,
+          "ladroagem": 1,
+          "manipulacao": 1,
+          "misticismo": 1,
+          "natureza": 1,
+          "ocultismo": 1,
+          "pontaria": 3,
+          "resistencia": 3,
+          "razao": 1,
+          "saber": 1,
+          "sobrevivencia": 1,
+          "teurgia": 1
+        },
+        "formulacaoAtributo": "inteligencia",
+        "notas": "Fonte: Playtest de Lunatar, p. 75. Direitos: Colucci e New Order Editora.\nPerfurante 1: opção disponível na janela de ataque; causa os dados de dano +1 e ignora a Proteção.",
+        "marcas": "",
+        "turno": "",
+        "repeticoes": {},
+        "equipagem": {
+          "configurada": false,
+          "esquerda": "",
+          "direita": "",
+          "corpo": ""
+        }
+      },
+      "items": [
+        {
+          "_id": "65c6fe1c767f6bbd",
+          "name": "Lança",
+          "type": "arma",
+          "img": "systems/lunatar-unofficial/assets/icons/arma.svg",
+          "system": {
+            "descricao": "Perfurante 1: ao escolher o dano perfurante na janela de ataque, ignore a Proteção e cause os dados de dano +1 (playtest, p. 57). Aplique esse dano como dano direto na ficha do alvo.",
+            "referencia": "Playtest de Lunatar, p. 75",
+            "aptidao": "ataque",
+            "dano": "2d6",
+            "atributoDano": "forca",
+            "adicionarAtributo": false,
+            "bonus": 1,
+            "bruta": 2,
+            "alcance": 0,
+            "propriedades": "Perfurante 1",
+            "custoAcao": 1,
+            "perfurante": true,
+            "duasMaos": false,
+            "mortifera": false,
+            "versatil": false
+          },
+          "effects": []
+        },
+        {
+          "_id": "d6ac82c85e9291d1",
+          "name": "Batalhão Unido",
+          "type": "proeza",
+          "img": "systems/lunatar-unofficial/assets/icons/proeza.svg",
+          "system": {
+            "descricao": "Enquanto estiver a até 1 m de um aliado, recebe 1 Trunfo na primeira jogada de Ataque. Marque o Trunfo na janela de rolagem quando a condição for atendida.",
+            "referencia": "Playtest de Lunatar, p. 75",
+            "custoAcao": 0,
+            "tipoAcao": "Passiva",
+            "usos": 0,
+            "maxUsos": 0,
+            "recuperar": false,
+            "fonte": "Bestiário",
+            "recarga": ""
+          },
+          "effects": []
+        }
+      ],
+      "effects": [],
+      "ownership": {
+        "default": 0
+      },
+      "prototypeToken": {
+        "name": "Mercenário",
+        "actorLink": false,
+        "disposition": -1,
+        "texture": {
+          "src": "systems/lunatar-unofficial/assets/icons/arma.svg"
+        },
+        "width": 1,
+        "height": 1,
+        "bar1": {
+          "attribute": "saude"
+        },
+        "bar2": {
+          "attribute": "magia"
+        },
+        "displayBars": 20,
+        "displayName": 20
+      }
+    }
+  ],
+  "folders": [
+    {
+      "_id": "cbd9be5565749fce",
+      "name": "Monstro",
+      "type": "Actor",
+      "folder": null,
+      "sorting": "a",
+      "color": "#5c7542",
+      "sort": 0,
+      "flags": {}
+    },
+    {
+      "_id": "11d5854cb58a44d6",
+      "name": "Profanado",
+      "type": "Actor",
+      "folder": null,
+      "sorting": "a",
+      "color": "#843d56",
+      "sort": 100000,
+      "flags": {}
+    },
+    {
+      "_id": "a6624f76c694c554",
+      "name": "Humanoide",
+      "type": "Actor",
+      "folder": null,
+      "sorting": "a",
+      "color": "#8a6b3a",
+      "sort": 200000,
+      "flags": {}
+    },
+    {
+      "_id": "e8efc3e97d9137be",
+      "name": "Morto-vivo",
+      "type": "Actor",
+      "folder": null,
+      "sorting": "a",
+      "color": "#5d547e",
+      "sort": 300000,
+      "flags": {}
+    }
+  ]
+}
