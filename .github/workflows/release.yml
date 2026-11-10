@@ -1,0 +1,52 @@
+name: Publicar sistema Foundry
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - system.json
+      - .github/workflows/release.yml
+permissions:
+  contents: write
+concurrency:
+  group: lunatar-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar e empacotar
+        run: |
+          python3 - <<'PY'
+          import json, pathlib, zipfile
+          root = pathlib.Path('.')
+          data = json.loads((root / 'system.json').read_text())
+          assert data['id'] == 'lunatar-unofficial'
+          version = data['version']
+          assert all(c.isdigit() or c == '.' for c in version)
+          assert data['download'].endswith('/v' + version + '/lunatar-unofficial.zip')
+          for entry in data['esmodules'] + data['styles'] + [x['path'] for x in data['languages']] + [x['path'] for x in data['packs']]:
+              assert (root / entry).exists(), entry
+          with zipfile.ZipFile('lunatar-unofficial.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+              for name in ['system.json', 'README.md', 'assets', 'lang', 'packs', 'src', 'styles', 'templates']:
+                  path = root / name
+                  files = sorted(path.rglob('*')) if path.is_dir() else [path]
+                  for file in files:
+                      if file.is_file():
+                          archive.write(file, file.as_posix())
+          with zipfile.ZipFile('lunatar-unofficial.zip') as archive:
+              assert archive.testzip() is None
+              assert 'system.json' in archive.namelist()
+          PY
+      - name: Publicar versão
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="$(python3 -c 'import json; print(json.load(open("system.json"))["version"])')"
+          TAG="v$VERSION"
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::A versão $TAG já existe. Aumente version em system.json para publicar outra versão."
+            exit 1
+          fi
+          gh release create "$TAG" system.json lunatar-unofficial.zip --target "$GITHUB_SHA" --title "Lunatar RPG $TAG" --notes "Implementação não oficial para Foundry VTT 13 e 14. Direitos de Lunatar: Colucci e New Order Editora. Instale usando o manifesto system.json desta release." --latest
