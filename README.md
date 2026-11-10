@@ -38,8 +38,8 @@ O pacote funciona como **sistema de jogo próprio** do Foundry e não exige outr
 
 ### Instalação manual
 
-1. Baixe o ZIP do sistema e feche o Foundry.
-2. Extraia os arquivos e coloque a pasta `lunatar-unofficial` dentro de `Data/systems`, no diretório de dados do Foundry.
+1. Baixe `lunatar-unofficial.zip` na [Release mais recente](https://github.com/DMArkhron/Lunatar-Unofficial/releases/latest) e feche o Foundry.
+2. Crie a pasta `Data/systems/lunatar-unofficial`, no diretório de dados do Foundry, e extraia o conteúdo do ZIP diretamente nela.
 3. Confira se o manifesto está em `Data/systems/lunatar-unofficial/system.json`, sem uma pasta extra entre eles.
 4. Abra o Foundry, crie um mundo e selecione **Lunatar RPG** como sistema de jogo.
 5. Inicie o mundo para acessar as fichas, os compêndios e o gerador.
@@ -48,7 +48,13 @@ Se baixar o código pelo GitHub, renomeie a pasta extraída para `lunatar-unoffi
 
 ### Instalação por manifesto
 
-A instalação por URL depende da publicação do manifesto e do ZIP para download. Nesta versão, utilize o procedimento manual acima.
+1. Na tela inicial do Foundry, abra **Sistemas de Jogo → Instalar Sistema**.
+2. Cole o endereço abaixo no campo **Manifest URL**.
+3. Clique em **Instalar** e crie um mundo com **Lunatar RPG**.
+
+```text
+https://github.com/DMArkhron/Lunatar-Unofficial/releases/latest/download/system.json
+```
 
 ## 🎮 Primeiros passos
 
