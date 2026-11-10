@@ -95,6 +95,6 @@ Encontrou um erro ou tem uma ideia de melhoria? Abra uma **Issue** no repositór
 
 **Implementação não oficial para Foundry VTT desenvolvida por DM Arkhron.**
 
-**Lunatar RPG e sua obra original pertencem a Colucci e à New Order Editora.** Todos os direitos sobre a obra original, seus textos, regras, ilustrações e materiais relacionados permanecem com seus respectivos titulares.
+**Lunatar RPG e sua obra original pertencem a Colucci, Smzinho e à New Order Editora.** Todos os direitos sobre a obra original, seus textos, regras, ilustrações e materiais relacionados permanecem com seus respectivos titulares.
 
 Este projeto é uma adaptação independente para uso no Foundry VTT e não é uma publicação oficial de Colucci ou da New Order Editora. Materiais de terceiros conservam seus próprios direitos. O projeto não substitui o material original de Lunatar RPG.
