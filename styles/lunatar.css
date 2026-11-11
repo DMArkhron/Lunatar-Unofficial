@@ -604,3 +604,8 @@
 @media (max-width: 600px) {
   .lunatar .ln-brand img.ln-official-logo { display: block; width: 180px; }
 }
+
+/* Marca recortada sobre a pausa, sem placa ou título adicional. */
+#pause.lunatar-pause { background: transparent; box-shadow: none; border: 0; }
+#pause.lunatar-pause img { width: 320px; max-width: 70vw; margin: 0 auto; filter: invert(1) drop-shadow(0 2px 8px #000a); box-shadow: none; border-radius: 0; }
+#pause.lunatar-pause figcaption, #pause.lunatar-pause h3, #pause.lunatar-pause p { display: none; }
