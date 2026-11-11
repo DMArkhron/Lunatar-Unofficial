@@ -7,7 +7,7 @@ export function brandPause(app, element) {
   const image = root?.querySelector("img");
   if (!image) return;
   root.classList.add("lunatar-pause");
-  image.src = LOGO;
+  image.src = `${PATH}/assets/logo-transparent.png`;
   image.alt = "Lunatar RPG";
 }
 
