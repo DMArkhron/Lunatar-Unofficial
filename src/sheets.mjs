@@ -192,7 +192,7 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
       }
     }
   };
-  static PARTS = { sheet: { template: tpl("actor"), scrollable: [".ln-scroll"] } };
+  static PARTS = { sheet: { template: tpl("actor"), scrollable: [""] } };
   static TABS = { sheet: { initial: "base", tabs: [
     { id: "base", label: "Ficha" }, { id: "inventory", label: "Equipamentos" },
     { id: "magic", label: "Formulações" }, { id: "features", label: "Classe, Proezas e Traços" },
@@ -399,7 +399,7 @@ export class LunatarItemSheet extends api.HandlebarsApplicationMixin(sheets.Item
       }
     })
   };
-  static PARTS = { sheet: { template: tpl("item"), scrollable: [".ln-scroll"] } };
+  static PARTS = { sheet: { template: tpl("item"), scrollable: [""] } };
 
   _onRender(context, options) {
     super._onRender(context, options);
