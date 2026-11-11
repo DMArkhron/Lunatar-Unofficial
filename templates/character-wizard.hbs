@@ -6,6 +6,7 @@
     </li>
     {{/each}}
   </ol>
+  <div class="ln-wizard-track" aria-hidden="true"><span style="width: {{progressPercent}}%"></span></div>
   <div class="ln-wizard-body">
     <h2>{{label}}</h2>
     {{#unless identity}}<p class="ln-wizard-byline">{{originLabel}} · {{classLabel}} · Nível 1</p>{{/unless}}
@@ -13,9 +14,9 @@
     {{#if identity}}
     <p>Dê um nome ao personagem e escolha de onde ele vem e qual papel terá no grupo.</p>
     <label class="ln-block">Nome <input name="name" value="{{name}}" maxlength="100" placeholder="Nome do personagem"></label>
-    <div class="ln-fields cols-2">
-      <label>Origem <select name="origin"><option value="">Escolha a origem</option>{{#each origins}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
-      <label>Classe Básica <select name="classe"><option value="">Escolha a classe</option>{{#each classes}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <div class="ln-wizard-choices">
+      <fieldset><legend><i class="fa-solid fa-compass" aria-hidden="true"></i> Origem</legend><div class="ln-wizard-options">{{#each origins}}<label><input type="radio" name="origin" value="{{id}}" {{#if selected}}checked{{/if}}><span>{{label}}</span></label>{{/each}}</div></fieldset>
+      <fieldset><legend><i class="fa-solid fa-book-open" aria-hidden="true"></i> Classe básica</legend><div class="ln-wizard-options">{{#each classes}}<label><input type="radio" name="classe" value="{{id}}" {{#if selected}}checked{{/if}}><span>{{label}}</span></label>{{/each}}</div></fieldset>
     </div>
     {{/if}}
 

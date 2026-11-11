@@ -98,12 +98,13 @@ class Equipamento extends Base {
   static defineSchema() { return { ...itemCommon(), quantidade: number(1) }; }
 }
 class Traco extends Base {
-  static defineSchema() { return { ...itemCommon(), origem: str(), custoAcao: number() }; }
+  static defineSchema() { return { ...itemCommon(), origem: str(), custoAcao: number(), dano: str(), aptidao: str("ataque") }; }
 }
 class Proeza extends Base {
   static defineSchema() {
     return { ...itemCommon(), custoAcao: number(1), tipoAcao: str("Ação"),
-      usos: number(), maxUsos: number(), recuperar: bool(), fonte: str(), recarga: str() };
+      usos: number(), maxUsos: number(), recuperar: bool(), fonte: str(), recarga: str(),
+      dano: str(), aptidao: str("ataque") };
   }
 }
 class Classe extends Base {

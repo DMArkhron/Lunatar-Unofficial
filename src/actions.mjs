@@ -1,7 +1,7 @@
 import { equipmentSlots, equippedAt } from "./equipment.mjs";
 import { SYSTEM, PATH, SCALE, ATTRIBUTES, CONCRETE, SKILLS, CLASSES, MOONS, clamp, outcome, testSpec, rankLimit } from "./rules.mjs";
 
-import { postRoll, postCard, chatModeOptions, defaultChatMode, publicChatMode } from "./chat.mjs";
+import { postRoll, postRollBundle, postCard, chatModeOptions, defaultChatMode, publicChatMode } from "./chat.mjs";
 
 const { Roll } = foundry.dice;
 
@@ -90,7 +90,8 @@ function configureRollPreview(dialog, getParameters) {
   const refresh = () => {
     const { spec, automatic, agile } = getParameters(Object.fromEntries(new FormData(form)));
     die.textContent = `d${spec.die}`;
-    icon.src = `${PATH}/assets/d${spec.die}.svg`;
+    icon.src = [4, 6, 8, 10, 12, 20].includes(spec.die)
+      ? `icons/dice/d${spec.die}black.svg` : `${PATH}/assets/d${spec.die}.svg`;
     formula.textContent = `1d${spec.die} ${spec.mod < 0 ? "−" : "+"} ${Math.abs(spec.mod)}`;
     const notes = automatic.map(([value, label]) => `${label} ${value}`);
     if (agile) notes.push("Ágil −2");
@@ -117,9 +118,10 @@ export async function rollTest(actor, skill, item = null) {
   const s = item?.system;
   const magic = item?.type === "formulacao";
   const weapon = item?.type === "arma";
+  const feature = ["proeza", "traco"].includes(item?.type);
   const targetActors = [...game.user.targets];
   const targetActor = targetActors.length === 1 ? targetActors[0].actor : null;
-  const target = targetActor && (weapon || (magic && s.ataqueMagico))
+  const target = targetActor && (weapon || feature || (magic && s.ataqueMagico))
     ? targetActor.system[magic ? "defesaMagica" : "defesa"] : "";
   const preferred = attributeFor(actor, skill);
   const attribute = weapon && s.propriedades.includes("Elegante") && actorModifier(actor, "destreza") >= 3
@@ -147,6 +149,7 @@ export async function rollTest(actor, skill, item = null) {
       throw new Error("Preencha a Forma e a Palavra, ou registre o dano de uma Forma que dispensa Palavra.");
     }
     if (pm > a.magia.value) throw new Error("PM insuficientes.");
+    if (feature && s.maxUsos && !s.usos) throw new Error("Não há usos disponíveis.");
     if (cost > a.acoes.value) throw new Error("Ações insuficientes.");
     if (data.lunar && !a.dadoLunar) throw new Error("Nenhum Dado Lunar disponível.");
     const na = data.na === "" ? null : Number(data.na);
@@ -171,10 +174,16 @@ export async function rollTest(actor, skill, item = null) {
     if (pm) updates["system.magia.value"] = a.magia.value - pm;
     if (reflex) updates["system.saude.value"] = Math.max(0, a.saude.value - reflex.total);
     if (Object.keys(updates).length) await actor.update(updates);
-    const metrics = result ? [
+    if (feature && s.maxUsos) await item.update({ "system.usos": s.usos - 1 });
+    const metrics = [
+      { label: magic ? "Teste de magia" : weapon ? "Acerto" : "Teste", value: roll.total },
+      ...(damageRoll ? [{ label: damage.label, value: damageRoll.total }] : []),
+      ...(reflex ? [{ label: "Reflexo", value: reflex.total }] : []),
+      ...(result ? [
       { label: data.tipo === "oposto" ? "Oposição" : "Número-Alvo", value: na },
       { label: "Impulso", value: result.impulso }, { label: "Recuo", value: result.recuo }
-    ] : [];
+      ] : [])
+    ];
     const details = [];
     if (automatic.length) details.push("Fardos automáticos · " + automatic.map(([value, source]) => `${source} ${value}`).join(" · "));
     if (useLunar) details.push(`Dado Lunar · total anterior ${original}`);
@@ -183,15 +192,15 @@ export async function rollTest(actor, skill, item = null) {
       details.push([s.forma, ...words, s.ampliacao].filter(Boolean).join(" + ") + ` · ${pm} PM`);
       if (s.descricao) details.push(s.descricao);
     }
-    await postRoll(actor, roll, {
-      kind: magic ? "spell" : weapon ? "attack" : "skill", title: label,
+    await postRollBundle(actor, [
+      { roll, label: magic ? "Teste de magia" : weapon ? "Acerto" : "Teste" },
+      ...(damageRoll ? [{ roll: damageRoll, label: damage.label }] : []),
+      ...(reflex ? [{ roll: reflex, label: "Reflexo · dano ao conjurador" }] : [])
+    ], {
+      kind: magic ? "spell" : weapon ? "attack" : feature ? (item.type === "traco" ? "trait" : "feat") : "skill", title: label,
       subtitle: item ? `${SKILLS[skill][0]} · ${ATTRIBUTES[attribute]}` : ATTRIBUTES[attribute],
       status: result ? (result.success ? "Sucesso" : "Falha") : "Sem Número-Alvo",
       ...(result ? { success: result.success } : {}), metrics, detail: details.join("\n")
-    }, mode);
-    if (damageRoll) await postRoll(actor, damageRoll, { kind: "damage", title: label, subtitle: damage.label }, mode);
-    if (reflex) await postRoll(actor, reflex, {
-      kind: "reflex", title: label, subtitle: "Dano direto ao conjurador · ignora Proteção"
     }, mode);
     return roll;
   });
@@ -199,6 +208,7 @@ export async function rollTest(actor, skill, item = null) {
 
 export async function useFeature(actor, item) {
   const s = item.system;
+  if (s.dano?.trim() && ["proeza", "traco"].includes(item.type)) return rollTest(actor, s.aptidao || "ataque", item);
   return serialize(actor, async () => {
     const costs = item.type === "traco" || (item.type === "proeza"
       && ["Ação", "Reação", "Ação ou Reação", "Ação e Reação"].includes(s.tipoAcao));

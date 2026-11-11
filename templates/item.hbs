@@ -53,6 +53,8 @@
       <label>Origem ou fonte <input name="system.origem" value="{{s.origem}}"></label>
       <label>Custo fixo em ações <input type="number" min="0" name="system.custoAcao" value="{{s.custoAcao}}"></label>
     </div>
+    <label>Aptidão do teste <select name="system.aptidao">{{#each skillOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    <label>Fórmula de dano (opcional) <input name="system.dano" value="{{s.dano}}" placeholder="1d6 + 2"></label>
   {{/if}}
   {{#if flags.proeza}}
   <div class="ln-fields cols-2">
@@ -62,6 +64,8 @@
     <label>Usos atuais <input type="number" min="0" name="system.usos" value="{{s.usos}}"></label>
     <label>Usos máximos (0 = sem contador) <input type="number" min="0" name="system.maxUsos" value="{{s.maxUsos}}"></label>
   </div>
+  <label>Aptidão do teste <select name="system.aptidao">{{#each skillOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+  <label>Fórmula de dano (opcional) <input name="system.dano" value="{{s.dano}}" placeholder="1d6 + 2"></label>
   <label class="ln-block">Recarga por cena
     <select name="system.recarga"><option value="">Manual</option><option value="cena" {{#if sceneRecharge}}selected{{/if}}>Macro de nova cena</option></select>
   </label>

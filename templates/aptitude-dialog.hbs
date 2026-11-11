@@ -10,7 +10,7 @@
       {{#each ranks}}
       <label class="{{#if locked}}ln-aptitude-rank-locked{{/if}}">
         <input type="radio" name="rank" value="{{rank}}" {{#if selected}}checked{{/if}} {{#if locked}}disabled{{/if}}>
-        <img src="systems/lunatar-unofficial/assets/d{{die}}.svg" alt="">
+        <img src="{{icon}}" alt="">
         <strong>d{{die}}</strong>
         <small>{{#if locked}}Bloqueado{{else}}Grau {{rank}}{{/if}}</small>
       </label>

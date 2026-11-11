@@ -116,7 +116,12 @@ function bindStep(dialog, step, identity, suggested) {
     const counter = root.querySelector("[data-budget]");
     if (counter) {
       const rows = step === "attributes" ? statBudget(values) : skillBudget(values);
-      counter.textContent = rows.map(({ label, used, max }) => `${label} ${used}/${max}`).join(" · ");
+      counter.replaceChildren(...rows.map(({ label, used, max }) => {
+        const chip = document.createElement("span");
+        chip.className = `ln-budget-chip ${used === max ? "complete" : used > max ? "over" : ""}`;
+        chip.textContent = `${label}  ${used}/${max}`;
+        return chip;
+      }));
       counter.classList.toggle("ln-invalid", !complete(rows));
     }
     for (const output of root.querySelectorAll("[data-final-attribute]")) {
@@ -251,7 +256,8 @@ async function generate(actor) {
     const [step, label] = stages[index];
     const { context, suggested } = stageContext(step, draft, actor);
     const content = await foundry.applications.handlebars.renderTemplate(`${PATH}/templates/character-wizard.hbs`, {
-      ...context, label, progress: stages.map(([, name, icon], i) => ({ name, icon, current: i === index, done: i < index }))
+      ...context, label, progressPercent: Math.round(((index + 1) / stages.length) * 100),
+      progress: stages.map(([, name, icon], i) => ({ name, icon, current: i === index, done: i < index }))
     });
     const read = direction => (_event, button) => ({ direction, values: Object.fromEntries(new FormData(button.form)) });
     const buttons = [];

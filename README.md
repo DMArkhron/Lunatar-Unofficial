@@ -114,3 +114,9 @@ Para gerar o compêndio a partir do código-fonte, instale `@foundryvtt/foundryv
 A versão 0.2.13 usa o PNG original de Lunatar na ficha, na pausa e na apresentação do sistema. Na primeira entrada de um mestre após a atualização, o sistema aplica a imagem como fundo do mundo pelo formulário nativo do Foundry. A imagem anterior fica registrada na configuração interna `previousWorldCover`; alterações posteriores da capa são preservadas.
 
 O arquivo fica em `systems/lunatar-unofficial/assets/logo.png` e também está disponível para download na Release. Se a configuração automática não for aceita pelo Foundry, use esse caminho em **Editar Mundo → Imagem de fundo**. As imagens mantêm os direitos de Colucci e New Order Editora.
+
+## 🎲 Dados e interface
+
+As Aptidões usam os SVGs nativos de dados do Foundry, como o módulo [Dice Tray](https://github.com/mclemente/fvtt-dice-tray). O ícone d16 foi adaptado do Dice Tray sob licença MIT, preservada em `assets/DICE-TRAY-LICENSE.txt`. Os pictogramas próprios foram simplificados em SVGs de traços limpos.
+
+Ataques, Formulações e habilidades com fórmula de dano apresentam o teste e o dano em um único card. Proezas e Traços podem receber fórmula de dano e Aptidão do teste. O gerador apresenta Origem e Classe como escolhas visuais e mostra os limites de distribuição em tempo real.

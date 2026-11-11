@@ -42,11 +42,18 @@ function cardMarkup(card) {
 }
 
 export function postRoll(actor, roll, card, mode = defaultChatMode()) {
+  return postRollBundle(actor, [{ roll, label: "Teste" }], card, mode);
+}
+
+export async function postRollBundle(actor, entries, card, mode = defaultChatMode()) {
   const visibility = hasMessageModes() ? { messageMode: mode } : { rollMode: mode };
-  return roll.toMessage({
+  const [first] = entries;
+  const data = await first.roll.toMessage({
     speaker: ChatMessage.getSpeaker({ actor }),
-    flags: { [SYSTEM]: { rollCard: card } }
-  }, visibility);
+    flags: { [SYSTEM]: { rollCard: { ...card, rollLabels: entries.map(entry => entry.label) } } }
+  }, { ...visibility, create: false });
+  data.rolls = entries.map(({ roll }) => roll.toJSON());
+  return ChatMessage.create(data);
 }
 
 export function postCard(actor, card, mode = defaultChatMode()) {
@@ -65,5 +72,10 @@ export function renderRollCard(message, html) {
   const rolls = [...content.querySelectorAll(".dice-roll")];
   content.insertAdjacentHTML("afterbegin", cardMarkup(card));
   const body = content.querySelector(".ln-chat-body");
-  for (const roll of rolls) body.append(roll);
+  for (const [index, roll] of rolls.entries()) {
+    const label = document.createElement("h4");
+    label.className = "ln-chat-roll-label";
+    label.textContent = card.rollLabels?.[index] ?? "Rolagem";
+    body.append(label, roll);
+  }
 }

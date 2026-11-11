@@ -106,7 +106,7 @@ async function editAptitude(actor, key) {
     attribute: ATTRIBUTES[attributeFor(actor, key)], pc,
     mastery: actor.system.maestrias?.[key], cap: SCALE[limit],
     overCap: storedRank > limit, recordedDie: SCALE[storedRank],
-    ranks: SCALE.map((die, rank) => ({ die, rank, selected: rank === storedRank, locked: rank > limit }))
+    ranks: SCALE.map((die, rank) => ({ die, icon: die === 16 ? `${PATH}/assets/d16.svg` : `icons/dice/d${die}black.svg`, rank, selected: rank === storedRank, locked: rank > limit }))
   }, "Salvar Aptidão", { classes: ["lunatar", "lunatar-roll-dialog"], position: { width: 460 } });
   if (!data) return;
   const changes = {};
@@ -215,7 +215,9 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
       const rank = Math.min(recordedRank, cap);
       return {
         key, label, img: aptitudeIcon(key), attribute, attr: ATTRIBUTES[attribute], concrete: CONCRETE.includes(attribute),
-        mastery: system.maestrias?.[key], rank, die: SCALE[rank], recordedDie: SCALE[recordedRank],
+        mastery: system.maestrias?.[key], rank, die: SCALE[rank],
+        dieIcon: SCALE[rank] === 16 ? `${PATH}/assets/d16.svg` : `icons/dice/d${SCALE[rank]}black.svg`,
+        recordedDie: SCALE[recordedRank],
         trained: rank > 0, overCap: recordedRank > cap,
         steps: SCALE.map((die, index) => ({ die, filled: index <= rank, locked: index > cap }))
       };
