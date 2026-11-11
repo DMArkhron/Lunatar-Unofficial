@@ -31,6 +31,20 @@
     </nav>
 
     <section class="tab {{tabs.base.cssClass}}" data-group="sheet" data-tab="base">
+      <div class="ln-overview">
+        <aside class="ln-characteristics-panel">
+      <h2 class="ln-heading">Características</h2>
+      <div class="ln-attributes">
+        {{#if pc}}
+          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
+          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
+        {{else}}
+          <label>Concretas <input type="number" name="system.concreto" value="{{system.concreto}}"></label>
+          <label>Abstratas <input type="number" name="system.abstrato" value="{{system.abstrato}}"></label>
+        {{/if}}
+      </div>
+
+        </aside>
       <div class="ln-vitals">
         <header class="ln-vitals-header">
           <h2><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Estado do {{#if pc}}personagem{{else}}ator{{/if}}</h2>
@@ -69,6 +83,8 @@
         </div>
       </div>
 
+      </div>
+
       {{#if pc}}
       <div class="ln-lunar">
         <img src="systems/lunatar-unofficial/assets/phases.svg" alt="">
@@ -97,17 +113,6 @@
         </div>
       </section>
       {{/if}}
-
-      <h2 class="ln-heading">Características</h2>
-      <div class="ln-attributes">
-        {{#if pc}}
-          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
-          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
-        {{else}}
-          <label>Concretas <input type="number" name="system.concreto" value="{{system.concreto}}"></label>
-          <label>Abstratas <input type="number" name="system.abstrato" value="{{system.abstrato}}"></label>
-        {{/if}}
-      </div>
 
       <div class="ln-aptitudes" data-lunatar-aptitudes>
         <h2 class="ln-heading">Aptidões</h2>

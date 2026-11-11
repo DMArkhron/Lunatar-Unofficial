@@ -120,3 +120,9 @@ O arquivo fica em `systems/lunatar-unofficial/assets/logo.png` e também está d
 As Aptidões usam os SVGs nativos de dados do Foundry, como o módulo [Dice Tray](https://github.com/mclemente/fvtt-dice-tray). O ícone d16 foi adaptado do Dice Tray sob licença MIT, preservada em `assets/DICE-TRAY-LICENSE.txt`. Os pictogramas próprios foram simplificados em SVGs de traços limpos.
 
 Ataques, Formulações e habilidades com fórmula de dano apresentam o teste e o dano em um único card. Proezas e Traços podem receber fórmula de dano e Aptidão do teste. O gerador apresenta Origem e Classe como escolhas visuais e mostra os limites de distribuição em tempo real.
+
+## 🧭 Gerador e organização da ficha
+
+A etapa **Origem** reúne nome, Origem, Classe Básica, bônus de Características e Proeza de Origem, com descrições das opções antes da escolha. As demais etapas continuam dedicadas à Classe, Características, Aptidões e revisão.
+
+Na aba Ficha, as Características aparecem em uma coluna própria. Saúde, Magia, Ações e Movimento ficam no painel principal, junto das três Defesas. A organização visual toma como referência a ficha oficial do sistema D&D5e para Foundry, mantendo os valores e as regras próprios de Lunatar.

@@ -34,7 +34,7 @@ const priorities = {
 const assignSlots = (keys, preferred, slots) =>
   Object.fromEntries([...new Set([...preferred, ...keys])].map((key, index) => [key, slots[index]]));
 const stages = [
-  ["identity", "Identidade", "fa-user"], ["origin", "Origem", "fa-compass"],
+  ["identity", "Origem", "fa-compass"],
   ["class", "Classe", "fa-book-open"], ["attributes", "Características", "fa-person"],
   ["skills", "Aptidões", "fa-dice-d20"], ["review", "Revisão", "fa-clipboard-check"]
 ];
@@ -45,6 +45,11 @@ const extras = {
 };
 const baseClasses = Object.fromEntries(Object.entries(CLASSES).map(([id, data]) => [id, data.label]));
 const origins = Object.fromEntries(Object.entries(ORIGINS).map(([id, [label]]) => [id, label]));
+const classGuides = {
+  adepto: "Fé, dogmas e magia divina.", combatente: "Armas, defesa e técnicas de combate.",
+  mistico: "Formas, Palavras e magia lunar.", naturalista: "Natureza, caça e sobrevivência.",
+  renegado: "Astúcia, precisão e mobilidade."
+};
 const skillLabels = Object.fromEntries(skillKeys.map(id => [id, SKILLS[id][0]]));
 
 function shuffled(values) {
@@ -68,14 +73,14 @@ const skillBudget = values => budget(skillKeys, skillSlots, values, SCALE.map(di
 const complete = rows => rows.every(({ used, max }) => used === max);
 const validChoice = (rows, value) => /^[0-9]+$/.test(value ?? "") && Object.hasOwn(rows, value);
 
-function isValid(step, values, identity) {
+export function isValid(step, values, identity) {
   switch (step) {
-    case "identity": return Boolean(values.name?.trim() && values.name.trim().length <= 100
-      && Object.hasOwn(ORIGINS, values.origin) && Object.hasOwn(CLASSES, values.classe));
-    case "origin": {
-      const origin = ORIGINS[identity.origin];
+    case "identity": {
+      if (!values.name?.trim() || values.name.trim().length > 100
+        || !Object.hasOwn(ORIGINS, values.origin) || !Object.hasOwn(CLASSES, values.classe)) return false;
+      const origin = ORIGINS[values.origin];
       return origin[2].includes(values.first) && origin[3].includes(values.second) && values.first !== values.second
-        && validChoice(ORIGIN_FEATS[identity.origin], values.feature);
+        && validChoice(ORIGIN_FEATS[values.origin], values.feature);
     }
     case "class": return validChoice(CLASS_FEATS[identity.classe], values.classFeature)
       && (!extras[identity.classe] || validChoice(extras[identity.classe][1], values.extra));
@@ -95,8 +100,14 @@ function bindStep(dialog, step, identity, suggested) {
   const next = dialog.element.querySelector('[data-action="next"]');
   const message = root.querySelector("[data-step-message]");
   const refresh = () => {
-    const first = fields.namedItem("first");
-    const second = fields.namedItem("second");
+    const selectedOrigin = root.querySelector('input[name="origin"]:checked')?.value;
+    for (const panel of root.querySelectorAll("[data-origin-panel]")) {
+      const active = panel.dataset.originPanel === selectedOrigin;
+      panel.hidden = !active;
+      for (const control of panel.querySelectorAll("select, input")) control.disabled = !active;
+    }
+    const first = root.querySelector('[data-origin-panel]:not([hidden]) [name="first"]');
+    const second = root.querySelector('[data-origin-panel]:not([hidden]) [name="second"]');
     if (first && second) {
       for (const option of second.options) option.disabled = option.value === first.value;
       if (second.selectedOptions[0]?.disabled) second.value = [...second.options].find(option => !option.disabled)?.value ?? "";
@@ -109,7 +120,8 @@ function bindStep(dialog, step, identity, suggested) {
       if (!available.includes(versatile.value)) versatile.value = available[0] ?? "";
     }
     for (const detail of root.querySelectorAll("[data-choice-detail]")) {
-      const option = fields.namedItem(detail.dataset.choiceDetail).selectedOptions[0];
+      const option = root.querySelector(`[data-origin-panel]:not([hidden]) [name="${detail.dataset.choiceDetail}"]`)?.selectedOptions[0]
+        ?? fields.namedItem(detail.dataset.choiceDetail)?.selectedOptions?.[0];
       detail.textContent = option?.dataset.description ?? "";
     }
     const values = read();
@@ -176,7 +188,7 @@ function buildItems(initial, result, extraRows) {
 
 function resultFor(draft, actor) {
   const initial = draft.identity;
-  const result = { ...draft.origin, ...draft.class, ...draft.attributes, ...draft.skills };
+  const result = { ...draft.identity, ...draft.class, ...draft.attributes, ...draft.skills };
   const caracteristicas = Object.fromEntries(attributeKeys.map(key => [
     key, Number(result[key]) + Number(key === result.first || key === result.second)
   ]));
@@ -195,7 +207,7 @@ function resultFor(draft, actor) {
   return { name: initial.name.trim(), system, items };
 }
 
-function stageContext(step, draft, actor) {
+export function stageContext(step, draft, actor) {
   const identity = draft.identity;
   const saved = draft[step] ?? {};
   const context = { [step]: true, originLabel: origins[identity.origin], classLabel: baseClasses[identity.classe] };
@@ -203,14 +215,13 @@ function stageContext(step, draft, actor) {
   switch (step) {
     case "identity":
       return { context: { ...context, name: identity.name,
-        origins: options(origins, identity.origin), classes: options(baseClasses, identity.classe) }, suggested };
-    case "origin": {
-      const origin = ORIGINS[identity.origin];
-      const [traitName, traitDescription] = ORIGIN_TRAITS[identity.origin];
-      return { context: { ...context, traitName, traitDescription, movement: origin[1],
-        first: pickOptions(origin[2], saved.first), second: pickOptions(origin[3], saved.second),
-        features: featChoices(ORIGIN_FEATS[identity.origin], saved.feature) }, suggested };
-    }
+        origins: options(origins, identity.origin).map(option => ({ ...option,
+          description: ORIGIN_TRAITS[option.id][1].slice(0, 110) })),
+        classes: options(baseClasses, identity.classe).map(option => ({ ...option, description: classGuides[option.id] })),
+        originPanels: Object.entries(ORIGINS).map(([id, origin]) => ({ id, label: origin[0],
+          traitName: ORIGIN_TRAITS[id][0], traitDescription: ORIGIN_TRAITS[id][1], movement: origin[1],
+          first: pickOptions(origin[2], saved.first), second: pickOptions(origin[3], saved.second),
+          features: featChoices(ORIGIN_FEATS[id], saved.feature) })) }, suggested };
     case "class": {
       const [extraLabel, rows] = extras[identity.classe] ?? ["", []];
       return { context: { ...context, extraLabel, extra: choices(rows, saved.extra),
@@ -219,7 +230,7 @@ function stageContext(step, draft, actor) {
     case "attributes": {
       const preferred = priorities[identity.classe][0];
       Object.assign(suggested, assignSlots(attributeKeys, preferred, attributeSlots));
-      suggested.bonuses = [draft.origin.first, draft.origin.second];
+      suggested.bonuses = [draft.identity.first, draft.identity.second];
       return { context: { ...context, priorities: preferred.slice(0, 2).map(id => ATTRIBUTES[id]).join(" e "),
         stats: attributeKeys.map(id => ({ id, label: ATTRIBUTES[id], bonus: suggested.bonuses.includes(id),
           values: options({ 1: 1, 2: 2, 3: 3, 4: 4 }, saved[id] ?? suggested[id]) })) }, suggested };
@@ -276,7 +287,7 @@ async function generate(actor) {
     draft[step] = values;
     if (step === "identity") {
       if (previous.origin !== values.origin) {
-        delete draft.origin;
+        delete draft.attributes;
         delete draft.skills?.humanTrait;
         delete draft.skills?.versatil;
       }
