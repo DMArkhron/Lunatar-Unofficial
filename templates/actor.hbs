@@ -36,8 +36,8 @@
       <h2 class="ln-heading">Características</h2>
       <div class="ln-attributes">
         {{#if pc}}
-          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
-          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label>{{label}}<input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}"></label>{{/each}}</div></div>
+          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
+          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
         {{else}}
           <label>Concretas <input type="number" name="system.concreto" value="{{system.concreto}}"></label>
           <label>Abstratas <input type="number" name="system.abstrato" value="{{system.abstrato}}"></label>

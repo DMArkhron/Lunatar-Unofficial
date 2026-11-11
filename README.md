@@ -126,3 +126,7 @@ Ataques, Formulações e habilidades com fórmula de dano apresentam o teste e o
 A etapa **Origem** reúne nome, Origem, Classe Básica, bônus de Características e Proeza de Origem, com descrições das opções antes da escolha. As demais etapas continuam dedicadas à Classe, Características, Aptidões e revisão.
 
 Na aba Ficha, as Características aparecem em uma coluna própria. Saúde, Magia, Ações e Movimento ficam no painel principal, junto das três Defesas. A organização visual toma como referência a ficha oficial do sistema D&D5e para Foundry, mantendo os valores e as regras próprios de Lunatar.
+
+## Ajustes da ficha e do gerador
+
+A etapa de Origem do gerador mostra os bônus e a Proeza da Origem escolhida no mesmo formulário; **Continuar** só habilita quando as escolhas obrigatórias estão completas. As oito Características têm ícones SVG próprios e cartões alinhados. O inventário apresenta os espaços equipados em destaque e categorias recolhíveis, preservando busca, filtros, catálogo e ações dos itens.

@@ -12,27 +12,28 @@
     {{#unless identity}}<p class="ln-wizard-byline">{{originLabel}} · {{classLabel}} · Nível 1</p>{{/unless}}
 
     {{#if identity}}
-    <p>Dê um nome ao personagem e escolha de onde ele vem e qual papel terá no grupo.</p>
+    <p>Defina o nome, a Origem e a Classe Básica. Confira o Traço, o movimento e os bônus da Origem antes de continuar.</p>
     <label class="ln-block">Nome <input name="name" value="{{name}}" maxlength="100" placeholder="Nome do personagem"></label>
     <div class="ln-wizard-choices">
-      <fieldset><legend><i class="fa-solid fa-compass" aria-hidden="true"></i> Origem</legend><div class="ln-wizard-options">{{#each origins}}<label><input type="radio" name="origin" value="{{id}}" {{#if selected}}checked{{/if}}><span>{{label}}</span></label>{{/each}}</div></fieldset>
-      <fieldset><legend><i class="fa-solid fa-book-open" aria-hidden="true"></i> Classe básica</legend><div class="ln-wizard-options">{{#each classes}}<label><input type="radio" name="classe" value="{{id}}" {{#if selected}}checked{{/if}}><span>{{label}}</span></label>{{/each}}</div></fieldset>
+      <fieldset><legend><i class="fa-solid fa-compass" aria-hidden="true"></i> Origem</legend><div class="ln-wizard-options">{{#each origins}}<label><input type="radio" name="origin" value="{{id}}" {{#if selected}}checked{{/if}}><span><strong>{{label}}</strong><small>{{description}}</small></span></label>{{/each}}</div></fieldset>
+      <fieldset><legend><i class="fa-solid fa-book-open" aria-hidden="true"></i> Classe básica</legend><div class="ln-wizard-options">{{#each classes}}<label><input type="radio" name="classe" value="{{id}}" {{#if selected}}checked{{/if}}><span><strong>{{label}}</strong><small>{{description}}</small></span></label>{{/each}}</div></fieldset>
     </div>
-    {{/if}}
-
-    {{#if origin}}
-    <div class="ln-wizard-callout"><strong>{{traitName}}</strong><p>{{traitDescription}}</p><small>Movimento base da Origem · {{movement}} m</small></div>
-    <p>A Origem concede +1 em duas Características diferentes. Escolha também a Proeza que o personagem recebe.</p>
-    <div class="ln-fields cols-2">
-      <label>Primeiro bônus de +1 <select name="first">{{#each first}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
-      <label>Segundo bônus de +1 <select name="second">{{#each second}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
-    </div>
-    <label class="ln-block">Proeza de Origem <select name="feature">{{#each features}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
-    <p class="ln-wizard-detail" data-choice-detail="feature"></p>
+    {{#each originPanels}}
+    <section class="ln-wizard-origin-panel" data-origin-panel="{{id}}" hidden>
+      <div class="ln-wizard-callout"><strong>{{label}} · {{traitName}}</strong><p>{{traitDescription}}</p><small>Movimento base: {{movement}} m</small></div>
+      <p>Escolha <strong>+1 em duas Características diferentes</strong> e a Proeza recebida por esta Origem.</p>
+      <div class="ln-fields cols-2">
+        <label>Primeiro bônus <select name="first" disabled>{{#each first}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+        <label>Segundo bônus <select name="second" disabled>{{#each second}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      </div>
+      <label class="ln-block">Proeza de Origem <select name="feature" disabled>{{#each features}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+      <p class="ln-wizard-detail" data-choice-detail="feature"></p>
+    </section>
+    {{/each}}
     {{/if}}
 
     {{#if class}}
-    <p>Escolha a Proeza inicial da Classe Básica. A Classe Superior pode ser escolhida na ficha a partir do nível 5.</p>
+    <p>Escolha a Proeza que a Classe Básica concede no nível 1. A Classe Superior fica disponível na ficha a partir do nível 5.</p>
     <label class="ln-block">Proeza de Classe <select name="classFeature">{{#each features}}<option value="{{id}}" data-description="{{description}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
     <p class="ln-wizard-detail" data-choice-detail="classFeature"></p>
     {{#if extra}}
@@ -101,7 +102,7 @@
     {{#if existing}}<p>Ao aplicar, a ficha volta ao nível 1 e recebe os valores desta criação.</p>{{/if}}
     {{/if}}
     <p class="ln-wizard-warning" data-step-message aria-live="polite" hidden>
-      {{#if identity}}Preencha o nome e escolha a Origem e a Classe Básica.{{else}}Complete as escolhas e confira os limites desta etapa.{{/if}}
+      {{#if identity}}Preencha o nome, escolha a Origem, a Classe, dois bônus distintos e a Proeza de Origem.{{else}}Complete as escolhas e confira os limites desta etapa.{{/if}}
     </p>
   </div>
 </div>

@@ -173,6 +173,7 @@ const wrapped = handlers => Object.fromEntries(Object.entries(handlers).map(([ke
 export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   #aptitudeFilters = { query: "", attribute: "", trained: false };
   #inventoryFilters = { query: "", equipped: false };
+  #inventoryCollapsed = new Set();
 
   static DEFAULT_OPTIONS = {
     classes: ["lunatar", "lunatar-actor"], tag: "form",
@@ -238,7 +239,9 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
         cost: type === "formulacao" ? item.system.custoForma + item.system.custoPalavra + item.system.custoExtra : 0
       }))
     }]));
-    const attrs = Object.entries(ATTRIBUTES).map(([id, label]) => ({ id, label, value: system.caracteristicas?.[id] }));
+    const attrs = Object.entries(ATTRIBUTES).map(([id, label]) => ({
+      id, label, icon: `${PATH}/assets/icons/atributo-${id}.svg`, value: system.caracteristicas?.[id]
+    }));
     const moon = game.settings.get(SYSTEM, "luas");
     return { ...context, actor, system, pc, editable: this.isEditable, isGM: game.user.isGM, abilities, groups,
       inventory: [groups.arma, groups.armadura, groups.equipamento],
@@ -330,11 +333,25 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
     const equipped = filters.querySelector("[data-inventory-equipped]");
     const count = inventory.querySelector("[data-inventory-count]");
     const groups = [...inventory.querySelectorAll("[data-inventory-group]")].map(group => ({
+      group,
       empty: group.querySelector("[data-inventory-empty]"),
       rows: [...group.querySelectorAll("[data-item-id]")].map(row => ({
         row, text: normalizedSearch(row.dataset.search)
       }))
     }));
+    for (const { group } of groups) {
+      const toggle = group.querySelector("[data-inventory-toggle]");
+      const type = [...group.classList].find(name => name.startsWith("ln-inventory-") && name !== "ln-inventory-group");
+      const collapsed = this.#inventoryCollapsed.has(type);
+      group.classList.toggle("ln-collapsed", collapsed);
+      toggle.setAttribute("aria-expanded", String(!collapsed));
+      toggle.onclick = () => {
+        const next = group.classList.toggle("ln-collapsed");
+        if (next) this.#inventoryCollapsed.add(type);
+        else this.#inventoryCollapsed.delete(type);
+        toggle.setAttribute("aria-expanded", String(!next));
+      };
+    }
     search.disabled = equipped.disabled = false;
     search.value = this.#inventoryFilters.query;
     equipped.checked = this.#inventoryFilters.equipped;

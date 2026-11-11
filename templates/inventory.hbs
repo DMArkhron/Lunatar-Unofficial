@@ -12,7 +12,9 @@
     </div>
     {{/if}}
   </header>
-  <section class="ln-loadout" aria-label="Itens equipados">
+  <section class="ln-equipment-card" aria-label="Itens equipados">
+    <h3><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Equipado agora <small>Mãos e corpo</small></h3>
+    <div class="ln-loadout">
     {{#each loadout}}
     <div class="ln-loadout-slot">
       <h3>{{label}}</h3>
@@ -25,6 +27,7 @@
       {{else}}<span class="ln-loadout-empty">Livre</span>{{/if}}
     </div>
     {{/each}}
+    </div>
   </section>
   <div class="ln-inventory-filters" data-inventory-filters>
     <label>Buscar no inventário
@@ -35,7 +38,7 @@
   {{#each inventory}}
   <section class="ln-inventory-group ln-inventory-{{type}}" data-inventory-group>
     <header class="ln-inventory-group-head">
-      <h3><i class="fa-solid {{#if catalog}}{{#if isWeapon}}fa-burst{{else}}fa-shield-halved{{/if}}{{else}}fa-box-open{{/if}}" aria-hidden="true"></i> {{label}} <small>{{items.length}}</small></h3>
+      <button type="button" class="ln-inventory-toggle" data-inventory-toggle aria-expanded="true" aria-label="Mostrar ou ocultar {{label}}"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i><span><i class="fa-solid {{#if catalog}}{{#if isWeapon}}fa-burst{{else}}fa-shield-halved{{/if}}{{else}}fa-box-open{{/if}}" aria-hidden="true"></i> {{label}}</span><small>{{items.length}}</small></button>
       {{#if ../editable}}<div class="ln-buttons">
         {{#if catalog}}<button type="button" data-action="catalog" data-kind="{{type}}"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Catálogo</button>{{/if}}
         <button type="button" data-action="add" data-kind="{{type}}"><i class="fa-solid fa-plus" aria-hidden="true"></i> Adicionar</button>

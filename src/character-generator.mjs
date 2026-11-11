@@ -92,7 +92,7 @@ export function isValid(step, values, identity) {
   }
 }
 
-function bindStep(dialog, step, identity, suggested) {
+export function bindStep(dialog, step, identity, suggested) {
   const root = dialog.element.querySelector(".ln-wizard");
   const form = root.closest("form");
   const fields = form.elements;
