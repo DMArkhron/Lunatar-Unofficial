@@ -586,3 +586,21 @@
 .lunatar-generator .ln-budget { font-weight: 700; flex: 1 1 180px; margin: 0; }
 .lunatar-generator .ln-budget.ln-invalid, .lunatar-generator .ln-wizard-warning { color: #842c26; font-weight: 700; }
 .lunatar-generator .ln-wizard [hidden] { display: none !important; }
+
+/* Logotipo original fornecido para o sistema. */
+.lunatar .ln-brand { flex-direction: column; align-items: flex-start; gap: 0; }
+.lunatar .ln-brand img.ln-official-logo {
+  display: block; width: 220px; max-width: 100%; height: auto; max-height: 124px;
+  object-fit: contain; border: 0; border-radius: 0; mix-blend-mode: multiply;
+}
+#pause.lunatar-pause { height: auto; }
+#pause.lunatar-pause img {
+  display: block; width: 220px; height: auto; max-width: 45vw; max-height: none;
+  margin: 0 auto 8px; top: auto; left: auto; position: static;
+  object-fit: contain; opacity: 1; border: 0; border-radius: 6px;
+  animation: none !important; transform: none !important; filter: none;
+  box-shadow: 0 2px 16px #0008;
+}
+@media (max-width: 600px) {
+  .lunatar .ln-brand img.ln-official-logo { display: block; width: 180px; }
+}
