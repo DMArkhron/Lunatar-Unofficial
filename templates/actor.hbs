@@ -33,11 +33,11 @@
     <section class="tab {{tabs.base.cssClass}}" data-group="sheet" data-tab="base">
       <div class="ln-overview">
         <aside class="ln-characteristics-panel">
-      <h2 class="ln-heading">Características</h2>
+      <div class="ln-panel-heading"><span>01 · Capacidades</span><h2>Características</h2></div>
       <div class="ln-attributes">
         {{#if pc}}
-          <div><h3>Concretas</h3><div class="ln-attribute-grid">{{#each concrete}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
-          <div><h3>Abstratas</h3><div class="ln-attribute-grid">{{#each abstract}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
+          <div class="ln-attribute-group"><h3>Concretas <small>Corpo e ação</small></h3><div class="ln-attribute-grid">{{#each concrete}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
+          <div class="ln-attribute-group"><h3>Abstratas <small>Mente e espírito</small></h3><div class="ln-attribute-grid">{{#each abstract}}<label><img class="ln-attribute-icon" src="{{icon}}" alt=""><span>{{label}}</span><input type="number" min="0" max="5" name="system.caracteristicas.{{id}}" value="{{value}}" aria-label="{{label}}"></label>{{/each}}</div></div>
         {{else}}
           <label>Concretas <input type="number" name="system.concreto" value="{{system.concreto}}"></label>
           <label>Abstratas <input type="number" name="system.abstrato" value="{{system.abstrato}}"></label>
@@ -47,11 +47,11 @@
         </aside>
       <div class="ln-vitals">
         <header class="ln-vitals-header">
-          <h2><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i> Estado do {{#if pc}}personagem{{else}}ator{{/if}}</h2>
+          <div class="ln-panel-heading"><span>02 · Em jogo</span><h2>Estado do {{#if pc}}personagem{{else}}ator{{/if}}</h2></div>
           {{#if pc}}{{#if editable}}<button type="button" data-action="editStats"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Editar valores</button>{{/if}}{{/if}}
         </header>
         <div class="ln-resources">
-          <div class="ln-resource {{#if halfActive}}ln-alert{{/if}}">
+          <div class="ln-resource ln-resource-health {{#if halfActive}}ln-alert{{/if}}">
             <span><i class="fa-solid fa-heart" aria-hidden="true"></i> Saúde</span>
             <div><input type="number" name="system.saude.value" value="{{system.saude.value}}" min="0" max="{{system.saude.max}}" aria-label="Saúde atual"><b>/</b>
               {{#if pc}}<strong>{{system.saude.max}}</strong>{{else}}<input type="number" name="system.saude.max" min="1" value="{{system.saude.max}}" aria-label="Saúde máxima">{{/if}}
@@ -66,17 +66,17 @@
             {{#if system.magia.max}}<meter min="0" max="{{system.magia.max}}" value="{{system.magia.value}}" aria-label="Proporção de Magia"></meter>{{/if}}
             <small>Pontos de Magia{{#if system.manual.magia includeZero=true}} · Máximo manual{{/if}}</small>
           </div>
-          <div class="ln-resource"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Ações</span>
+          <div class="ln-resource ln-resource-actions"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Ações</span>
             <div><input type="number" name="system.acoes.value" value="{{system.acoes.value}}" min="0" max="{{system.acoes.max}}" aria-label="Ações disponíveis"><b>/</b><input type="number" name="system.acoes.max" value="{{system.acoes.max}}" min="0" aria-label="Máximo de ações"></div>
             <button type="button" data-action="reset" {{#unless editable}}disabled{{/unless}}>Repor</button>
           </div>
-          <div class="ln-resource"><span><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> Movimento</span>
+          <div class="ln-resource ln-resource-movement"><span><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> Movimento</span>
             <div>{{#if pc}}<strong>{{system.movimento}}</strong>{{else}}<input type="number" name="system.movimento" min="0" value="{{system.movimento}}" aria-label="Movimento">{{/if}}<b>m</b></div>
             <small>Por ação</small>
           </div>
         </div>
 
-        <div class="ln-defenses">
+        <div class="ln-defenses" aria-label="Defesas do personagem">
           <label><i class="fa-solid fa-shield" aria-hidden="true"></i> Defesa {{#if pc}}<strong>{{system.defesa}}</strong>{{#if system.manual.defesa includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesa" value="{{system.defesa}}" min="0">{{/if}}</label>
           <label><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Defesa Mágica {{#if pc}}<strong>{{system.defesaMagica}}</strong>{{#if system.manual.defesaMagica includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesaMagica" value="{{system.defesaMagica}}" min="0">{{/if}}</label>
           <label><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Proteção {{#if pc}}<strong>{{system.protecao}}</strong>{{#if system.manual.protecao includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.protecao" value="{{system.protecao}}" min="0">{{/if}}</label>

@@ -130,3 +130,7 @@ Na aba Ficha, as Características aparecem em uma coluna própria. Saúde, Magia
 ## Ajustes da ficha e do gerador
 
 A etapa de Origem do gerador mostra os bônus e a Proeza da Origem escolhida no mesmo formulário; **Continuar** só habilita quando as escolhas obrigatórias estão completas. As oito Características têm ícones SVG próprios e cartões alinhados. O inventário apresenta os espaços equipados em destaque e categorias recolhíveis, preservando busca, filtros, catálogo e ações dos itens.
+
+### Painel de jogo e Características
+
+A aba Ficha reúne Saúde, Magia, Ações, Movimento e Defesas em um painel compacto na parte superior. Características Concretas e Abstratas aparecem logo abaixo em grupos equilibrados, com oito pictogramas SVG próprios redesenhados para leitura em tamanho pequeno.
