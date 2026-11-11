@@ -31,6 +31,11 @@ jobs:
           assert image[:8] == bytes.fromhex('89504e470d0a1a0a')
           assert struct.unpack('>II', image[16:24]) == (576, 324)
           pathlib.Path('assets/logo.png').write_bytes(image)
+          transparent = base64.b64decode(pathlib.Path('assets/logo-transparent.png.base64').read_text().strip(), validate=True)
+          assert transparent[:8] == bytes.fromhex('89504e470d0a1a0a')
+          assert struct.unpack('>II', transparent[16:24]) == (576, 324)
+          assert transparent[25] == 6, 'PNG deve ter canal alfa RGBA'
+          pathlib.Path('assets/logo-transparent.png').write_bytes(transparent)
           PY
           node --check src/branding.mjs
       - name: Validar e empacotar
@@ -66,4 +71,4 @@ jobs:
             echo "::error::A versão $TAG já existe. Aumente version em system.json para publicar outra versão."
             exit 1
           fi
-          gh release create "$TAG" system.json lunatar-unofficial.zip assets/logo.png --target "$GITHUB_SHA" --title "Lunatar RPG $TAG" --notes "Implementação não oficial para Foundry VTT 13 e 14. Direitos de Lunatar: Colucci e New Order Editora. Instale usando o manifesto system.json desta release." --latest
+          gh release create "$TAG" system.json lunatar-unofficial.zip assets/logo.png assets/logo-transparent.png --target "$GITHUB_SHA" --title "Lunatar RPG $TAG" --notes "Implementação não oficial para Foundry VTT 13 e 14. Direitos de Lunatar: Colucci e New Order Editora. Instale usando o manifesto system.json desta release." --latest
