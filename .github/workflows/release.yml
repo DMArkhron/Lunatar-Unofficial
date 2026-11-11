@@ -22,6 +22,16 @@ jobs:
         run: |
           npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5
           node scripts/build-bestiary.mjs
+      - name: Preparar logotipo PNG
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib, struct
+          image = base64.b64decode(pathlib.Path('assets/logo.png.base64').read_text().strip(), validate=True)
+          assert image[:8] == b'\\x89PNG\\r\\n\\x1a\\n'
+          assert struct.unpack('>II', image[16:24]) == (576, 324)
+          pathlib.Path('assets/logo.png').write_bytes(image)
+          PY
+          node --check src/branding.mjs
       - name: Validar e empacotar
         run: |
           python3 - <<'PY'
@@ -55,4 +65,4 @@ jobs:
             echo "::error::A versão $TAG já existe. Aumente version em system.json para publicar outra versão."
             exit 1
           fi
-          gh release create "$TAG" system.json lunatar-unofficial.zip --target "$GITHUB_SHA" --title "Lunatar RPG $TAG" --notes "Implementação não oficial para Foundry VTT 13 e 14. Direitos de Lunatar: Colucci e New Order Editora. Instale usando o manifesto system.json desta release." --latest
+          gh release create "$TAG" system.json lunatar-unofficial.zip assets/logo.png --target "$GITHUB_SHA" --title "Lunatar RPG $TAG" --notes "Implementação não oficial para Foundry VTT 13 e 14. Direitos de Lunatar: Colucci e New Order Editora. Instale usando o manifesto system.json desta release." --latest
