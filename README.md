@@ -28,7 +28,7 @@ Crie personagens com orientação em cada etapa, organize armas e armaduras por 
 | Requisito | Versão |
 | --- | --- |
 | Foundry VTT | 13 e 14 |
-| Lunatar para Foundry | 0.2.11 |
+| Lunatar para Foundry | 0.2.13 |
 | Idioma da interface | Português brasileiro |
 | Material de referência | Playtest de Lunatar RPG |
 
@@ -108,3 +108,9 @@ O Conjurador possui suas Formas e Palavras registradas como Traço, para montar 
 **Nota da fonte:** o Guardião da Culpa lista Resistência d16 e d10 no mesmo bloco. A ficha utiliza d16 e registra a divergência nas Anotações para revisão pelo mestre.
 
 Para gerar o compêndio a partir do código-fonte, instale `@foundryvtt/foundryvtt-cli@3.0.5` e execute `node scripts/build-bestiary.mjs`. As Releases já incluem o compêndio compilado.
+
+## 🖼️ Logotipo na ficha, pausa e capa
+
+A versão 0.2.13 usa o PNG original de Lunatar na ficha, na pausa e na apresentação do sistema. Na primeira entrada de um mestre após a atualização, o sistema aplica a imagem como fundo do mundo pelo formulário nativo do Foundry. A imagem anterior fica registrada na configuração interna `previousWorldCover`; alterações posteriores da capa são preservadas.
+
+O arquivo fica em `systems/lunatar-unofficial/assets/logo.png` e também está disponível para download na Release. Se a configuração automática não for aceita pelo Foundry, use esse caminho em **Editar Mundo → Imagem de fundo**. As imagens mantêm os direitos de Colucci e New Order Editora.
