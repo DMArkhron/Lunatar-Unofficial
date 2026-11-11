@@ -11,16 +11,17 @@
           <span class="ln-kicker">{{#if pc}}Ficha de personagem{{else}}Registro de ameaça{{/if}}</span>
         </div>
         <div class="ln-identity">
-          <label class="ln-name">Nome <input name="name" value="{{actor.name}}" required></label>
+          <label class="ln-name"><span><i class="fa-solid fa-feather-pointed" aria-hidden="true"></i> Nome do personagem</span><input name="name" value="{{actor.name}}" required></label>
           {{#if pc}}
-          <label>Origem <select name="system.origem"><option value="">Escolha a origem</option>{{#each origins}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
-          <div class="ln-class-summary"><span>Classe</span>
+          <label class="ln-choice ln-choice-origin"><span><i class="fa-solid fa-compass" aria-hidden="true"></i> Origem</span><select name="system.origem"><option value="">Escolha a origem</option>{{#each origins}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+          <div class="ln-class-summary ln-choice"><span><i class="fa-solid fa-book-open" aria-hidden="true"></i> Classe</span>
             <strong>{{#if progression.base}}{{progression.base}}{{else}}Sem classe{{/if}}{{#if progression.unlocked}}{{#if progression.superior}} <i class="fa-solid fa-angle-right" aria-hidden="true"></i> {{progression.superior}}{{/if}}{{/if}}</strong>
+            <button type="button" data-action="selectTab" data-group="sheet" data-tab="features" title="Abrir classes, proezas e traços" aria-label="Abrir escolhas de classe"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></button>
           </div>
           {{else}}
           <label>Categoria <input name="system.categoria" value="{{system.categoria}}" placeholder="Humanoide, monstro…"></label>
           {{/if}}
-          <label>Nível <input type="number" name="system.nivel" min="1" max="12" value="{{system.nivel}}"></label>
+          <label class="ln-choice ln-choice-level"><span><i class="fa-solid fa-star" aria-hidden="true"></i> Nível</span><input type="number" name="system.nivel" min="1" max="12" value="{{system.nivel}}"></label>
         </div>
       </div>
     </header>
