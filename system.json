@@ -3,7 +3,7 @@
   "type": "system",
   "title": "Lunatar RPG",
   "description": "Sistema não oficial para o playtest de Lunatar RPG. Direitos da obra original: Colucci e New Order Editora.",
-  "version": "0.2.11",
+  "version": "0.2.12",
   "compatibility": {
     "minimum": "13",
     "verified": "14",
@@ -193,5 +193,5 @@
   ],
   "url": "https://github.com/DMArkhron/Lunatar-Unofficial",
   "manifest": "https://github.com/DMArkhron/Lunatar-Unofficial/releases/latest/download/system.json",
-  "download": "https://github.com/DMArkhron/Lunatar-Unofficial/releases/download/v0.2.11/lunatar-unofficial.zip"
+  "download": "https://github.com/DMArkhron/Lunatar-Unofficial/releases/download/v0.2.12/lunatar-unofficial.zip"
 }
