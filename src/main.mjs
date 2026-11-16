@@ -76,3 +76,20 @@ Hooks.on("updateCombat", (combat, changes, _options, userId) => {
 Hooks.on("renderChatMessageHTML", renderRollCard);
 Hooks.on("hotbarDrop", onHotbarDrop);
 Hooks.on("renderActorDirectory", addGeneratorButton);
+
+
+// A criação pelo gerador fica disponível a todas as funções do mundo.
+Hooks.once("ready", async () => {
+  if (!game.user.isGM || (game.users.activeGM && game.users.activeGM.id !== game.user.id)) return;
+  try {
+    const permissions = foundry.utils.deepClone(game.settings.get("core", "permissions"));
+    const roles = Object.values(CONST.USER_ROLES).filter(role => Number.isInteger(role) && role > 0);
+    const allowed = permissions.ACTOR_CREATE ?? [];
+    if (roles.every(role => allowed.includes(role))) return;
+    permissions.ACTOR_CREATE = [...new Set([...allowed, ...roles])];
+    await game.settings.set("core", "permissions", permissions);
+  } catch (error) {
+    console.error("Lunatar | Permissões do gerador", error);
+    ui.notifications.warn("Ative Criar Atores para os jogadores nas permissões do mundo para concluir a criação pelo gerador.");
+  }
+});
