@@ -328,15 +328,14 @@ async function generate(actor) {
 let open = false;
 
 export async function buildCharacter(actor) {
-  const Actor = foundry.documents.Actor;
-  if (open || (actor ? !actor.isOwner || actor.type !== "personagem" : !Actor.canUserCreate(game.user))) return;
+  if (open || (actor && (!actor.isOwner || actor.type !== "personagem"))) return;
   open = true;
   try { return await generate(actor); }
   finally { open = false; }
 }
 
 export function addGeneratorButton(_directory, element) {
-  if (!foundry.documents.Actor.canUserCreate(game.user) || element.querySelector(".ln-open-generator")) return;
+  if (element.querySelector(".ln-open-generator")) return;
   const header = element.querySelector(".directory-header");
   if (!header) return;
   const button = document.createElement("button");
