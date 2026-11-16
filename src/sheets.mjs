@@ -67,6 +67,7 @@ async function openPortrait(sheet) {
     src: sheet.document.img, name: sheet.document.name
   });
   const buttons = [{ action: "close", label: "Fechar", default: true }];
+  if (game.user.isGM) buttons.push({ action: "share", label: "Mostrar aos jogadores", icon: "fa-solid fa-eye" });
   if (sheet.isEditable) buttons.push(
     { action: "replace", label: "Trocar imagem", icon: "fa-solid fa-image" },
     { action: "token", label: "Trocar token", icon: "fa-solid fa-circle-user" }
@@ -75,6 +76,14 @@ async function openPortrait(sheet) {
     classes: ["lunatar", "lunatar-portrait-dialog"], position: { width: 540 },
     window: { title: "Retrato" }, content, buttons, rejectClose: false
   });
+  if (action === "share" && game.user.isGM) {
+    const image = new foundry.applications.apps.ImagePopout({
+      src: sheet.document.img, window: { title: sheet.document.name }
+    });
+    await image.render({ force: true });
+    image.shareImage();
+    return image;
+  }
   if (action === "replace" && sheet.isEditable) return updatePortrait(sheet);
   if (action === "token" && sheet.isEditable) return updateTokenImage(sheet);
 }
