@@ -11,6 +11,7 @@ export const CONCRETE = Object.keys(ATTRIBUTES).slice(0, 4);
 export const SKILLS = {
   astucia: ["Astúcia", "instinto"], atletismo: ["Atletismo", "corpo"],
   ataque: ["Ataque", "forca"], ataqueMagico: ["Ataque Mágico", ""],
+  atencao: ["Atenção", "instinto"],
   conducao: ["Condução", "destreza"], esquiva: ["Esquiva", "agilidade"],
   expressao: ["Expressão", "personalidade"], furtividade: ["Furtividade", "destreza"],
   iniciativa: ["Iniciativa", "agilidade"], intuicao: ["Intuição", "instinto"],
@@ -18,8 +19,9 @@ export const SKILLS = {
   misticismo: ["Misticismo", "inteligencia"], natureza: ["Natureza", "instinto"],
   ocultismo: ["Ocultismo", "inteligencia"], pontaria: ["Pontaria", "destreza"],
   resistencia: ["Resistência", "corpo"], razao: ["Razão", "inteligencia"],
+  rituais: ["Rituais", "inteligencia"],
   saber: ["Saber", "inteligencia"], sobrevivencia: ["Sobrevivência", "instinto"],
-  teurgia: ["Teurgia", "presenca"]
+  taticas: ["Táticas", "inteligencia"], teurgia: ["Teurgia", "presenca"]
 };
 export const CLASSES = {
   adepto: { label: "Adepto", hp: [8, 4], def: [5, "corpo"], ward: [5, "instinto"],
