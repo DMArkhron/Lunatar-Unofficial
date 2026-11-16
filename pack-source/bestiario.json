@@ -49,7 +49,10 @@
           "razao": 0,
           "saber": 0,
           "sobrevivencia": 0,
-          "teurgia": 0
+          "teurgia": 0,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 73. Direitos: Colucci e New Order Editora.\nGigante: ocupa dois hexágonos; ajuste o token conforme o grid. Pontaria não está listada: usa d4, como as demais Aptidões não especificadas.",
@@ -209,7 +212,10 @@
           "razao": 1,
           "saber": 1,
           "sobrevivencia": 1,
-          "teurgia": 1
+          "teurgia": 1,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nMovimento: voo, 7 m.",
@@ -375,7 +381,10 @@
           "razao": 0,
           "saber": 0,
           "sobrevivencia": 0,
-          "teurgia": 0
+          "teurgia": 0,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nEstudioso da magia que prefere combater à distância e planejar suas ações.\nFormas: Cone, Disparo, Toque. Palavras: Implosão, Elemento, Energia. A Rajada Mística causa apenas 1d6, sem somar o modificador abstrato.",
@@ -499,7 +508,10 @@
           "razao": 0,
           "saber": 0,
           "sobrevivencia": 0,
-          "teurgia": 0
+          "teurgia": 0,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nPerfurante 1: opção disponível na janela de ataque; causa os dados de dano +1 e ignora a Proteção.",
@@ -611,7 +623,10 @@
           "razao": 1,
           "saber": 1,
           "sobrevivencia": 1,
-          "teurgia": 1
+          "teurgia": 1,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 74. Direitos: Colucci e New Order Editora.\nDivergência da fonte: Resistência aparece como d16 e d10 no mesmo bloco. Esta ficha usa d16 (primeira ocorrência). O mestre pode alterar para d10 se preferir. O PDF não identifica outra Aptidão para substituir a entrada duplicada.",
@@ -759,7 +774,10 @@
           "razao": 1,
           "saber": 1,
           "sobrevivencia": 1,
-          "teurgia": 1
+          "teurgia": 1,
+          "atencao": 0,
+          "rituais": 0,
+          "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
         "notas": "Fonte: Playtest de Lunatar, p. 75. Direitos: Colucci e New Order Editora.\nPerfurante 1: opção disponível na janela de ataque; causa os dados de dano +1 e ignora a Proteção.",
