@@ -43,17 +43,40 @@ const updatePortrait = sheet => new foundry.applications.apps.FilePicker.impleme
   callback: img => sheet.document.update({ img })
 }).render({ force: true });
 
+
+const updateTokenImage = sheet => {
+  const actor = sheet.document;
+  const token = actor.isToken ? actor.token : null;
+  return new foundry.applications.apps.FilePicker.implementation({
+    type: "image", current: token?.texture.src ?? actor.prototypeToken.texture.src,
+    callback: async src => {
+      try {
+        if (token) await token.update({ "texture.src": src });
+        else await actor.update({ "prototypeToken.texture.src": src });
+        ui.notifications.info(token ? "Imagem do token na cena atualizada." : "Imagem do protótipo de token atualizada.");
+      } catch (error) {
+        console.error("Lunatar | Imagem do token", error);
+        ui.notifications.error("Não foi possível trocar a imagem do token.");
+      }
+    }
+  }).render({ force: true });
+};
+
 async function openPortrait(sheet) {
   const content = await foundry.applications.handlebars.renderTemplate(tpl("portrait-dialog"), {
     src: sheet.document.img, name: sheet.document.name
   });
   const buttons = [{ action: "close", label: "Fechar", default: true }];
-  if (sheet.isEditable) buttons.push({ action: "replace", label: "Trocar imagem", icon: "fa-solid fa-image" });
+  if (sheet.isEditable) buttons.push(
+    { action: "replace", label: "Trocar imagem", icon: "fa-solid fa-image" },
+    { action: "token", label: "Trocar token", icon: "fa-solid fa-circle-user" }
+  );
   const action = await api.DialogV2.wait({
     classes: ["lunatar", "lunatar-portrait-dialog"], position: { width: 540 },
     window: { title: "Retrato" }, content, buttons, rejectClose: false
   });
   if (action === "replace" && sheet.isEditable) return updatePortrait(sheet);
+  if (action === "token" && sheet.isEditable) return updateTokenImage(sheet);
 }
 
 const manualStats = [
