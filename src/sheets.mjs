@@ -1,3 +1,5 @@
+import { MOON_BLESSINGS } from "./moon-blessings.mjs";
+import { postCard } from "./chat.mjs";
 import { SLOT_LABELS, equipmentSlots, equippedAt } from "./equipment.mjs";
 import { PATH, SYSTEM, SCALE, ATTRIBUTES, CONCRETE, SKILLS, CLASSES, ORIGINS, MOONS,
   ITEM_LABELS, rankLimit } from "./rules.mjs";
@@ -158,6 +160,14 @@ const normalizedSearch = value => value.normalize("NFD").replace(/\p{Diacritic}/
 
 const actorActions = {
   portrait: sheet => openPortrait(sheet),
+  showBlessing: (sheet, button) => {
+    const rows = MOON_BLESSINGS[sheet.actor.system.lua - 1];
+    const entry = rows?.[Number(button.dataset.blessing)];
+    if (!entry) return;
+    return postCard(sheet.actor, { kind: "lunar", title: entry[0],
+      subtitle: "Bênção · " + MOONS[sheet.actor.system.lua - 1],
+      detail: entry[1] + "\nAtivação: gaste 1 Dado Lunar e descarte-o. Resolva o efeito conforme as condições da bênção." });
+  },
   test: (sheet, button) => rollTest(sheet.actor, button.dataset.skill),
   editAptitude: (sheet, button) => editAptitude(sheet.actor, button.dataset.skill),
   editStats: sheet => editStats(sheet.actor),
@@ -281,6 +291,8 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
         const item = actor.items.find(entry => entry.id === id);
         return { label: SLOT_LABELS[slot], id, name: item?.name, img: item && itemIcon(item) };
       }),
+      blessings: (MOON_BLESSINGS[system.lua - 1] ?? []).map(([name, description], index) => ({ name, description, index })),
+      blessingMoon: MOONS[system.lua - 1],
       cap: SCALE[cap], attributeFilters: options(ATTRIBUTES), half: Math.floor(system.saude.max / 2),
       halfActive: system.saude.value <= Math.floor(system.saude.max / 2), collapsed: system.saude.value === 0,
       concrete: attrs.slice(0, CONCRETE.length), abstract: attrs.slice(CONCRETE.length),
