@@ -79,6 +79,10 @@
           <label for="{{actor.id}}-impulsos"><i class="fa-solid fa-burst" aria-hidden="true"></i> Impulsos <small>Pontos disponíveis</small></label>
           <input id="{{actor.id}}-impulsos" type="number" name="system.impulsos" value="{{system.impulsos}}" min="0" step="1" aria-label="Impulsos disponíveis" title="Registrar os pontos de Impulso disponíveis">
         </div>
+        <div class="ln-impulse-resource ln-recoil-resource">
+          <label for="{{actor.id}}-recuo"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Recuo <small>Pontos registrados</small></label>
+          <input id="{{actor.id}}-recuo" type="number" name="system.recuo" value="{{system.recuo}}" min="0" step="1" aria-label="Recuo registrado" title="Registrar os pontos de Recuo">
+        </div>
         <div class="ln-defenses" aria-label="Defesas do personagem">
           <label><i class="fa-solid fa-shield" aria-hidden="true"></i> Defesa {{#if pc}}<strong>{{system.defesa}}</strong>{{#if system.manual.defesa includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesa" value="{{system.defesa}}" min="0">{{/if}}</label>
           <label><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Defesa Mágica {{#if pc}}<strong>{{system.defesaMagica}}</strong>{{#if system.manual.defesaMagica includeZero=true}}<small>Manual</small>{{/if}}{{else}}<input type="number" name="system.defesaMagica" value="{{system.defesaMagica}}" min="0">{{/if}}</label>
