@@ -911,3 +911,7 @@
 }
 .lunatar .ln-paper .ln-resource-actions > button:hover:not(:disabled) { background: #e2d0ad; }
 .lunatar .ln-paper .ln-resource-actions > button:active:not(:disabled) { transform: scale(.96); }
+
+/* Marca alinhada à direita do cabeçalho. */
+.lunatar .ln-hero .ln-brand { justify-content: flex-end; width: 100%; }
+.lunatar .ln-hero .ln-brand img.ln-official-logo { margin-inline-start: auto; }
