@@ -1,3 +1,4 @@
+import "./file-picker-memory.mjs";
 import "./branding.mjs";
 import { SYSTEM, PATH, CONDITIONS, SKILLS, testSpec } from "./rules.mjs";
 import { itemIcon } from "./catalog.mjs";
