@@ -182,14 +182,19 @@
         </header>
         {{#if pc}}{{> lunatarClassProgression}}{{/if}}
         {{#if pc}}
-        <section class="ln-feature-group">
-          <header class="ln-section-banner"><div><span class="ln-kicker">{{#if blessingMoon}}Lua {{blessingMoon}}{{else}}Signo Lunar{{/if}}</span><h2>Bênçãos</h2></div><img src="icons/svg/moon.svg" alt=""></header>
-          <p class="ln-note">Cada bênção exige 1 Dado Lunar. Enviar ao chat apenas mostra a descrição; o gasto e os efeitos são resolvidos na ficha.</p>
-          <div class="ln-spell-grid">
-          {{#each blessings}}<article class="ln-spell-card">
-            <h3>{{name}}</h3><p>{{description}}</p>
-            {{#if ../editable}}<button type="button" data-action="showBlessing" data-blessing="{{index}}"><i class="fa-solid fa-comment" aria-hidden="true"></i> Mostrar bênção no chat</button>{{/if}}
-          </article>{{else}}<p class="ln-empty">Escolha o Signo Lunar na aba Ficha para ver suas duas bênçãos.</p>{{/each}}
+        <section class="ln-blessings" aria-label="Bênçãos lunares">
+          <header class="ln-blessings-header">
+            <div class="ln-blessings-emblem"><img src="systems/lunatar-unofficial/assets/moon.svg" alt=""></div>
+            <div><span class="ln-kicker">Poderes do Signo Lunar</span><h2>Bênçãos</h2></div>
+            {{#if blessingMoon}}<span class="ln-blessings-moon"><i class="fa-solid fa-moon" aria-hidden="true"></i> {{blessingMoon}}</span>{{/if}}
+          </header>
+          <div class="ln-blessings-guide"><span><i class="fa-solid fa-dice" aria-hidden="true"></i> <strong>1 Dado Lunar</strong> por ativação</span><span>Gasto e efeitos aplicados manualmente.</span></div>
+          <div class="ln-blessings-grid">
+          {{#each blessings}}<article class="ln-blessing-card">
+            <header><span class="ln-blessing-mark"><i class="fa-solid fa-star" aria-hidden="true"></i></span><h3>{{name}}</h3></header>
+            <div class="ln-blessing-effect"><span>Efeito</span><p>{{description}}</p></div>
+            <footer>{{#if ../editable}}<button type="button" data-action="showBlessing" data-blessing="{{index}}"><i class="fa-solid fa-comment" aria-hidden="true"></i> Compartilhar no chat</button>{{/if}}<small>Compartilhar apenas exibe a descrição.</small></footer>
+          </article>{{else}}<p class="ln-blessings-empty"><i class="fa-solid fa-moon" aria-hidden="true"></i> Selecione uma Lua na aba Ficha para revelar suas duas bênçãos.</p>{{/each}}
           </div>
         </section>
         {{/if}}
