@@ -873,3 +873,41 @@
 .lunatar .ln-blessing-card footer small { color: #756b64; font: 10px/1.3 system-ui,sans-serif; text-align: center; }
 .lunatar .ln-blessings-empty { margin: 0; padding: 14px; color: #574663; border: 1px dashed #bba6c8; border-radius: 7px; grid-column: 1/-1; }
 @container (max-width: 590px) { .lunatar .ln-blessings-grid { grid-template-columns: 1fr; } .lunatar .ln-blessings-header { flex-wrap: wrap; } }
+
+/* Recursos integrados: números sem moldura e indicação suave de edição. */
+.lunatar .ln-overview .ln-resource {
+  border: 0; border-radius: 16px; padding: 16px 10px 12px;
+  background: #fffdf8; box-shadow: 0 2px 8px #4033260d;
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.lunatar .ln-overview .ln-resource::before {
+  inset: 0 20px auto; height: 3px; border-radius: 0 0 5px 5px;
+}
+.lunatar .ln-overview .ln-resource:hover { background: #fffaf1; box-shadow: 0 3px 12px #40332616; }
+.lunatar .ln-overview .ln-resource:focus-within { background: #fff9ee; box-shadow: 0 0 0 2px #ad97734a; }
+.lunatar .ln-paper .ln-overview .ln-resource input:not([type=checkbox]) {
+  width: 52px; height: 40px; padding: 2px 4px; margin: 0;
+  border: 0 !important; border-radius: 10px !important;
+  background: transparent !important; box-shadow: none;
+  color: #302824; font: 700 27px/1 Georgia,serif; text-align: center;
+  appearance: textfield; transition: background .18s ease, color .18s ease;
+}
+.lunatar .ln-paper .ln-overview .ln-resource input:not([type=checkbox]):hover { background: #e9dfcd80 !important; }
+.lunatar .ln-paper .ln-overview .ln-resource input:not([type=checkbox]):focus {
+  background: #e8ddc9a6 !important; outline: 2px solid #a28b645c; outline-offset: 1px;
+}
+.lunatar .ln-resource input::-webkit-inner-spin-button,
+.lunatar .ln-resource input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+.lunatar .ln-overview .ln-resource div { gap: 2px; }
+.lunatar .ln-overview .ln-resource div > b { font: 400 20px/1 Georgia,serif; color: #aa9c86; padding: 0 2px; }
+.lunatar .ln-overview .ln-resource strong { font: 700 27px/1 Georgia,serif; }
+.lunatar .ln-overview .ln-resource meter { border-radius: 10px; height: 6px; overflow: hidden; }
+.lunatar .ln-resource meter::-webkit-meter-bar { border-radius: 10px; background: #ece4d6; }
+.lunatar .ln-resource meter::-webkit-meter-optimum-value { border-radius: 10px; }
+.lunatar .ln-paper .ln-resource-actions > button {
+  min-height: 27px; padding: 4px 13px; border: 0; border-radius: 14px;
+  background: #eee3ce; color: #725631; font: 700 11px/1.2 system-ui,sans-serif;
+  transition: background .15s ease, transform .15s ease;
+}
+.lunatar .ln-paper .ln-resource-actions > button:hover:not(:disabled) { background: #e2d0ad; }
+.lunatar .ln-paper .ln-resource-actions > button:active:not(:disabled) { transform: scale(.96); }
