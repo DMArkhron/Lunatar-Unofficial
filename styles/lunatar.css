@@ -848,3 +848,28 @@
   .lunatar .ln-attribute-grid { grid-template-columns: 1fr; }
   .lunatar .ln-overview .ln-vitals,.lunatar .ln-overview .ln-characteristics-panel { padding: 10px; }
 }
+
+/* Bênçãos: contraste explícito contra o tema escuro do Foundry. */
+.lunatar .ln-blessings { padding: 14px; border: 1px solid #baa9c8; border-radius: 10px; background: #f2edf5; color: #302739; }
+.lunatar .ln-blessings-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.lunatar .ln-blessings-emblem { width: 44px; height: 44px; flex: none; display: grid; place-items: center; background: #e6dceb; border: 1px solid #c6b4d2; border-radius: 50%; }
+.lunatar .ln-blessings-emblem img { width: 31px; height: 31px; border: 0; }
+.lunatar .ln-blessings-header .ln-kicker { color: #645171; font: 700 9px/1.2 system-ui,sans-serif; letter-spacing: .12em; }
+.lunatar .ln-blessings-header h2 { margin: 3px 0 0; border: 0; color: #35223f; font: 700 24px/1.15 Georgia,serif; text-shadow: none; }
+.lunatar .ln-blessings-moon { margin-left: auto; padding: 6px 10px; border: 1px solid #c8b7d2; border-radius: 16px; background: #fffafd; color: #4f355f; font: 700 12px/1.2 system-ui,sans-serif; }
+.lunatar .ln-blessings-guide { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; padding: 9px 11px; margin-bottom: 12px; border-radius: 6px; background: #e7dfed; color: #51445c; font: 12px/1.4 system-ui,sans-serif; }
+.lunatar .ln-blessings-guide strong { color: #3e2b4c; }
+.lunatar .ln-blessings-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.lunatar .ln-blessing-card { display: flex; flex-direction: column; min-width: 0; background: #fffcf7; border: 1px solid #cbbbd5; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px #34203c0c; }
+.lunatar .ln-blessing-card > header { display: flex; align-items: center; gap: 9px; padding: 12px; border-bottom: 1px solid #e0d5e6; background: #eee6f2; }
+.lunatar .ln-blessing-mark { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 6px; background: #614771; color: #fff5dc; font-size: 12px; }
+.lunatar .ln-blessing-card h3 { margin: 0; padding: 0; border: 0; color: #3a2748; font: 700 18px/1.25 Georgia,serif; text-shadow: none; overflow-wrap: anywhere; }
+.lunatar .ln-blessing-effect { padding: 12px 14px; flex: 1; }
+.lunatar .ln-blessing-effect > span { display: block; color: #786247; font: 700 9px/1.2 system-ui,sans-serif; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 6px; }
+.lunatar .ln-blessing-effect p { margin: 0; color: #352e2a; font: 13px/1.55 system-ui,sans-serif; }
+.lunatar .ln-blessing-card > footer { padding: 0 12px 12px; display: grid; gap: 6px; }
+.lunatar .ln-paper .ln-blessing-card button { width: 100%; min-height: 34px; border: 1px solid #614771; border-radius: 6px; background: #614771; color: #fffaf4; font-weight: 700; }
+.lunatar .ln-paper .ln-blessing-card button:hover:not(:disabled) { background: #765486; color: white; border-color: #765486; }
+.lunatar .ln-blessing-card footer small { color: #756b64; font: 10px/1.3 system-ui,sans-serif; text-align: center; }
+.lunatar .ln-blessings-empty { margin: 0; padding: 14px; color: #574663; border: 1px dashed #bba6c8; border-radius: 7px; grid-column: 1/-1; }
+@container (max-width: 590px) { .lunatar .ln-blessings-grid { grid-template-columns: 1fr; } .lunatar .ln-blessings-header { flex-wrap: wrap; } }
