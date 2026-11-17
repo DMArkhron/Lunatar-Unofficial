@@ -181,6 +181,18 @@
           <img src="icons/svg/book.svg" alt="">
         </header>
         {{#if pc}}{{> lunatarClassProgression}}{{/if}}
+        {{#if pc}}
+        <section class="ln-feature-group">
+          <header class="ln-section-banner"><div><span class="ln-kicker">{{#if blessingMoon}}Lua {{blessingMoon}}{{else}}Signo Lunar{{/if}}</span><h2>Bênçãos</h2></div><img src="icons/svg/moon.svg" alt=""></header>
+          <p class="ln-note">Cada bênção exige 1 Dado Lunar. Enviar ao chat apenas mostra a descrição; o gasto e os efeitos são resolvidos na ficha.</p>
+          <div class="ln-spell-grid">
+          {{#each blessings}}<article class="ln-spell-card">
+            <h3>{{name}}</h3><p>{{description}}</p>
+            {{#if ../editable}}<button type="button" data-action="showBlessing" data-blessing="{{index}}"><i class="fa-solid fa-comment" aria-hidden="true"></i> Mostrar bênção no chat</button>{{/if}}
+          </article>{{else}}<p class="ln-empty">Escolha o Signo Lunar na aba Ficha para ver suas duas bênçãos.</p>{{/each}}
+          </div>
+        </section>
+        {{/if}}
         {{> lunatarGroup groups.proeza editable=editable}}
         {{> lunatarGroup groups.traco editable=editable}}
       </div>
