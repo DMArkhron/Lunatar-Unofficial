@@ -311,7 +311,7 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
       sky: moon.map(index => MOONS[index - 1]).join(", "), moonActive: moon.includes(system.lua),
       ward: klass?.ward.length === 3 ? options({ instinto: "Instinto", personalidade: "Personalidade" }, system.wardAtributo) : null,
       def: klass?.def.length === 3 ? options({ corpo: "Corpo", agilidade: "Agilidade" }, system.defAtributo) : null,
-      canCompose: Boolean(MAGIC[system.classe]), status: [...actor.statuses].map(id => CONFIG.statusEffects.find(e => e.id === id)?.name ?? id),
+      canCompose: actor.isOwner, status: [...actor.statuses].map(id => CONFIG.statusEffects.find(e => e.id === id)?.name ?? id),
       tabs: Object.fromEntries(Object.entries(this._prepareTabs("sheet"))
         .map(([id, tab]) => [id, { ...tab, icon: tabIcons[id] }])),
       nature: system.classe === "naturalista" ? options(Object.fromEntries(
