@@ -92,11 +92,22 @@ export function isValid(step, values, identity) {
   }
 }
 
+export function readWizardForm(form) {
+  const values = {};
+  for (const field of form.querySelectorAll("input[name], select[name], textarea[name]")) {
+    if (field.disabled || field.closest("[hidden]")) continue;
+    if (["radio", "checkbox"].includes(field.type) && !field.checked) continue;
+    values[field.name] = field.value;
+  }
+  return values;
+}
+
 export function bindStep(dialog, step, identity, suggested) {
   const root = dialog.element.querySelector(".ln-wizard");
   const form = root.closest("form");
   const fields = form.elements;
-  const read = () => Object.fromEntries(new FormData(form));
+  form.noValidate = true;
+  const read = () => readWizardForm(form);
   const next = dialog.element.querySelector('[data-action="next"]');
   const message = root.querySelector("[data-step-message]");
   const refresh = () => {
@@ -141,7 +152,7 @@ export function bindStep(dialog, step, identity, suggested) {
       output.textContent = Number(values[key]) + Number(suggested.bonuses.includes(key));
     }
     const valid = isValid(step, values, identity);
-    if (next) next.disabled = !valid;
+    if (next) { next.disabled = false; next.setAttribute("aria-describedby", "ln-step-message"); }
     message.hidden = valid;
   };
   root.addEventListener("input", refresh);
@@ -270,7 +281,7 @@ async function generate(actor) {
       ...context, label, progressPercent: Math.round(((index + 1) / stages.length) * 100),
       progress: stages.map(([, name, icon], i) => ({ name, icon, current: i === index, done: i < index }))
     });
-    const read = direction => (_event, button) => ({ direction, values: Object.fromEntries(new FormData(button.form)) });
+    const read = direction => (_event, button) => ({ direction, values: readWizardForm(button.form) });
     const buttons = [];
     if (index > 0) buttons.push({ action: "back", label: "Voltar", callback: read(-1) });
     buttons.push({ action: "next", label: step === "review" ? (actor ? "Aplicar à ficha" : "Criar personagem") : "Continuar",
@@ -297,7 +308,10 @@ async function generate(actor) {
         delete draft.skills;
       }
     }
-    if (direction > 0 && !isValid(step, values, draft.identity)) continue;
+    if (direction > 0 && !isValid(step, values, draft.identity)) {
+      ui.notifications.warn("Complete as escolhas indicadas nesta etapa antes de continuar.");
+      continue;
+    }
     index += direction;
   }
 
