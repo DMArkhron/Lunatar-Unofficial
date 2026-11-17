@@ -95,9 +95,15 @@ function configureComposer(dialog, catalog, actor) {
 }
 
 export async function compose(actor) {
+  if (!actor.isOwner) throw new Error("Você precisa controlar esta ficha para compor formulações.");
   const s = actor.system;
   const base = MAGIC[s.classe];
-  if (!base) throw new Error("Escolha uma classe conjuradora ou crie uma formulação personalizada.");
+  if (!base) {
+    const [created] = await actor.createEmbeddedDocuments("Item", [{
+      name: "Nova formulação", type: "formulacao"
+    }]);
+    return created?.sheet.render({ force: true });
+  }
   const klass = CLASSES[s.classe];
   const superior = s.nivel >= 5 && Boolean(klass.paths[s.trilha]);
   const path = superior ? MAGIC[s.trilha] : null;
