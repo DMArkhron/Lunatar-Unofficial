@@ -53,22 +53,22 @@
         <div class="ln-resources">
           <div class="ln-resource ln-resource-health {{#if halfActive}}ln-alert{{/if}}">
             <span><i class="fa-solid fa-heart" aria-hidden="true"></i> Saúde</span>
-            <div><input type="number" name="system.saude.value" value="{{system.saude.value}}" min="0" max="{{system.saude.max}}" aria-label="Saúde atual"><b>/</b>
+            <div><input type="number" name="system.saude.value" value="{{system.saude.value}}" min="0" max="{{system.saude.max}}" aria-label="Saúde atual" title="Clique para editar a Saúde atual"><b>/</b>
               {{#if pc}}<strong>{{system.saude.max}}</strong>{{else}}<input type="number" name="system.saude.max" min="1" value="{{system.saude.max}}" aria-label="Saúde máxima">{{/if}}
             </div>
             <meter min="0" max="{{system.saude.max}}" value="{{system.saude.value}}" aria-label="Proporção de Saúde"></meter>
             <small>{{#if collapsed}}Colapso{{else}}{{#if pc}}Meia Vida {{half}}{{/if}}{{/if}}{{#if system.manual.saude includeZero=true}} · Máximo manual{{/if}}</small>
           </div>
           <div class="ln-resource ln-resource-magic"><span><i class="fa-solid fa-droplet" aria-hidden="true"></i> Magia</span>
-            <div><input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais"><b>/</b>
+            <div><input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais" title="Clique para editar os Pontos de Magia"><b>/</b>
               {{#if pc}}<strong>{{system.magia.max}}</strong>{{else}}<input type="number" name="system.magia.max" min="0" value="{{system.magia.max}}" aria-label="PM máximos">{{/if}}
             </div>
             {{#if system.magia.max}}<meter min="0" max="{{system.magia.max}}" value="{{system.magia.value}}" aria-label="Proporção de Magia"></meter>{{/if}}
             <small>Pontos de Magia{{#if system.manual.magia includeZero=true}} · Máximo manual{{/if}}</small>
           </div>
           <div class="ln-resource ln-resource-actions"><span><i class="fa-solid fa-bolt" aria-hidden="true"></i> Ações</span>
-            <div><input type="number" name="system.acoes.value" value="{{system.acoes.value}}" min="0" max="{{system.acoes.max}}" aria-label="Ações disponíveis"><b>/</b><input type="number" name="system.acoes.max" value="{{system.acoes.max}}" min="0" aria-label="Máximo de ações"></div>
-            <button type="button" data-action="reset" {{#unless editable}}disabled{{/unless}}>Repor</button>
+            <div><input type="number" name="system.acoes.value" value="{{system.acoes.value}}" min="0" max="{{system.acoes.max}}" aria-label="Ações disponíveis" title="Clique para editar as ações disponíveis"><b>/</b><input type="number" name="system.acoes.max" value="{{system.acoes.max}}" min="0" aria-label="Máximo de ações" title="Clique para editar o máximo de ações"></div>
+            <button type="button" data-action="reset" {{#unless editable}}disabled{{/unless}}><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Repor</button>
           </div>
           <div class="ln-resource ln-resource-movement"><span><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> Movimento</span>
             <div>{{#if pc}}<strong>{{system.movimento}}</strong>{{else}}<input type="number" name="system.movimento" min="0" value="{{system.movimento}}" aria-label="Movimento">{{/if}}<b>m</b></div>
