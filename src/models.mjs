@@ -15,6 +15,7 @@ const abilityFields = () => Object.fromEntries(Object.keys(SKILLS).map(key => [k
 const common = () => ({
   nivel: number(1, 1, 12),
   saude: pool(1, 1), magia: pool(0, 0), acoes: pool(3, 3),
+  impulsos: number(0),
   movimento: number(5), defesa: number(), defesaMagica: number(), protecao: number(),
   equipagem: schema({ configurada: bool(), esquerda: str(), direita: str(), corpo: str() }),
   aptidoes: schema(abilityFields()),
