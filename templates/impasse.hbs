@@ -1,0 +1,22 @@
+<section class="ln-impasse-panel">
+  <header class="ln-impasse-heading">
+    <div><span class="ln-impasse-eyebrow">Ferramenta do mestre</span><h2>{{title}}</h2></div>
+    <button type="button" data-action="configure" title="Editar nome e limites" aria-label="Configurar Impasse"><i class="fa-solid fa-gear" aria-hidden="true"></i> Configurar</button>
+  </header>
+  <p class="ln-impasse-note">Marcadores de apoio à cena. As consequências são decididas pelo mestre.</p>
+  <span class="ln-impasse-status {{tone}}" role="status">{{status}}</span>
+  {{#each tracks}}
+  <section class="ln-impasse-track {{key}}">
+    <header><h3><i class="fa-solid {{icon}}" aria-hidden="true"></i> {{label}}</h3><strong>{{value}} <small>/ {{max}}</small></strong></header>
+    <div class="ln-impasse-segments" role="progressbar" aria-label="{{label}}" aria-valuemin="0" aria-valuenow="{{value}}" aria-valuemax="{{max}}">
+      {{#each segments}}<span class="{{#if filled}}filled{{/if}}"></span>{{/each}}
+    </div>
+    <div class="ln-impasse-controls"><small>{{value}} de {{max}} etapas</small><div>
+      <button type="button" data-action="step" data-track="{{key}}" data-delta="-1" aria-label="Diminuir {{label}}" {{#if atMin}}disabled{{/if}}><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+      <button type="button" data-action="step" data-track="{{key}}" data-delta="1" aria-label="Aumentar {{label}}" {{#if atMax}}disabled{{/if}}><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+    </div></div>
+  </section>
+  {{/each}}
+  <button type="button" class="ln-impasse-reset" data-action="reset"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Reiniciar marcadores</button>
+  <small class="ln-impasse-private">Somente mestre · Salvo neste navegador para este usuário e mundo.</small>
+</section>
