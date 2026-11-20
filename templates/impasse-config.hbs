@@ -1,0 +1,12 @@
+<div class="ln-impasse-config">
+  <label>Nome do desafio<input name="title" value="{{title}}" maxlength="100" required placeholder="Fuga da cripta"></label>
+  <fieldset><legend>Progresso</legend>
+    <label>Nome do marcador<input name="progressLabel" value="{{progress.label}}" maxlength="80" required></label>
+    <label>Etapas para concluir<input type="number" name="progressMax" value="{{progress.max}}" min="1" max="100" step="1" required></label>
+  </fieldset>
+  <fieldset><legend>Falhas</legend>
+    <label>Nome do marcador<input name="failureLabel" value="{{failure.label}}" maxlength="80" required></label>
+    <label>Limite de falhas<input type="number" name="failureMax" value="{{failure.max}}" min="1" max="100" step="1" required></label>
+  </fieldset>
+  <p>Exemplos: 5 sucessos antes de 3 falhas ou 8 sucessos antes de 4 falhas. Reduzir um limite ajusta o contador para caber no novo total.</p>
+</div>
