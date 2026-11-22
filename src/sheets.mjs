@@ -1,3 +1,4 @@
+import { exportCharacterPDF } from "./character-print.mjs";
 import { MOON_BLESSINGS } from "./moon-blessings.mjs";
 import { postCard } from "./chat.mjs";
 import { SLOT_LABELS, equipmentSlots, equippedAt } from "./equipment.mjs";
@@ -159,6 +160,7 @@ async function editAptitude(actor, key) {
 const normalizedSearch = value => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("pt-BR");
 
 const actorActions = {
+  exportPDF: sheet => exportCharacterPDF(sheet.actor),
   portrait: sheet => openPortrait(sheet),
   showBlessing: (sheet, button) => {
     const rows = MOON_BLESSINGS[sheet.actor.system.lua - 1];
