@@ -11,6 +11,11 @@ const plain = value => {
   return doc.body.textContent.trim();
 };
 const pool = p => `${p?.value ?? 0} / ${p?.max ?? 0}`;
+// Match the characteristic used by the actual magic damage roll.
+export function displayDamage(actor, formula) {
+  const value = Number(actor.system.caracteristicas?.[attributeFor(actor, "ataqueMagico")] ?? 0);
+  return String(formula ?? "").replace(/@formula(?:ç|c)(?:ã|a)o(?![\p{L}\p{N}_])/giu, String(Number.isFinite(value) ? value : 0));
+}
 const color = (r,g,b) => rgb(r/255,g/255,b/255);
 const ink=color(45,40,34), muted=color(100,94,85), border=color(201,185,158), pale=color(246,241,229), cream=color(255,253,248), gold=color(146,117,72), purple=color(106,82,125);
 
@@ -92,11 +97,11 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null, artwork={
   newPage();
   title("Equipamentos");cards(Object.entries(equipmentSlots(actor)).map(([slot,id])=>[SLOT_LABELS[slot],items.find(i=>i.id===id)?.name||"—"]),3);
   const subheading=label=>{ensure(32);draw(label,M+3,y,10,bold,purple);y+=15;};
-  subheading("Armas");table(["Arma","Aptidão","Dano","Mãos","Propriedades"],[.25,.19,.12,.17,.27],by("arma").map(i=>[i.name,SKILLS[i.system.aptidao]?.[0],i.system.dano,i.system.duasMaos?"Duas mãos":"Uma mão",i.system.propriedades]));
+  subheading("Armas");table(["Arma","Aptidão","Dano","Mãos","Propriedades"],[.25,.19,.12,.17,.27],by("arma").map(i=>[i.name,SKILLS[i.system.aptidao]?.[0],displayDamage(actor,i.system.dano),i.system.duasMaos?"Duas mãos":"Uma mão",i.system.propriedades]));
   subheading("Armaduras e escudos");table(["Nome","Defesa","Proteção","Fardos"],[.52,.16,.16,.16],by("armadura").map(i=>[i.name,i.system.defesa,i.system.protecao,i.system.fardos]));
   subheading("Inventário");table(["Item","Quantidade","Descrição"],[.30,.15,.55],by("equipamento").map(i=>[i.name,i.system.quantidade,plain(i.system.descricao)]));cards([['Solares',s.moedas?.solares],['Lunares',s.moedas?.lunares],['Estelares',s.moedas?.estelares]],3);
-  title("Formulações");for(const i of by("formulacao")){const f=i.system;textBlock(i.name,[[f.forma,f.palavra,f.palavraExtra].filter(Boolean).join(" / "),f.ampliacao,`${Number(f.custoForma||0)+Number(f.custoPalavra||0)+Number(f.custoExtra||0)} PM · ${f.custoAcao} ação(ões)`,f.dano,f.alcance,f.alvos,f.duracao,plain(f.descricao)].filter(Boolean).join(" · "));}if(!by("formulacao").length)textBlock("—","");
-  for(const [type,label] of [["proeza","Proezas"],["traco","Traços"]]){title(label);for(const i of by(type))textBlock(i.name,[i.system.tipoAcao,i.system.custoAcao?`${i.system.custoAcao} ação(ões)`:null,i.system.maxUsos?`Usos ${i.system.usos}/${i.system.maxUsos}`:null,plain(i.system.descricao)].filter(Boolean).join(" · "));if(!by(type).length)textBlock("—","");}
+  title("Formulações");for(const i of by("formulacao")){const f=i.system;textBlock(i.name,displayDamage(actor,[[f.forma,f.palavra,f.palavraExtra].filter(Boolean).join(" / "),f.ampliacao,`${Number(f.custoForma||0)+Number(f.custoPalavra||0)+Number(f.custoExtra||0)} PM · ${f.custoAcao} ação(ões)`,f.dano,f.alcance,f.alvos,f.duracao,plain(f.descricao)].filter(Boolean).join(" · ")));}if(!by("formulacao").length)textBlock("—","");
+  for(const [type,label] of [["proeza","Proezas"],["traco","Traços"]]){title(label);for(const i of by(type))textBlock(i.name,displayDamage(actor,[i.system.tipoAcao,i.system.custoAcao?`${i.system.custoAcao} ação(ões)`:null,i.system.maxUsos?`Usos ${i.system.usos}/${i.system.maxUsos}`:null,plain(i.system.descricao)].filter(Boolean).join(" · ")));if(!by(type).length)textBlock("—","");}
   title("Bênçãos lunares");for(const [name,desc] of MOON_BLESSINGS[s.lua-1]??[])textBlock(name,desc);
   title("Anotações");textBlock("História",plain(s.notas));textBlock("Marcas e condições",[plain(s.marcas),...[...actor.statuses].map(id=>CONFIG.statusEffects.find(e=>e.id===id)?.name??id)].filter(Boolean).join(" · "));textBlock("Desafios superados",String(s.desafios??0));
   const pages=doc.getPages();pages.forEach((p,i)=>{p.drawLine({start:{x:M,y:34},end:{x:W-M,y:34},color:border,thickness:.5});p.drawText("Lunatar RPG - Ficha não oficial - Colucci / New Order Editora",{x:M,y:22,font:regular,size:7,color:muted});p.drawText(`${i+1} / ${pages.length}`,{x:W-M-28,y:22,font:regular,size:7,color:muted});});
