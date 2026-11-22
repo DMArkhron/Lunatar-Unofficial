@@ -21,8 +21,13 @@ jobs:
           node-version: '22'
       - name: Compilar e testar bestiário
         run: |
-          npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5
+          npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5 pdf-lib@1.17.1
           node scripts/build-bestiary.mjs
+          mkdir -p src/vendor
+          cp node_modules/pdf-lib/dist/pdf-lib.esm.min.js src/vendor/pdf-lib.mjs
+          cp node_modules/pdf-lib/LICENSE.md src/vendor/pdf-lib-LICENSE.md
+          node --check src/character-pdf-direct.mjs
+          node --check src/vendor/pdf-lib.mjs
       - name: Preparar logotipo PNG
         run: |
           python3 - <<'PY'

@@ -46,15 +46,8 @@ ${section("Inventário",table(["Item","Quantidade","Descrição"],by("equipament
 ${details("Anotações",[["História",plain(s.notas)],["Marcas e condições",[plain(s.marcas),...[...actor.statuses].map(id=>CONFIG.statusEffects.find(e=>e.id===id)?.name??id)].filter(Boolean).join(" · ")],["Desafios superados",String(s.desafios??0)]])}</div><footer>Lunatar RPG · Ficha não oficial · Colucci / New Order Editora</footer></main></body></html>`;
 }
 
-export function exportCharacterPDF(actor) {
+export async function exportCharacterPDF(actor) {
   if (actor.type !== "personagem" || !actor.isOwner) return;
-  const popup = window.open("", "_blank");
-  if (!popup) { ui.notifications.warn("Permita a abertura de janelas para exportar a ficha."); return; }
-  try {
-    const logo = new URL(`${PATH}/assets/logo.png`,document.baseURI).href;
-    const html = characterPrintHTML(actor,game.settings.get(SYSTEM,"luas"),logo);
-    popup.document.open(); popup.document.write(html); popup.document.close();
-    popup.document.getElementById("print").addEventListener("click",()=>popup.print());
-    popup.focus();
-  } catch(error) { popup.close(); throw error; }
+  const { exportCharacterPDF: download } = await import("./character-pdf-direct.mjs");
+  return download(actor);
 }
