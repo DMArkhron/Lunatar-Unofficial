@@ -36,7 +36,7 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null, artwork={
   };
   const draw=(value,x,top,size=9,font=regular,c=ink)=>page.drawText(safe(value,font).replace(/\n/g," "),{x,y:H-top-size,size,font,color:c});
   const rect=(x,top,w,h,fill)=>page.drawRectangle({x,y:H-top-h,width:w,height:h,borderColor:border,borderWidth:.55,...(fill?{color:fill}:{})});
-  const rounded=(x,top,w,h,fill=cream,r=5)=>page.drawSvgPath(`M${r} 0 H${w-r} Q${w} 0 ${w} ${r} V${h-r} Q${w} ${h} ${w-r} ${h} H${r} Q0 ${h} 0 ${h-r} V${r} Q0 0 ${r} 0 Z`,{x,y:H-top,color:fill,borderColor:border,borderWidth:.65});
+  const rounded=(x,top,w,h,fill=cream,r=5,edge=border)=>page.drawSvgPath(`M${r} 0 H${w-r} Q${w} 0 ${w} ${r} V${h-r} Q${w} ${h} ${w-r} ${h} H${r} Q0 ${h} 0 ${h-r} V${r} Q0 0 ${r} 0 Z`,{x,y:H-top,color:fill,borderColor:edge,borderWidth:.65});
   const center=(value,x,top,w,size=9,font=regular,c=ink)=>{const v=safe(value,font).replace(/\n/g," ");draw(v,x+Math.max(0,(w-font.widthOfTextAtSize(v,size))/2),top,size,font,c);};
   const fitted=(value,x,top,w,size,font=bold,c=ink)=>{const v=safe(value,font).replace(/\n/g," ");draw(v,x,top,Math.min(size,w/Math.max(1,font.widthOfTextAtSize(v,1))),font,c);};
   const embedded={};for(const [key,bytes] of Object.entries(artwork)){try{embedded[key]=await doc.embedPng(bytes);}catch{/* optional art */}}
@@ -46,10 +46,18 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null, artwork={
   const rule=top=>page.drawLine({start:{x:M,y:H-top},end:{x:W-M,y:H-top},thickness:.6,color:border});
   const newPage=()=>{page=doc.addPage([W,H]);y=M;};
   const ensure=h=>{if(y+h>H-bottom)newPage();};
-  const title=label=>{ensure(35);rounded(M,y,CW,21,pale,5);draw(label,M+7,y+3,13,serif,purple);y+=25;};
+  const themes={"Formulações":{tone:color(92,69,137),fill:color(237,231,247),card:color(250,247,253)},"Proezas":{tone:color(145,66,62),fill:color(245,228,224),card:color(253,248,246)},"Traços":{tone:color(46,105,83),fill:color(225,239,230),card:color(246,251,247)},"Bênçãos lunares":{tone:color(132,94,36),fill:color(248,237,207),card:color(255,251,240)}};
+  let activeTheme=null,activeLabel="";
+  const heading=(label,theme)=>{rounded(M,y,CW,theme?27:21,theme?.fill??pale,5,theme?.tone??border);if(theme)page.drawRectangle({x:M+1,y:H-y-24,width:4,height:21,color:theme.tone});draw(label,M+11,y+(theme?6:3),theme?14:13,serif,theme?.tone??purple);y+=theme?35:25;};
+  const title=label=>{activeTheme=themes[label]??null;activeLabel=label;if(activeTheme&&y>M)y+=13;ensure(activeTheme?86:label==="Anotações"?75:35);heading(label,activeTheme);};
   const textBlock=(label,value)=>{
-    const labels=wrap(label,CW-16,10,bold),lines=wrap(value,CW-20,9);ensure(40);const blockHeight=labels.length*15+lines.length*12+7;if(blockHeight<=H-bottom-y)rounded(M,y,CW,blockHeight,cream,4);for(const l of labels){ensure(15);draw(l,M+7,y+4,10,bold,purple);y+=15;}
-    for(const line of lines){ensure(13);draw(line,M+8,y+3,9);y+=12;}y+=9;
+    const theme=activeTheme,tone=theme?.tone??purple,fill=theme?.card??cream;
+    const labels=wrap(label,CW-26,10,bold),lines=wrap(value,CW-26,9.5),len=labels.length*14+lines.length*13+18;
+    const minimum=14+13+18;
+    const continuation=()=>{newPage();if(activeLabel)heading(`${activeLabel} (continuação)`,theme);};
+    if(y+Math.min(len,H-bottom-M-(theme?35:0))>H-bottom&&y>M+(theme?35:0))continuation();
+    let entries=[...labels.map(v=>({v,font:bold,size:10,c:tone,h:14})),...lines.map(v=>({v,font:regular,size:9.5,c:ink,h:13}))];
+    while(entries.length){if(y+minimum>H-bottom)continuation();let available=H-bottom-y-18,count=0,used=0;while(count<entries.length&&used+entries[count].h<=available){used+=entries[count].h;count++;}if(!count){continuation();continue;}const h=used+18;rounded(M,y,CW,h,fill,5,theme?.tone??border);if(theme)page.drawRectangle({x:M+1,y:H-y-h+4,width:3,height:h-8,color:tone});let top=y+9;for(const e of entries.splice(0,count)){draw(e.v,M+13,top,e.size,e.font,e.c);top+=e.h;}y+=h+8;if(entries.length)continuation();}
   };
   const cards=(pairs,cols=5)=>{
     const gap=5,w=(CW-gap*(cols-1))/cols;
