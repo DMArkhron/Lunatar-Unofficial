@@ -21,11 +21,22 @@ jobs:
           node-version: '22'
       - name: Compilar e testar bestiário
         run: |
-          npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5 pdf-lib@1.17.1
+          npm install --no-save --package-lock=false @foundryvtt/foundryvtt-cli@3.0.5 pdf-lib@1.17.1 @pdf-lib/fontkit@1.1.1 esbuild@0.25.12
           node scripts/build-bestiary.mjs
           mkdir -p src/vendor
           cp node_modules/pdf-lib/dist/pdf-lib.esm.min.js src/vendor/pdf-lib.mjs
           cp node_modules/pdf-lib/LICENSE.md src/vendor/pdf-lib-LICENSE.md
+          ./node_modules/.bin/esbuild node_modules/@pdf-lib/fontkit/dist/fontkit.es.js --bundle --format=esm --platform=browser --minify --legal-comments=inline --outfile=src/vendor/fontkit.mjs
+          sudo apt-get update -qq
+          sudo apt-get install -y fonts-liberation
+          mkdir -p assets/fonts
+          for FONT in LiberationSans-Regular LiberationSans-Bold LiberationSerif-Bold; do
+            FONT_PATH="$(find /usr/share/fonts/truetype -name "$FONT.ttf" -print -quit)"
+            test -n "$FONT_PATH"
+            cp "$FONT_PATH" "assets/fonts/$FONT.ttf"
+          done
+          cp /usr/share/doc/fonts-liberation/copyright assets/fonts/LICENSE.txt
+          node --check src/vendor/fontkit.mjs
           node --check src/character-pdf-direct.mjs
           node --check src/vendor/pdf-lib.mjs
       - name: Preparar logotipo PNG
