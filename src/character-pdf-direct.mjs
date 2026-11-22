@@ -10,7 +10,7 @@ const plain = value => {
   doc.querySelectorAll("p,div,li,br").forEach(n=>n.append("\n"));
   return doc.body.textContent.trim();
 };
-const pool = p => `${p?.value ?? 0} / ${p?.max ?? 0}`;
+const pool = p => ({ write: true, max: p?.max ?? 0 });
 // Match the characteristic used by the actual magic damage roll.
 export function displayDamage(actor, formula) {
   const value = Number(actor.system.caracteristicas?.[attributeFor(actor, "ataqueMagico")] ?? 0);
@@ -47,7 +47,7 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null, artwork={
   const embedded={};for(const [key,bytes] of Object.entries(artwork)){try{embedded[key]=await doc.embedPng(bytes);}catch{/* optional art */}}
   const image=(key,x,top,w,h)=>{const img=embedded[key];if(!img)return;const d=img.scaleToFit(w,h);page.drawImage(img,{x:x+(w-d.width)/2,y:H-top-(h+d.height)/2,width:d.width,height:d.height});};
   const panel=(label,top,h)=>{rounded(M,top,CW,h,pale,6);draw(label,M+7,top+6,14,serif);page.drawLine({start:{x:M+7,y:H-top-24},end:{x:W-M-7,y:H-top-24},color:border,thickness:.6});};
-  const mini=(x,top,w,h,label,value,tone=null)=>{rounded(x,top,w,h,cream,4);if(tone)page.drawRectangle({x:x+4,y:H-top-2,width:w-8,height:2,color:tone});center(label,x,top+5,w,7,bold,muted);const v=safe(value,serif);center(v,x,top+15,w,Math.min(13,(w-8)/Math.max(1,serif.widthOfTextAtSize(v,1))),serif);};
+  const mini=(x,top,w,h,label,value,tone=null)=>{rounded(x,top,w,h,cream,4);if(tone)page.drawRectangle({x:x+4,y:H-top-2,width:w-8,height:2,color:tone});center(label,x,top+5,w,7,bold,muted);if(value?.write){const lineY=H-top-28;if(value.max!==undefined){const suffix=`/ ${value.max}`,sw=serif.widthOfTextAtSize(suffix,13),lineWidth=Math.min(35,w-sw-14),start=x+(w-lineWidth-sw-6)/2;page.drawLine({start:{x:start,y:lineY},end:{x:start+lineWidth,y:lineY},color:border,thickness:.7});draw(suffix,start+lineWidth+6,top+15,13,serif);}else{page.drawLine({start:{x:x+w*.24,y:lineY},end:{x:x+w*.76,y:lineY},color:border,thickness:.7});}return;}const v=safe(value,serif);center(v,x,top+15,w,Math.min(13,(w-8)/Math.max(1,serif.widthOfTextAtSize(v,1))),serif);};
   const rule=top=>page.drawLine({start:{x:M,y:H-top},end:{x:W-M,y:H-top},thickness:.6,color:border});
   const newPage=()=>{page=doc.addPage([W,H]);y=M;};
   const ensure=h=>{if(y+h>H-bottom)newPage();};
@@ -86,9 +86,9 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null, artwork={
   if(logoBytes){try{const logo=await doc.embedPng(logoBytes);const d=logo.scaleToFit(85,42);page.drawImage(logo,{x:W-M-9-d.width,y:H-42-d.height,width:d.width,height:d.height});}catch{/* optional */}}
   draw("NOME DO PERSONAGEM",M+91,76,8,bold,muted);fitted(actor.name,M+91,88,CW-105,21,serif);
   const ix=M+91, iw=CW-98;mini(ix,116,iw*.40-3,36,"Origem",ORIGINS[s.origem]?.[0]);mini(ix+iw*.40,116,iw*.45-3,36,"Classe",[klass?.label,s.nivel>=5?klass?.paths?.[s.trilha]?.[0]:null].filter(Boolean).join(" / "));mini(ix+iw*.85,116,iw*.15,36,"Nível",s.nivel);
-  panel("Estado do personagem",172,144);const vitals=[["Saúde",pool(s.saude)],["Meia vida",Math.floor(s.saude.max/2)],["Magia",pool(s.magia)],["Ações",pool(s.acoes)],["Movimento",`${s.movimento} m`],["Defesa",s.defesa],["Defesa mágica",s.defesaMagica],["Proteção",s.protecao],["Impulsos",s.impulsos],["Recuo",s.recuo]];const red=color(167,82,79),green=color(85,117,109), vtones=[red,red,purple,gold,green,gold,purple,gold,purple,red];const inner=CW-14, ww=(inner-16)/5;
+  panel("Estado do personagem",172,144);const vitals=[["Saúde",pool(s.saude)],["Meia vida",Math.floor(s.saude.max/2)],["Magia",pool(s.magia)],["Ações",pool(s.acoes)],["Movimento",`${s.movimento} m`],["Defesa",s.defesa],["Defesa mágica",s.defesaMagica],["Proteção",s.protecao],["Impulsos",{write:true}],["Recuo",{write:true}]];const red=color(167,82,79),green=color(85,117,109), vtones=[red,red,purple,gold,green,gold,purple,gold,purple,red];const inner=CW-14, ww=(inner-16)/5;
   vitals.forEach(([l,v],i)=>mini(M+7+(i%5)*(ww+4),200+Math.floor(i/5)*38,ww,34,l,v,vtones[i]));
-  const moon=[["Signo lunar",MOONS[s.lua-1]],["Dados lunares",s.dadoLunar],["Luas no céu",sky.map(i=>MOONS[i-1]).filter(Boolean).join(", ")||"—"]];moon.forEach(([l,v],i)=>mini(M+7+i*((inner-8)/3+4),276,(inner-8)/3,33,l,v));
+  const moon=[["Signo lunar",MOONS[s.lua-1]],["Dados lunares",{write:true}],["Luas no céu",sky.map(i=>MOONS[i-1]).filter(Boolean).join(", ")||"—"]];moon.forEach(([l,v],i)=>mini(M+7+i*((inner-8)/3+4),276,(inner-8)/3,33,l,v));
   panel("Características",322,119);const attrs=Object.entries(ATTRIBUTES);const aw=(inner-12)/4;draw("CONCRETAS",M+7,349,8,bold,purple);draw("ABSTRATAS",M+7+inner/2,349,8,bold,purple);
   attrs.forEach(([key,label],i)=>{const group=Math.floor(i/4),j=i%4,x=M+7+(group*2+j%2)*(aw+4),top=360+Math.floor(j/2)*37;rounded(x,top,aw,33);image(`attr-${key}`,x+5,top+6,20,20);fitted(label,x+29,top+5,aw-34,8,bold,muted);draw(s.caracteristicas?.[key],x+29,top+15,13,serif);});
   const skills=Object.entries(SKILLS).sort((a,b)=>a[1][0].localeCompare(b[1][0],"pt-BR"));const sw=(inner-8)/3;const rowH=35;panel("Aptidões",447,35+Math.ceil(skills.length/3)*rowH+12);
