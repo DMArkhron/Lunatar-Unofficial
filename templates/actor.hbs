@@ -25,6 +25,7 @@
       </div>
     </header>
 
+    {{#if pc}}{{#if editable}}<div style="display:flex;justify-content:flex-end;margin:6px 0"><button type="button" data-action="exportPDF" title="Exportar ficha preenchida para PDF"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Exportar PDF</button></div>{{/if}}{{/if}}
     <nav class="ln-tabs" aria-label="Seções da ficha">
       {{#each tabs}}<button type="button" class="{{cssClass}}" data-action="selectTab" data-group="sheet" data-tab="{{id}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}"><i class="fa-solid {{icon}}" aria-hidden="true"></i><span>{{label}}</span></button>{{/each}}
     </nav>
