@@ -82,12 +82,55 @@ export async function buildCharacterPDF(actor, sky=[], logoBytes=null) {
   return doc.save();
 }
 
+const EXPORT_FOLDER = "exportação-fichas";
+export function exportFilename(name, now = new Date(), suffix = "") {
+  const safe = String(name).normalize("NFKD").replace(/\p{M}/gu, "").replace(/[^a-zA-Z0-9_-]+/g,"-").replace(/^-+|-+$/g, "").slice(0,80) || "Personagem";
+  return `${safe}-Lunatar-${now.toISOString().replace(/[:.]/g,"-")}${suffix ? `-${suffix}` : ""}.pdf`;
+}
+
+export async function archivePDF(file, picker = foundry.applications.apps.FilePicker.implementation) {
+  const storage = `${PATH}/storage`;
+  const destination = `${storage}/${EXPORT_FOLDER}`;
+  // Create missing folders; do not replace existing files or require elevated permissions.
+  for (const directory of [storage, destination]) {
+    let exists = false;
+    try { const result = await picker.browse("data",directory); exists = decodeURI(result.target ?? "").replace(/\/$/, "") === directory; } catch { /* create below */ }
+    if (!exists) {
+      try { await picker.createDirectory("data",directory); }
+      catch (error) { const result = await picker.browse("data",directory); if (decodeURI(result.target ?? "").replace(/\/$/, "") !== directory) throw error; }
+    }
+  }
+  const response = await picker.uploadPersistent(SYSTEM,EXPORT_FOLDER,file,{}, {notify:false});
+  if (!response?.path || response.error) throw new Error(response?.error || "O Foundry não confirmou o salvamento da ficha.");
+  const raw = String(response.path);
+  const url = new URL(/^(https?:\/\/|\/)/i.test(raw) ? raw : foundry.utils.getRoute(raw),document.baseURI);
+  if (url.origin !== location.origin || !decodeURI(url.pathname).includes(`/${destination}/`)) throw new Error("O Foundry retornou um caminho inesperado para a ficha.");
+  return { path: `${destination}/${file.name}`, url: url.href };
+}
+
+function downloadFile(url, filename) {
+  const link=document.createElement("a");link.href=url;link.download=filename;link.target="_self";
+  document.body.append(link);link.click();link.remove();
+}
+
 export async function exportCharacterPDF(actor) {
   if(actor.type!=="personagem"||!actor.isOwner)return;
   let logo=null;try{const response=await fetch(new URL(`${PATH}/assets/logo.png`,document.baseURI));if(response.ok)logo=await response.arrayBuffer();}catch{/* optional logo */}
   const bytes=await buildCharacterPDF(actor,game.settings.get(SYSTEM,"luas"),logo);
-  const blob=new Blob([bytes],{type:"application/pdf"});const url=URL.createObjectURL(blob);
-  const link=document.createElement("a");link.href=url;link.download=`${String(actor.name).replace(/[\\/:*?"<>|\u0000-\u001f]/g,"_")||"Personagem"}-Lunatar.pdf`;
-  document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
-  ui.notifications.info("Ficha PDF gerada.");
+  const name=exportFilename(actor.name,new Date(),foundry.utils.randomID(6));
+  const file=new File([bytes],name,{type:"application/pdf"});
+  let saved;
+  try { saved=await archivePDF(file); }
+  catch(error) {
+    console.warn("Lunatar | Não foi possível arquivar PDF",error);
+    if (/Electron/i.test(navigator.userAgent)) {
+      ui.notifications.error("Não foi possível salvar a cópia no sistema. Verifique a permissão de envio de arquivos ou use o navegador para baixar o PDF.");
+      return;
+    }
+    const url=URL.createObjectURL(file);downloadFile(url,name);setTimeout(()=>URL.revokeObjectURL(url),60000);
+    ui.notifications.warn("Download solicitado. A cópia no sistema não foi salva; verifique a permissão de envio de arquivos.");
+    return;
+  }
+  downloadFile(saved.url,name);
+  ui.notifications.info(`Cópia salva em ${saved.path}. Download solicitado.`);
 }
