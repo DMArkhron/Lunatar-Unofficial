@@ -23,6 +23,7 @@ const common = () => ({
 });
 
 class Personagem extends Base {
+  static migrateData(source) { if(source.aptidoes) delete source.aptidoes.rituais; if(source.maestrias) delete source.maestrias.rituais; return super.migrateData(source); }
   static defineSchema() {
     return {
       ...common(), classe: str(), origem: str(), trilha: str(), trilhaNatureza: str(),
@@ -69,6 +70,7 @@ class Personagem extends Base {
 }
 
 class Ameaca extends Base {
+  static migrateData(source) { if(source.aptidoes) delete source.aptidoes.rituais; return super.migrateData(source); }
   static defineSchema() {
     return {
       ...common(), categoria: str(), concreto: number(0, -99), abstrato: number(0, -99),

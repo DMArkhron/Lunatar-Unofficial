@@ -1,4 +1,5 @@
 import "./impasse.mjs";
+import { addMonsterGenerator, buildMonster } from "./monster-generator.mjs";
 import "./file-picker-memory.mjs";
 import "./branding.mjs";
 import { SYSTEM, PATH, CONDITIONS, SKILLS, testSpec } from "./rules.mjs";
@@ -48,7 +49,7 @@ Hooks.once("init", async () => {
   const { DocumentSheetConfig } = foundry.applications.apps;
   DocumentSheetConfig.registerSheet(foundry.documents.Actor, SYSTEM, LunatarActorSheet, { makeDefault: true });
   DocumentSheetConfig.registerSheet(foundry.documents.Item, SYSTEM, LunatarItemSheet, { makeDefault: true });
-  game.lunatar = { newLunarCycle, startSession, rollTest, skills: SKILLS, attributeFor, runMacro, useItemMacro, buildCharacter };
+  game.lunatar = { newLunarCycle, startSession, rollTest, skills: SKILLS, attributeFor, runMacro, useItemMacro, buildCharacter, buildMonster };
   await foundry.applications.handlebars.loadTemplates({
     lunatarGroup: `${PATH}/templates/item-group.hbs`,
     lunatarClassProgression: `${PATH}/templates/class-progression.hbs`,
@@ -111,3 +112,5 @@ Hooks.on("renderActorDirectory",(_app,element)=>{
  const button=document.createElement("button");button.type="button";button.className="ln-session-start";button.textContent="Iniciar sessão · recuperar PM";button.addEventListener("click",()=>startSession().catch(error=>ui.notifications.error(error.message)));header.append(button);
 });
 
+
+Hooks.on("renderActorDirectory", addMonsterGenerator);

@@ -28,7 +28,7 @@ export function eligibleFeats(docs,actor,level,path){
 }
 async function choose(title, rows, note=""){
  if(!rows.length)throw Error("Não há escolhas disponíveis: "+title);
- const content='<div class="ln-wizard"><div class="ln-wizard-callout"><p>'+esc(note)+'</p></div><div class="ln-wizard-grid">'+rows.map((r,i)=>'<label class="ln-wizard-field"><input type="radio" name="choice" value="'+esc(r.id)+'" '+(i===0?'checked':'')+'><strong>'+esc(r.label)+'</strong><small style="display:block;white-space:normal">'+esc(r.description||"")+'</small></label>').join("")+'</div></div>';
+ const content='<div class="ln-wizard"><div class="ln-wizard-callout"><p>'+esc(note)+'</p></div><div class="ln-wizard-grid ln-level-options">'+rows.map((r,i)=>'<label class="ln-wizard-field ln-level-choice"><input type="radio" name="choice" value="'+esc(r.id)+'" '+(i===0?'checked':'')+'><strong>'+esc(r.label)+'</strong><small style="display:block;white-space:normal">'+esc(r.description||"")+'</small></label>').join("")+'</div></div>';
  return dialog.prompt({window:{title},classes:["lunatar","lunatar-generator"],position:{width:680},content,modal:true,rejectClose:false,ok:{label:"Continuar",callback:(_e,b)=>new FormData(b.form).get("choice")}});
 }
 export async function levelUp(actor){

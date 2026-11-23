@@ -51,7 +51,6 @@
           "sobrevivencia": 0,
           "teurgia": 0,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
@@ -214,7 +213,6 @@
           "sobrevivencia": 1,
           "teurgia": 1,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
@@ -383,7 +381,6 @@
           "sobrevivencia": 0,
           "teurgia": 0,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
@@ -510,7 +507,6 @@
           "sobrevivencia": 0,
           "teurgia": 0,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
@@ -625,7 +621,6 @@
           "sobrevivencia": 1,
           "teurgia": 1,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",
@@ -776,7 +771,6 @@
           "sobrevivencia": 1,
           "teurgia": 1,
           "atencao": 0,
-          "rituais": 0,
           "taticas": 0
         },
         "formulacaoAtributo": "inteligencia",

@@ -920,3 +920,12 @@
 .lunatar .ln-impulse-resource label { flex: 1; display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 7px; color: #50345e; font: 700 14px/1.3 system-ui,sans-serif; }
 .lunatar .ln-impulse-resource label small { font: 11px/1.3 system-ui,sans-serif; color: #776580; }
 .lunatar .ln-paper .ln-impulse-resource input { width: 66px; height: 38px; border: 0; border-radius: 9px; background: #ffffff80; color: #50345e; font: bold 25px Georgia,serif; text-align: center; }
+
+/* Level-up selection cards */
+.lunatar-generator .ln-level-options { grid-template-columns: repeat(auto-fit,minmax(min(100%,140px),1fr)); gap:8px; max-height:58vh; overflow:auto; padding:4px; }
+.lunatar-generator .ln-level-choice { display:flex; flex-direction:column; align-items:center; justify-content:flex-start; text-align:center; gap:6px; padding:12px 8px; cursor:pointer; min-width:0; }
+.lunatar-generator .ln-wizard .ln-level-choice input[type=radio] { appearance:auto; width:18px!important; height:18px!important; min-height:0!important; margin:0 auto!important; padding:0!important; border:0!important; background:none!important; accent-color:#735887; flex:none; }
+.lunatar-generator .ln-level-choice:has(input:checked) { background:#e8deec; border-color:#735887; box-shadow:inset 0 0 0 1px #735887; }
+.lunatar-generator .ln-level-choice:hover { border-color:#735887; }
+.lunatar-generator .ln-level-choice strong,.lunatar-generator .ln-level-choice small { text-align:center; width:100%; overflow-wrap:anywhere; }
+.lunatar-generator .ln-level-choice small { font-size:11px; line-height:1.4; }

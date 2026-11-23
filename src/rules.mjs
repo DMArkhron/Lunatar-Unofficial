@@ -19,7 +19,6 @@ export const SKILLS = {
   misticismo: ["Misticismo", "inteligencia"], natureza: ["Natureza", "instinto"],
   ocultismo: ["Ocultismo", "inteligencia"], pontaria: ["Pontaria", "destreza"],
   resistencia: ["Resistência", "corpo"], razao: ["Razão", "inteligencia"],
-  rituais: ["Rituais", "inteligencia"],
   saber: ["Saber", "inteligencia"], sobrevivencia: ["Sobrevivência", "instinto"],
   taticas: ["Táticas", "inteligencia"], teurgia: ["Teurgia", "presenca"]
 };
