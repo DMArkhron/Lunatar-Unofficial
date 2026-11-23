@@ -1,0 +1,14 @@
+import { SYSTEM } from "./rules.mjs";
+const light=["Adaga","Bastão","Florete"],medium=["Clava","Espada Curta","Espada Longa","Lança"],heavy=["Claymore","Machado de Batalha","Martelo de Guerra"],ranged=["Arco Curto","Arco Longo","Besta Pequena"],armor=["Armadura Leve","Armadura Média"];
+const group=(label,names,optional=false)=>({label,names,optional});
+export const loadouts={
+ adepto:{fixed:["Kit de Aventureiro","Símbolo Sagrado","Livro Religioso"],groups:[group("Besta",["Besta Pequena","Besta Pesada"]),group("Arma leve ou média",[...light,...medium]),group("Armadura",armor)]},
+ combatente:{fixed:["Kit de Aventureiro"],rations:40,groups:[group("Besta",["Besta Pequena","Besta Pesada"]),group("Arma principal",[...medium,...heavy,...light]),group("Segunda arma leve (obrigatória se a principal for leve)",light,true),group("Armadura",[...armor,"Armadura Pesada"]),group("Escudo",["Escudo Leve","Escudo Médio","Escudo Pesado"],true)]},
+ mistico:{fixed:["Kit de Aventureiro","Foco Mágico","Livro de Formulações"],rations:30,groups:[group("Arma leve ou média",[...light,...medium])]},
+ naturalista:{fixed:["Kit de Aventureiro"],groups:[group("Arma corporal",[...light,...medium]),group("Arma à distância",ranged),group("Armadura",armor)]},
+ renegado:{fixed:["Kit de Aventureiro","Armadura Leve"],groups:[group("Arma corporal",[...light,...medium]),group("Arma leve à distância",["Arco Curto","Besta Pequena"])]}
+};
+export function gearValid(classe,values){const l=loadouts[classe];return !!l&&l.groups.every((g,i)=>g.names.includes(values["gear"+i])||(g.optional&&!values["gear"+i]))&&(classe!=="combatente"||(light.includes(values.gear1)?light.includes(values.gear2):!values.gear2));}
+export function gearContext(classe,saved){const l=loadouts[classe];return {equipment:true,fixed:[...l.fixed,...(l.rations?[l.rations+" Rações de Viagem"]:[])],gearGroups:l.groups.map((g,i)=>({key:"gear"+i,label:g.label,options:[...(g.optional?[""]:[]),...g.names].map(name=>({name,label:name||"Nenhum",selected:name===(saved["gear"+i]??(g.optional?"":g.names[0]))}))}))};}
+export async function initialGear(classe,values){if(!gearValid(classe,values))throw Error("Confira as escolhas de equipamento.");const l=loadouts[classe],pack=game.packs.get(SYSTEM+".equipamentos");if(!pack)throw Error("Compêndio de equipamentos indisponível.");const docs=await pack.getDocuments();const names=[...l.fixed,...l.groups.map((g,i)=>values["gear"+i]).filter(Boolean),...(l.rations?["Ração de Viagem"]:[])];return names.map(name=>{const doc=docs.find(d=>d.name===name);if(!doc)throw Error("Equipamento ausente do compêndio: "+name);const data=doc.toObject();delete data._id;delete data.folder;if(name==="Ração de Viagem")data.system.quantidade=l.rations;data.flags={...data.flags,[SYSTEM]:{...data.flags?.[SYSTEM],fromGenerator:true}};return data;});}
+

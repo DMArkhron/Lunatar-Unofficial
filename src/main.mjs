@@ -8,7 +8,7 @@ import { LunatarActorSheet, LunatarItemSheet } from "./sheets.mjs";
 import { onHotbarDrop, runMacro, useItemMacro } from "./item-actions.mjs";
 import { addGeneratorButton, buildCharacter } from "./character-generator.mjs";
 import { renderRollCard } from "./chat.mjs";
-import { attributeFor, actorModifier, clearTurn, newLunarCycle, rollTest } from "./actions.mjs";
+import { attributeFor, actorModifier, clearTurn, newLunarCycle, startSession, rollTest } from "./actions.mjs";
 
 class LunatarCombatant extends foundry.documents.Combatant {
   _getInitiativeFormula() {
@@ -41,12 +41,14 @@ Hooks.once("init", async () => {
   game.settings.register(SYSTEM, "empate", { scope: "world", config: true, type: String,
     name: "Empate em Teste Oposto", hint: "O playtest apresenta duas orientações na página 7.",
     choices: { oposicao: "Favorece a oposição", acao: "Favorece a ação" }, default: "oposicao" });
+  game.settings.register(SYSTEM,"pmPorSessao",{scope:"world",config:true,type:Boolean,default:false,name:"PM apenas no início da sessão",hint:"Regra alternativa do revisor. Desmarcado: recuperação por descanso conforme Playtest V3.",onChange:()=>{for(const a of game.actors)if(a.sheet?.rendered)a.sheet.render();}});
+  game.settings.register(SYSTEM,"testeMagia",{scope:"world",config:true,type:Boolean,default:false,name:"Permitir testes de magia sem gastar PM",hint:"Exibe uma opção de teste na rolagem. Desative durante sessões normais."});
   game.settings.register(SYSTEM, "luas", { scope: "world", config: false, type: Array, default: [],
     onChange: () => { for (const actor of game.actors) if (actor.sheet?.rendered) actor.sheet.render(); } });
   const { DocumentSheetConfig } = foundry.applications.apps;
   DocumentSheetConfig.registerSheet(foundry.documents.Actor, SYSTEM, LunatarActorSheet, { makeDefault: true });
   DocumentSheetConfig.registerSheet(foundry.documents.Item, SYSTEM, LunatarItemSheet, { makeDefault: true });
-  game.lunatar = { newLunarCycle, rollTest, skills: SKILLS, attributeFor, runMacro, useItemMacro, buildCharacter };
+  game.lunatar = { newLunarCycle, startSession, rollTest, skills: SKILLS, attributeFor, runMacro, useItemMacro, buildCharacter };
   await foundry.applications.handlebars.loadTemplates({
     lunatarGroup: `${PATH}/templates/item-group.hbs`,
     lunatarClassProgression: `${PATH}/templates/class-progression.hbs`,
@@ -95,3 +97,17 @@ Hooks.once("ready", async () => {
     ui.notifications.warn("Ative Criar Atores para os jogadores nas permissões do mundo para concluir a criação pelo gerador.");
   }
 });
+
+Hooks.on("preUpdateActor",(actor,changes,options,userId)=>{
+  if(actor.type!=="personagem"||game.users.get(userId)?.isGM|| (options.lunatarRest && !game.settings.get(SYSTEM,"pmPorSessao")))return;
+  const value=changes["system.magia.value"]??changes.system?.magia?.value;
+  if(value!==undefined&&Number(value)>actor.system.magia.value){ui.notifications.warn("Use o descanso ou a recuperação definida pelo mestre para recuperar PM.");return false;}
+});
+
+Hooks.on("renderActorDirectory",(_app,element)=>{
+ if(!game.user.isGM||!game.settings.get(SYSTEM,"pmPorSessao"))return;
+ const root=element?.querySelector?element:element?.[0],header=root?.querySelector(".directory-header");
+ if(!header||header.querySelector(".ln-session-start"))return;
+ const button=document.createElement("button");button.type="button";button.className="ln-session-start";button.textContent="Iniciar sessão · recuperar PM";button.addEventListener("click",()=>startSession().catch(error=>ui.notifications.error(error.message)));header.append(button);
+});
+

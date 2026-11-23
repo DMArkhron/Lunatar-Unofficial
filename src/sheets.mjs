@@ -1,4 +1,5 @@
 import { exportCharacterPDF } from "./character-print.mjs";
+import { levelUp } from "./level-up.mjs";
 import { MOON_BLESSINGS } from "./moon-blessings.mjs";
 import { postCard } from "./chat.mjs";
 import { SLOT_LABELS, equipmentSlots, equippedAt } from "./equipment.mjs";
@@ -8,7 +9,7 @@ import { NATURE_TRAITS } from "./features.mjs";
 import { ARMOR, WEAPONS, MAGIC, itemIcon, aptitudeIcon } from "./catalog.mjs";
 import { compose } from "./formulation.mjs";
 import { chooseClass, equipItem, useItem } from "./item-actions.mjs";
-import { attributeFor, prompt, rollTest, clearTurn, changeHealth, rest, serialize, sign, newLunarCycle } from "./actions.mjs";
+import { attributeFor, prompt, rollTest, clearTurn, changeHealth, rest, serialize, sign, newLunarCycle, startSession } from "./actions.mjs";
 
 const { api, sheets } = foundry.applications;
 const options = (source, current = "") => Object.entries(source).map(([id, label]) => ({
@@ -160,6 +161,8 @@ async function editAptitude(actor, key) {
 const normalizedSearch = value => value.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("pt-BR");
 
 const actorActions = {
+  levelUp: sheet => levelUp(sheet.actor),
+  startSession: () => startSession(),
   exportPDF: sheet => exportCharacterPDF(sheet.actor),
   portrait: sheet => openPortrait(sheet),
   showBlessing: (sheet, button) => {
@@ -287,7 +290,7 @@ export class LunatarActorSheet extends api.HandlebarsApplicationMixin(sheets.Act
       id, label, icon: `${PATH}/assets/icons/atributo-${id}.svg`, value: system.caracteristicas?.[id]
     }));
     const moon = game.settings.get(SYSTEM, "luas");
-    return { ...context, actor, system, pc, editable: this.isEditable, isGM: game.user.isGM, abilities, groups,
+    return { ...context, actor, system, pc, editable: this.isEditable, isGM: game.user.isGM, pmPorSessao: game.settings.get(SYSTEM,"pmPorSessao"), abilities, groups,
       inventory: [groups.arma, groups.armadura, groups.equipamento],
       loadout: Object.entries(worn).map(([slot, id]) => {
         const item = actor.items.find(entry => entry.id === id);
@@ -508,3 +511,4 @@ export class LunatarItemSheet extends api.HandlebarsApplicationMixin(sheets.Item
       cost: item.type === "formulacao" ? s.custoForma + s.custoPalavra + s.custoExtra : 0 };
   }
 }
+

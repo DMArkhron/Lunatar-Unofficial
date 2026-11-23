@@ -20,12 +20,12 @@
           {{else}}
           <label>Categoria <input name="system.categoria" value="{{system.categoria}}" placeholder="Humanoide, monstro…"></label>
           {{/if}}
-          <label class="ln-choice ln-choice-level"><span><i class="fa-solid fa-star" aria-hidden="true"></i> Nível</span><input type="number" name="system.nivel" min="1" max="12" value="{{system.nivel}}"></label>
+          <label class="ln-choice ln-choice-level"><span><i class="fa-solid fa-star" aria-hidden="true"></i> Nível</span>{{#if pc}}<strong>{{system.nivel}}</strong>{{else}}<input type="number" name="system.nivel" min="1" max="12" value="{{system.nivel}}">{{/if}}</label>
         </div>
       </div>
     </header>
 
-    {{#if pc}}{{#if editable}}<div style="display:flex;justify-content:flex-end;margin:6px 0"><button type="button" data-action="exportPDF" title="Exportar ficha preenchida para PDF"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Exportar PDF</button></div>{{/if}}{{/if}}
+    {{#if pc}}{{#if editable}}<div style="display:flex;justify-content:flex-end;gap:6px;margin:6px 0"><button type="button" data-action="levelUp" title="Abrir assistente de evolução"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Subir nível</button><button type="button" data-action="exportPDF" title="Exportar ficha preenchida para PDF"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Exportar PDF</button></div>{{/if}}{{/if}}
     <nav class="ln-tabs" aria-label="Seções da ficha">
       {{#each tabs}}<button type="button" class="{{cssClass}}" data-action="selectTab" data-group="sheet" data-tab="{{id}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}"><i class="fa-solid {{icon}}" aria-hidden="true"></i><span>{{label}}</span></button>{{/each}}
     </nav>
@@ -60,7 +60,7 @@
             <small>{{#if collapsed}}Colapso{{else}}{{#if pc}}Meia Vida {{half}}{{/if}}{{/if}}{{#if system.manual.saude includeZero=true}} · Máximo manual{{/if}}</small>
           </div>
           <div class="ln-resource ln-resource-magic"><span><i class="fa-solid fa-droplet" aria-hidden="true"></i> Magia</span>
-            <div><input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais" title="Clique para editar os Pontos de Magia"><b>/</b>
+            <div>{{#if pc}}{{#if isGM}}<input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais">{{else}}<strong title="Recuperação conforme a regra de PM da mesa">{{system.magia.value}}</strong>{{/if}}{{else}}<input type="number" name="system.magia.value" value="{{system.magia.value}}" min="0" max="{{system.magia.max}}" aria-label="PM atuais">{{/if}}<b>/</b>
               {{#if pc}}<strong>{{system.magia.max}}</strong>{{else}}<input type="number" name="system.magia.max" min="0" value="{{system.magia.max}}" aria-label="PM máximos">{{/if}}
             </div>
             {{#if system.magia.max}}<meter min="0" max="{{system.magia.max}}" value="{{system.magia.value}}" aria-label="Proporção de Magia"></meter>{{/if}}
@@ -100,7 +100,7 @@
         <label>Dados Lunares <input type="number" name="system.dadoLunar" min="0" value="{{system.dadoLunar}}"></label>
         <div class="ln-buttons">
           <button type="button" data-action="sign" {{#unless editable}}disabled{{/unless}}>Rolar signo</button>
-          {{#if isGM}}<button type="button" data-action="cycle">Novo ciclo</button>{{/if}}
+          {{#if isGM}}<button type="button" data-action="cycle">Novo ciclo</button>{{#if pmPorSessao}}<button type="button" data-action="startSession">Iniciar sessão · PM</button>{{/if}}{{/if}}
         </div>
         {{#if sky}}<small>No céu: {{sky}}{{#if moonActive}} · Seu signo está ativo{{/if}}</small>{{/if}}
       </div>
@@ -236,3 +236,4 @@
     </section>
   </div>
 </div>
+

@@ -58,9 +58,11 @@
 
   <div class="ln-roll-options">
     <label><input type="checkbox" name="gastar" {{#if spend}}checked{{/if}}> Gastar {{cost}} ação(ões) e contar repetição</label>
+    {{#if allowTestMagic}}<label><input type="checkbox" name="testarMagia"> Testar magia sem gastar PM</label>{{/if}}
     {{#if lunar}}<label><input type="checkbox" name="lunar"> Oferecer rejogada lunar após ver o resultado</label>{{/if}}
     {{#if damage}}<label><input type="checkbox" name="dano" checked> Rolar dano ao acertar ou sem Número-Alvo</label>{{/if}}
     {{#if piercing}}<label><input type="checkbox" name="perfurante"> Usar Perfurante</label>{{/if}}
     {{#if versatile}}<label><input type="checkbox" name="duas"> Empunhar com duas mãos</label>{{/if}}
   </div>
 </div>
+

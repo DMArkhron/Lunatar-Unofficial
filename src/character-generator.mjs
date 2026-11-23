@@ -1,6 +1,7 @@
 import { PATH, SYSTEM, SCALE, ATTRIBUTES, SKILLS, CLASSES, ORIGINS, MOONS,
   defenseBase, healthBase, magicBase } from "./rules.mjs";
 import { ORIGIN_TRAITS, ORIGIN_FEATS, CLASS_FEATS, NATURE_TRAITS } from "./features.mjs";
+import { gearValid, gearContext, initialGear } from "./starting-equipment.mjs";
 import { serialize } from "./actions.mjs";
 
 const attributeKeys = Object.keys(ATTRIBUTES);
@@ -36,7 +37,7 @@ const assignSlots = (keys, preferred, slots) =>
 const stages = [
   ["identity", "Origem", "fa-compass"],
   ["class", "Classe", "fa-book-open"], ["attributes", "Características", "fa-person"],
-  ["skills", "Aptidões", "fa-dice-d20"], ["review", "Revisão", "fa-clipboard-check"]
+  ["skills", "Aptidões", "fa-dice-d20"], ["equipment", "Equipamentos", "fa-suitcase"], ["review", "Revisão", "fa-clipboard-check"]
 ];
 const extras = {
   adepto: ["Religião", religions],
@@ -84,6 +85,7 @@ export function isValid(step, values, identity) {
     }
     case "class": return validChoice(CLASS_FEATS[identity.classe], values.classFeature)
       && (!extras[identity.classe] || validChoice(extras[identity.classe][1], values.extra));
+    case "equipment": return gearValid(identity.classe,values);
     case "attributes": return complete(statBudget(values));
     case "skills": return complete(skillBudget(values)) && (identity.origin !== "humano"
       || values.humanTrait === "proposito"
@@ -256,6 +258,7 @@ export function stageContext(step, draft, actor) {
         humanTraits: options({ versatil: "Versátil", proposito: "Propósito (Azular)" }, saved.humanTrait),
         versatile: options(skillLabels, saved.versatil) }, suggested };
     }
+    case "equipment": return {context:{...context,...gearContext(identity.classe,saved)},suggested};
     case "review": {
       const { name, system, items } = resultFor(draft, actor);
       return { context: { ...context, name, items, existing: Boolean(actor),
@@ -277,6 +280,7 @@ async function generate(actor) {
   while (index < stages.length) {
     const [step, label] = stages[index];
     const { context, suggested } = stageContext(step, draft, actor);
+    if(step==="review"){const gear=await initialGear(draft.identity.classe,draft.equipment);context.items.push(...gear.map(i=>({name:i.name+(i.system.quantidade>1?" × "+i.system.quantidade:"")})));}
     const content = await foundry.applications.handlebars.renderTemplate(`${PATH}/templates/character-wizard.hbs`, {
       ...context, label, progressPercent: Math.round(((index + 1) / stages.length) * 100),
       progress: stages.map(([, name, icon], i) => ({ name, icon, current: i === index, done: i < index }))
@@ -304,6 +308,7 @@ async function generate(actor) {
       }
       if (previous.classe !== values.classe) {
         delete draft.class;
+        delete draft.equipment;
         delete draft.attributes;
         delete draft.skills;
       }
@@ -316,6 +321,7 @@ async function generate(actor) {
   }
 
   const { name, system, items } = resultFor(draft, actor);
+  items.push(...await initialGear(draft.identity.classe,draft.equipment));
   if (draft.review.lua === "on" && !actor?.system.lua) system.lua = (await new foundry.dice.Roll("1d12").evaluate()).total;
   if (!actor) {
     const created = await foundry.documents.Actor.create({ name, type: "personagem", system, items });
@@ -365,3 +371,4 @@ export function addGeneratorButton(_directory, element) {
   }));
   header.append(button);
 }
+

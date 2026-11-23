@@ -84,6 +84,7 @@
     {{/if}}
     {{/if}}
 
+    {{#if equipment}}<h3>Equipamento inicial da classe</h3><div class="ln-wizard-callout"><strong>Itens recebidos</strong><ul>{{#each fixed}}<li>{{this}}</li>{{/each}}</ul></div><div class="ln-wizard-grid">{{#each gearGroups}}<label class="ln-wizard-field">{{label}}<select name="{{key}}">{{#each options}}<option value="{{name}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{/each}}</div>{{/if}}
     {{#if review}}
     <div class="ln-wizard-callout">
       <strong>{{name}}</strong>
@@ -98,7 +99,7 @@
     {{#each training}}<p><strong>{{die}}</strong> {{skills}}</p>{{/each}}
     <h3>Proezas e Traços iniciais</h3>
     <ul>{{#each items}}<li>{{name}}</li>{{/each}}</ul>
-    <p>O equipamento pode ser adicionado pelo catálogo depois de abrir a ficha.</p>
+    <p>Os equipamentos escolhidos serão importados do compêndio.</p>
     {{#if existing}}<p>Ao aplicar, a ficha volta ao nível 1 e recebe os valores desta criação.</p>{{/if}}
     {{/if}}
     <p class="ln-wizard-warning" data-step-message aria-live="polite" hidden>
@@ -106,3 +107,4 @@
     </p>
   </div>
 </div>
+

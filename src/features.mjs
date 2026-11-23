@@ -48,7 +48,7 @@ export const ORIGIN_FEATS = {
   ]
 };
 export const CLASS_FEATS = {
-  adepto: [["Arma do Eleito", "Ação", 1, "Durante a rodada, +1 em Ataque e +2 de dano sagrado. Os bônus aumentam nos níveis 5 e 9."]],
+  adepto: [["Arma do Eleito", "Ação", 1, "Durante a rodada, +1 em Ataque e +2 de dano sagrado. Os bônus aumentam nos níveis 5 e 9."], ["Punhos ungidos","Passiva",0,"Golpes desarmados causam 1d6 + Força ou Destreza (maior), com Proteção 1. Melhora nos níveis 5 e 9."], ["Reserva de fé","Livre",0,"Armazene 4 PM no símbolo após descanso completo; absorva-os durante a cena. Capacidade aumenta nos níveis 5 e 9."]],
   combatente: [
     ["Contra-Atacar", "Reação", 1, "Reaja a uma Abertura causada por um ataque que errou você. Usos por cena iguais a metade da Agilidade, mínimo 1."],
     ["Golpe furioso", "Ação", 1, "−2 de Defesa e +1 em Ataque até o próximo turno, com +2 de dano. Consulte os limites e escalonamento na p. 34."],
@@ -75,3 +75,4 @@ export const NATURE_TRAITS = {
   conexao: ["Conexão", "+4 PS no nível 1 e +1 de Proteção sem armadura ou com armadura leve."],
   espiritualidade: ["Espiritualidade", "+2 PM no nível 1 e visão a 10 m na penumbra ou escuridão natural."]
 };
+

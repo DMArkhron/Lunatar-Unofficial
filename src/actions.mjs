@@ -133,7 +133,7 @@ export async function rollTest(actor, skill, item = null) {
   const data = await prompt("Rolagem · Lunatar", "test-dialog", {
     label, actor: actor.name, skill: item ? SKILLS[skill][0] : "", attribute: ATTRIBUTES[attribute], baseDie,
     characteristic: actorModifier(actor, attribute), level: pc ? actor.system.nivel : null,
-    target, modes: chatModeOptions(), magic, damage: Boolean(s?.dano),
+    target, modes: chatModeOptions(), magic, allowTestMagic: magic && game.settings.get(SYSTEM,"testeMagia"), damage: Boolean(s?.dano),
     trumps: magic ? clamp(s.trunfos, 0, 2) : 0, cost: s?.custoAcao ?? 1, spend: inCombat(actor) && skill !== "iniciativa",
     pm: magic ? s.custoForma + s.custoPalavra + s.custoExtra : 0,
     reflex: s?.reflexo ?? 0, piercing: s?.perfurante, versatile: s?.versatil && !equippedAt(equipmentSlots(actor), item.id),
@@ -144,7 +144,8 @@ export async function rollTest(actor, skill, item = null) {
   return serialize(actor, async () => {
     const a = actor.system;
     const { cost, repeat, spec, automatic } = getParameters(data);
-    const pm = magic ? s.custoForma + s.custoPalavra + s.custoExtra : 0;
+    const testing = magic && data.testarMagia === "on" && game.settings.get(SYSTEM, "testeMagia");
+    const pm = magic && !testing ? s.custoForma + s.custoPalavra + s.custoExtra : 0;
     if (magic && (!s.forma.trim() || (!s.palavra.trim() && !s.dano.trim()))) {
       throw new Error("Preencha a Forma e a Palavra, ou registre o dano de uma Forma que dispensa Palavra.");
     }
@@ -189,7 +190,7 @@ export async function rollTest(actor, skill, item = null) {
     if (useLunar) details.push(`Dado Lunar · total anterior ${original}`);
     if (magic) {
       const words = [s.palavra, s.palavraExtra].filter(Boolean);
-      details.push([s.forma, ...words, s.ampliacao].filter(Boolean).join(" + ") + ` · ${pm} PM`);
+      details.push([s.forma, ...words, s.ampliacao].filter(Boolean).join(" + ") + (testing ? " · TESTE (sem gasto de PM)" : ` · ${pm} PM`));
       if (s.descricao) details.push(s.descricao);
     }
     await postRollBundle(actor, [
@@ -246,8 +247,9 @@ export function rest(actor, complete) {
     const s = actor.system;
     const bonus = complete ? s.nivel : 0;
     const hp = Math.min(s.saude.max, s.saude.value + s.caracteristicas.corpo + bonus);
-    const pm = Math.min(s.magia.max, s.magia.value + s.caracteristicas.instinto + bonus);
-    await actor.update({ "system.saude.value": hp, "system.magia.value": pm });
+    const recovery = {"system.saude.value":hp};
+    if (!game.settings.get(SYSTEM,"pmPorSessao")) recovery["system.magia.value"] = Math.min(s.magia.max,s.magia.value+s.caracteristicas.instinto+bonus);
+    await actor.update(recovery, {lunatarRest:true});
     if (complete) {
       const uses = actor.items.filter(item => item.type === "proeza" && item.system.recuperar && item.system.maxUsos)
         .map(item => ({ _id: item.id, "system.usos": item.system.maxUsos }));
@@ -278,3 +280,13 @@ export async function newLunarCycle({ replenish = true } = {}) {
     detail: [...moons].map(index => MOONS[index - 1]).join(" · ") }, publicChatMode());
   return [...moons];
 }
+
+export async function startSession() {
+  if (!game.user.isGM || !game.settings.get(SYSTEM,"pmPorSessao")) return;
+  const ok=await foundry.applications.api.DialogV2.confirm({window:{title:"Iniciar sessão?"},content:"<p>Recupera todos os PM dos personagens de jogadores, inclusive durante combate. PS e ações não serão alterados.</p>",modal:true,rejectClose:false});
+  if(!ok)return;
+  const actors=game.actors.filter(a=>a.type==="personagem"&&a.hasPlayerOwner);
+  if(actors.length)await foundry.documents.Actor.updateDocuments(actors.map(a=>({_id:a.id,"system.magia.value":a.system.magia.max})));
+  ui.notifications.info("Nova sessão: PM dos personagens restaurados.");
+}
+
